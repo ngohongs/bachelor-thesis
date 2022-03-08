@@ -1,5 +1,33 @@
-\chapter{Teoretický základ k mechanice kapalin}
+\chapter{Základ teorie mechaniky tekutin}
  
+ V této kapitole je shrnutí teorie mechaniky tekutin, která je nezbytnou součástí pro simulování fyzikálně korektního chování vody. Teorie je zde vyložena takovým způsobem, aby byl čtenář s ní seznámem a co nejrychleji pochopil principy chování tekutin, neobsahuje žádné rigorózní vysvětlení problematiky.
+ 
+ \section{Navierovy--Stokesovy rovnice}
+ 
+ Proud tekutin se v reálném světě řídí podle Navierovými--Stokesový rovnicemi (NSE), soustavou nelinearních diferenciálních rovnic. [fluid sim lecterus notes] 
+ 
+ \begin{equation}
+  \nabla \cdot \vec{u} = 0 \label{eq:mass_conservation}
+ \end{equation}
+ \begin{equation}
+  \frac{ \partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g} + \nu \nabla \cdot \nabla \vec{u}
+ \end{equation}
+ 
+ Kde vektor $ \vec{u} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \vec{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla \cdot \nabla $ označují diferenciální operátory nabla, divergence a Laplacův operátor.  
+ 
+ \subsection{Vysvětlení}
+ Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s vektorovými poly\footnote{funkce, která každému bodu prostoru přirazuje vektor}. Navierovy--Stokesovy rovnice např. pracují s vektorovým pole, kde jednotlivé body prostoru přiřazují vektor určující rychlost proudu tekutiny v daném místě.
+ 
+ 
+ Na první pohled vypadají rovnice těžce uchopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě vznikla nebo zanikla.
+ 
+ Druhá rovnice je ve své podstatě Newtonův druhý zákon.
+ \begin{equation}
+  \vec{F} = m \vec{a}
+ \end{equation}
+
+
+
 \chapter{Vlastnosti vodního povrchu}
 
 \section{Dynamické vlastnosti}
