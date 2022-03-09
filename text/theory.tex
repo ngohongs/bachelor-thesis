@@ -4,29 +4,74 @@
  
  \section{Navierovy--Stokesovy rovnice}
  
- Proud tekutin se v reálném světě řídí podle Navierovými--Stokesový rovnicemi (NSE), soustavou nelinearních diferenciálních rovnic. [fluid sim lecterus notes] 
+    Proud tekutin se v reálném světě řídí podle Navierovými--Stokesový rovnicemi, soustavou nelinearních diferenciálních rovnic.
  
- \begin{equation}
-  \nabla \cdot \vec{u} = 0 \label{eq:mass_conservation}
- \end{equation}
- \begin{equation}
-  \frac{ \partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g} + \nu \nabla \cdot \nabla \vec{u}
- \end{equation}
+    \begin{equation}
+        \nabla \cdot \vec{u} = 0 \label{eq:mass_conservation}
+    \end{equation}
+    \begin{equation}
+        \frac{ \partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g} + \nu \nabla \cdot \nabla \vec{u} \label{eq:momentum_conservation}
+    \end{equation}
  
- Kde vektor $ \vec{u} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \vec{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla \cdot \nabla $ označují diferenciální operátory nabla, divergence a Laplacův operátor.  
+    Kde vektor $ \vec{u} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \vec{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kynematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla \cdot \nabla $ označují diferenciální operátory nabla, divergence a Laplacův operátor.  
  
- \subsection{Vysvětlení}
- Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s vektorovými poly\footnote{funkce, která každému bodu prostoru přirazuje vektor}. Navierovy--Stokesovy rovnice např. pracují s vektorovým pole, kde jednotlivé body prostoru přiřazují vektor určující rychlost proudu tekutiny v daném místě.
+        \subsection{Vysvětlení}
+            Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s vektorovými poli, resp. skalárními poli. Navierovy--Stokesovy rovnice např. pracují s vektorovým poli, resp. se skalárními poli, kde jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku, v daném místě.
  
+            Na první pohled vypadají rovnice těžce uchopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě vznikla nebo zanikla.
  
- Na první pohled vypadají rovnice těžce uchopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě vznikla nebo zanikla.
+            Druhá rovnice \ref{eq:momentum_conservation} popisuje zákon o zachování hybnosti a je ve své podstatě Newtonův druhý zákon.
+            
+            \begin{equation}
+                \vec{F} = m \vec{a} \label{eq:newton_second}
+            \end{equation}
  
- Druhá rovnice je ve své podstatě Newtonův druhý zákon.
- \begin{equation}
-  \vec{F} = m \vec{a}
- \end{equation}
+            Zrychlení $ \vec{a} $ lze přepsat je derivací rychlosti podle času.
 
+            \begin{equation}
+                \vec{F} = m \frac{D \vec{u}}{D {t}} \label{eq:first_step}
+            \end{equation}
 
+            Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g} $.
+ 
+            Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své blízké okolí, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
+    
+            Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny [lecture notes] a snaží se vyrovnat rychlost částic rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla \cdot \nabla \vec{u} $ \footnote{Operace $ \nabla \cdot \nabla \vec{u} $ vyjadřuje míru deviace rychlosti částice okolo svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity.
+ 
+            \begin{equation}
+                m \vec{g} - V \nabla p + V \mu \nabla \cdot \nabla \vec{u} = m \frac{D \vec{u}}{Dt} \label{eq:second_step}
+            \end{equation}
+ 
+            Rovnice \ref{eq:newton_second}, \ref{eq:first_step} a \ref{eq:second_step} předpokládají, že tekutinu lze rozložit na konečně mnoho malých částí, tímto způsobem je do výpočtu představena výpočetní chybu. Řešením toho problému je celou rovnici \ref{eq:second_step} je vydělit $V$, aby zachytila pohyb nekonečně mnoho malých částic tekutin. Dobré je připomenout, že hustota $\rho$ lze vyjádřit jako $\frac{m}{V}$
+ 
+            \begin{equation}
+                \rho \vec{g} - \nabla p + \mu \nabla \cdot \nabla \vec{u} = \rho \frac{D \vec{u}}{D \vec{t}}  
+            \end{equation}
+ 
+            Následně po vydělení hustoty $\rho$, vyjádření derivace $\frac{D\vec{u}}{Dt}$ řetízkovým pravidlem a prohození sčítanců získáme druhou Navierovu--Stokesovu rovnici. Kynematická vyskozita $\nu$ je rovna $\frac{\mu}{\rho}$.
+ 
+            \begin{equation}
+                \frac{\partial \vec{u}}{\partial \vec{t}} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g}  + \nu \nabla \cdot \nabla \vec{u} 
+            \end{equation}
+
+    \section{Popisy tekutiny}
+
+        V teorii mechaniky tekutin existují dva různé pohledu popisů. Na základě těchto popisů jsou následně založeny algoritmy pro simulaci kapalin, resp. plynů, které jich využívají pro diskretizaci Navierových--Stokesových rovnic.
+
+        \newpage
+
+        \subsection{Lagrangeův popis}
+
+            Lagrangeův popis je jeden z popisů kontinua, který si většina nejspíše vybaví. Na tekutinu nahlíží jako na systém částic. Na jednotlivé body tekutiny nahlíží jako částice. Částice mohou být na základě potřeby různě velké, např. jako molekule nebo části tekutiny o nějakém objemu. Každé části Lagrangeův popis přiradí jeho pozici $\vec{x}$ a rychlost $\vec{u}$ a sleduje ho, jak se hodnoty v čase mění.
+
+        \subsection{Euleurův popis}
+        
+            Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. Přestože tento postup vypadá omezující a složitý kvůli svému sledování veličin tekutin jen v pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua.
+
+            
+
+ 
+ 
 
 \chapter{Vlastnosti vodního povrchu}
 
