@@ -75,7 +75,26 @@
 
 \chapter{Vlastnosti vodního povrchu}
 
+Tato kapitola obsahuje popis vizuální vlastnosti vodní hladiny, které v reálném lze zpozorovat a k jejím hlavním rysům jsou vypsané algoritmy, které je simulují. Z\,pohledu počítačové grafiky lze vlastnosti vody lze rozdělit do dvou kategorií:
+\begin{description}
+ \item[dynamické vlastnosti] popisující pohyb vodní hladiny,
+ \item[světelné vlastnosti] popisující interakce povrch vody se světelnými prsky.
+\end{description}
+
 \section{Dynamické vlastnosti}
+
+Dynamické vlastnosti zachycují, jak se pohybuje a jak reaguje na dynamické prostředí hladiny vody.
+
+V současnosti nejrealističtější výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk [gdc mueller]. Takto řídké rozdělení však nelze simulovat v reálném čase.
+
+[crane et al picture]
+
+Proto real-time simulace vody vhodná pro aplikace jako hry musí splňovat tyto podmínky [gdc mueller]:
+
+\begin{itemize}
+ \item rychlost
+\end{itemize}
+
 
 \subsection{Pohyb vodního povrchu}
 
