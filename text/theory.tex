@@ -53,12 +53,14 @@
             \begin{equation}
                 \frac{\partial \vec{u}}{\partial \vec{t}} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g}  + \nu \nabla \cdot \nabla \vec{u} 
             \end{equation}
-
+            
+    \section{Využití}
+        Výhodou Navierovy--Stokesovy rovnic je, že lze aplikovat na téměř jakékoliv tekutiny, a tím padem je možné využitím pro modelování počasí, podnebí pro předpověď počasí, proudění v oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují využít se zanedbatelnými chybami v modelovacích systémech.
+        
     \section{Popisy tekutiny}
 
         V teorii mechaniky tekutin existují dva různé pohledu popisů. Na základě těchto popisů jsou následně založeny algoritmy pro simulaci kapalin, resp. plynů, které jich využívají pro diskretizaci Navierových--Stokesových rovnic.
 
-        \newpage
 
         \subsection{Lagrangeův popis}
 
@@ -88,7 +90,10 @@ Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje n
 V současnosti nejrealističtější výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacíh metod jako ray-tracing pro realistickou vizualci odrazů, refrakcí a kaustik je výpočetně nemožné simulovaci provést v reálném čase [gdc mueller].
 
 
-[crane et al picture]
+\begin{figure}\centering
+ 	\includegraphics[width=0.5\textwidth]{img/Guendelman2005}
+ 	\caption{Ukázka off-line simulace Eulerovy tekutiny [guendelman et al siggraph 2005]}\label{fig:guendelman-offline}
+\end{figure}
 
 Proto real-time simulace vody vhodná pro aplikace jako hry musí nutně splňovat tyto podmínky [gdc mueller]:
 
@@ -98,11 +103,13 @@ Proto real-time simulace vody vhodná pro aplikace jako hry musí nutně splňov
  \item být stabilní -- korektně reagovat i na nefyzikálně pohybující se objekty.
 \end{itemize}
 
-\newpage
+\newpage 
 
-Jedna z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci.
+Jeden přístup, jak se co nejvíce příblížit off-line simulaci a stále dodržet podmínky pro rea-time simulaci ve hrách, je zachovat stejný algoritmus jako při off-line simulaci, ale zmenšit rozlišení prostoru simulace. Tento postup ale spíše ubírá na realitě vodního povrchu, neboť se voda nefyzikálně shlukuje a detaily z obrazu jsou vynechány.
 
-Podle tohodle principu můžeme dělit metody simulace vodní plochy na:
+Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci.
+
+Podle tohodle principu můžeme dělit metody simulace vodní plochy na [gdc mueller]:
 
 \begin{itemize}
  \item procedulární
@@ -110,8 +117,14 @@ Podle tohodle principu můžeme dělit metody simulace vodní plochy na:
  \item hybridní
 \end{itemize}
 
+\subsection{Procedulární metody}
 
-\subsection{Pohyb vodního povrchu}
+Procedulární metody simulují konečné efekty jako vlnění vodního povrchu, které nejsou vyvolány fyzikální činitily. Největší výhodou této metody je výpočetní rychlost a versetalita, na druhou stranu ale vodní útvary nereagují na dynamické prostředí.
+
+Na základě tichto vlastností se procedulární metody používají pro vizualici rozsáhlé vodní plochy, které ve scéně hraje malou roli, např. jako oceán v pozadí scény.
+
+Mezi prvními, kdo zkoumal procedulární metody pro zobrazení vodního povrchu byl Nelson. L Max ve své práci \uv{Vectorized Procedural Modesl for Natural Terrain: Wave and Islands in the Sunset}, ve které modeluje vlnění povrchu pomocí funkce sinus.
+
 
 \section{Světelné vlastnosti}
 
