@@ -16,7 +16,7 @@
     Kde vektor $ \vec{u} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \vec{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kynematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla \cdot \nabla $ označují diferenciální operátory nabla, divergence a Laplacův operátor.  
  
         \subsection{Vysvětlení}
-            Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s vektorovými poli, resp. skalárními poli. Navierovy--Stokesovy rovnice např. pracují s vektorovým poli, resp. se skalárními poli, kde jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku, v daném místě.
+            Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s vektorovými poli, resp. skalárními poli. Navierovy--Stokesovy rovnice např. pracují s vektorovým poli, resp. se skalárními poli, kde jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
  
             Na první pohled vypadají rovnice těžce uchopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě vznikla nebo zanikla.
  
@@ -66,7 +66,7 @@
 
         \subsection{Euleurův popis}
         
-            Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. Přestože tento postup vypadá omezující a složitý kvůli svému sledování veličin tekutin jen v pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua.
+            Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua.
 
             
 
@@ -83,16 +83,31 @@ Tato kapitola obsahuje popis vizuální vlastnosti vodní hladiny, které v reá
 
 \section{Dynamické vlastnosti}
 
-Dynamické vlastnosti zachycují, jak se pohybuje a jak reaguje na dynamické prostředí hladiny vody.
+Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje na dynamické prostředí.
 
-V současnosti nejrealističtější výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk [gdc mueller]. Takto řídké rozdělení však nelze simulovat v reálném čase.
+V současnosti nejrealističtější výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacíh metod jako ray-tracing pro realistickou vizualci odrazů, refrakcí a kaustik je výpočetně nemožné simulovaci provést v reálném čase [gdc mueller].
+
 
 [crane et al picture]
 
-Proto real-time simulace vody vhodná pro aplikace jako hry musí splňovat tyto podmínky [gdc mueller]:
+Proto real-time simulace vody vhodná pro aplikace jako hry musí nutně splňovat tyto podmínky [gdc mueller]:
 
 \begin{itemize}
- \item rychlost
+ \item být výpočetně rychlá -- zlomek 15 ms, který je třeba pro vykreslení jednoho snímku,
+ \item být paměťově nenáročná,
+ \item být stabilní -- korektně reagovat i na nefyzikálně pohybující se objekty.
+\end{itemize}
+
+\newpage
+
+Jedna z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci.
+
+Podle tohodle principu můžeme dělit metody simulace vodní plochy na:
+
+\begin{itemize}
+ \item procedulární
+ \item částicové
+ \item hybridní
 \end{itemize}
 
 
