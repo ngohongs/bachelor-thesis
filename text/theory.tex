@@ -141,7 +141,7 @@
                     Tento model se ale vlní jen v jednom směru a výsledné vlny vypadají nerealisticky hladce. K dosažení větších detailů lze k funkci přičíst další funkce sinus s odlišnými parametry amplitudy, vlnového vektoru nebo úhlové frekvence:  
 
                     \begin{equation}
-                        h(x, z, t) = -y_0 + \sum_{i=1}^{N_w} A_i \sin (k_{x_i}x+k_{z_i}z-\omega_i t + \varphi_i), \label{eq:sin_wave_sum}
+                        h(x, z, t) = -y_0 + \sum_{i=1}^{N_w} A_i \sin (k_{x_i}x+k_{z_i}z-\omega_i t + \varphi_i), \label{eq:sin_wave_sum} 
                     \end{equation}
 
                     \noindent kde $N_w$ je celkový počet vln.
@@ -188,9 +188,9 @@
                      z = z_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t  ),
                     \end{equation}
                     
-                    \noindent kde vektor $(x_0, z_0)$ reprezentuje klidovou pozici vrcholu roviny, $ r $ je délka opisujícího bodu od středu kružnice trochoidní křivky, vektor $\vec{k} = (k_x, k_y)$ určuje rychlost a směr propagace vlnění, $ \omega $ označuje úhlovou frekvenci a $ t $ je čas.
+                    \noindent kde vektor $(x_0, z_0)$ reprezentuje klidovou pozici vrcholu roviny, $ r $ je délka opisujícího bodu od středu kružnice trochoidní křivky, vektor $\vec{k} = (k_x, k_z)$ určuje rychlost a směr propagace vlnění, $ \omega $ označuje úhlovou frekvenci a $ t $ je čas.
                     
-                    Hodnota $ s = r|\vec{k_x}| $ určuje, jak strmá bude vlna. Pro hodnutu $ s = 0.2 $ má vlna tvar jako sinusoida, pro $ s = 1 $ má tvar cykloidy a pro $ s > 1 $ dochází samoprotínání trochoidy, a proto by se hodnotám vyšší než jedna mělo vyhýbat pro vizualizaci vodního povrchu. V obrázku \ref{fig:s_comparison} je porovnání hodnot $ s $ pro vlnění ve dvourozměrném prostoru.   
+                    Hodnota $ s = r|\vec{k}| $ určuje, jak strmá bude vlna. Pro hodnutu $ s = 0.2 $ má vlna tvar jako sinusoida, pro $ s = 1 $ má tvar cykloidy a pro $ s > 1 $ dochází samoprotínání trochoidy, a proto by se hodnotám vyšší než jedna mělo vyhýbat pro vizualizaci vodního povrchu. V obrázku \ref{fig:s_comparison} je porovnání hodnot $ s $ pro vlnění ve dvourozměrném prostoru.   
 
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/s_comparison}
@@ -200,7 +200,7 @@
                     Detailnějších výsledků lze získat podobně jako u sinusoid pomocí skládání Gerstnerových vln:
                     
                     \begin{equation}
-                     x = x_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t )
+                     x = x_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t ) \label{eq:gerstner_x}
                     \end{equation}
                     
                     \begin{equation}
@@ -208,15 +208,30 @@
                     \end{equation}
 
                     \begin{equation}
-                     z = z_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t  ).
+                     z = z_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t  ). \label{eq:gerstner_z}
                     \end{equation}
 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/gerstner_wave}
                         \caption{Implemetace Gerstnerových vln pro simulování vodního povrchu  \url{https://catlikecoding.com/unity/tutorials/flow/waves/}} \label{fig:gerstner_wave}
                     \end{figure}
-                \subsubsection{Vlnění za pomocí Fourierovy Transformace}
-                    Předešlé dvě metody jsou dobrý aproximacemi vodních povrchů, ale jejich
+                \subsubsection{Vlnění za pomocí Fourierovy transformace}
+                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner_x}--\ref{eq:gerstner_z} herní enginy provedly ve vertex shaderech, pro které je však výpočet funkcí sinus a cosinus náročné [\url{https://paroj.github.io/gltut/Positioning/Tut03%20On%20Vertex%20Shader%20Performance.html}].
+                    
+                    Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny [Johanson2004]. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee [LeeGL2006], který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny.
+                    
+                    V současnosti nejlepšího řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa [Tessendorf01]. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
+                    
+                    \begin{equation}
+                     h(x,z,t) = \sum_k \widetilde{h}(k_x, k_z, t) e^{i(k_x, k_z) \cdot (x, z)},
+                    \end{equation}
+                    
+                    \noindent $(x, z)$ je pozice vrcholů roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o amplitudě a fázy sinusoidy $e^{i(k_x, k_z) \cdot (x, z)}$ s vlnovým vektorem $(k_x, k_z)$.
+                    
+                    Časová komplexita triviálního sčítání sinusoid v rovnici \ref{eq:sin_wave_sum}, tj. inverzní Fourierovy transformace, je $\mathcal{O} (n^2)$, kdežto užitím algoritmů pro IFFT se redukuje časová komplexita na $\mathcal{O} (n \log n)$.
+                    
+                    
+
 
 
 
