@@ -4,21 +4,21 @@
  
     \section{Navierovy--Stokesovy rovnice}
     
-        Proud tekutin se v reálném světě řídí podle Navierovými--Stokesový rovnicemi, soustavou nelinearních diferenciálních rovnic.
+        Proud tekutin se v reálném světě řídí podle Navierovými--Stokesový rovnicemi (NSE), soustavou nelinearních diferenciálních rovnic:
     
         \begin{equation}
             \nabla \cdot \vec{u} = 0 \label{eq:mass_conservation}
         \end{equation}
         \begin{equation}
-            \frac{ \partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g} + \nu \nabla \cdot \nabla \vec{u} \label{eq:momentum_conservation}
+            \frac{ \partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g} + \nu \nabla \cdot \nabla, \vec{u} \label{eq:momentum_conservation}
         \end{equation}
     
-        Kde vektor $ \vec{u} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \vec{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kynematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla \cdot \nabla $ označují diferenciální operátory nabla, divergence a Laplacův operátor.  
+        \noindent kde vektor $ \vec{u} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \vec{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kynematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla \cdot \nabla $ označují diferenciální operátory nabla, divergence a Laplacův operátor.  
     
             \subsection{Vysvětlení}
-                Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s vektorovými poli, resp. skalárními poli. Navierovy--Stokesovy rovnice např. pracují s vektorovým poli, resp. se skalárními poli, kde jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
+                Před vysvětlení jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s\,vektorovými poli, resp. skalárními poli. NSE např. pracují s vektorovým poli, resp. se skalárními poli, kde jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
     
-                Na první pohled vypadají rovnice těžce uchopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě vznikla nebo zanikla.
+                Na první pohled vypadají rovnice těžce uchopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě z ničeho vznikla nebo zanikla.
     
                 Druhá rovnice \ref{eq:momentum_conservation} popisuje zákon o zachování hybnosti a je ve své podstatě Newtonův druhý zákon.
                 
@@ -26,23 +26,23 @@
                     \vec{F} = m \vec{a} \label{eq:newton_second}
                 \end{equation}
     
-                Zrychlení $ \vec{a} $ lze přepsat je derivací rychlosti podle času.
+                \noindent Zrychlení $ \vec{a} $ lze přepsat je derivací rychlosti podle času.
 
                 \begin{equation}
                     \vec{F} = m \frac{D \vec{u}}{D {t}} \label{eq:first_step}
                 \end{equation}
 
-                Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g} $.
+                Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí [Bridson2006]. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g} $.
     
-                Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své blízké okolí, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
+                Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své sousední body, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
         
-                Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny [lecture notes] a snaží se vyrovnat rychlost částic rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla \cdot \nabla \vec{u} $ \footnote{Operace $ \nabla \cdot \nabla \vec{u} $ vyjadřuje míru deviace rychlosti částice okolo svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity.
+                Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny a snaží se vyrovnat rychlost částic rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla \cdot \nabla \vec{u} $ \footnote{Operace $ \nabla \cdot \nabla \vec{u} $ vyjadřuje míru deviace rychlosti částice okolo svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity.
     
                 \begin{equation}
                     m \vec{g} - V \nabla p + V \mu \nabla \cdot \nabla \vec{u} = m \frac{D \vec{u}}{Dt} \label{eq:second_step}
                 \end{equation}
     
-                Rovnice \ref{eq:newton_second}, \ref{eq:first_step} a \ref{eq:second_step} předpokládají, že tekutinu lze rozložit na konečně mnoho malých částí, tímto způsobem je do výpočtu představena výpočetní chybu. Řešením toho problému je celou rovnici \ref{eq:second_step} je vydělit $V$, aby zachytila pohyb nekonečně mnoho malých částic tekutin. Dobré je připomenout, že hustota $\rho$ lze vyjádřit jako $\frac{m}{V}$
+                Rovnice \ref{eq:newton_second}, \ref{eq:first_step} a \ref{eq:second_step} předpokládají, že tekutinu lze rozložit na konečně mnoho malých částí, tímto způsobem je do vyčíslení představena výpočetní chyba. Řešením toho problému je celou rovnici \ref{eq:second_step} je vydělit $V$, aby zachytila pohyb nekonečně mnoho nekonečně malých částic tekutin. Dobré je připomenout, že hustota $\rho$ lze vyjádřit jako $\frac{m}{V}$
     
                 \begin{equation}
                     \rho \vec{g} - \nabla p + \mu \nabla \cdot \nabla \vec{u} = \rho \frac{D \vec{u}}{D \vec{t}}  
@@ -54,21 +54,23 @@
                     \frac{\partial \vec{u}}{\partial \vec{t}} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g}  + \nu \nabla \cdot \nabla \vec{u} 
                 \end{equation}
                 
+        \newpage
+                
         \section{Využití}
-            Výhodou Navierovy--Stokesovy rovnic je, že lze aplikovat na téměř jakékoliv tekutiny, a tím padem je možné využitím pro modelování počasí, podnebí pro předpověď počasí, proudění v oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují využít se zanedbatelnými chybami v modelovacích systémech.
+            Výhodou NSE je, že je lze aplikovat na téměř jakékoliv tekutiny. V praxi se využívají pro modelování počasí, podnebí pro předpověď počasí, proudění v\,oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují aplikovat se zanedbatelnými chybami v modelovacích systémech.
             
         \section{Popisy tekutiny}
 
-            V teorii mechaniky tekutin existují dva různé pohledu popisů. Na základě těchto popisů jsou následně založeny algoritmy pro simulaci kapalin, resp. plynů, které jich využívají pro diskretizaci Navierových--Stokesových rovnic.
+            V teorii mechaniky tekutin existují dva různé pohledy popisu tekutin. Na základě těchto popisů jsou následně založeny algoritmy pro simulaci kapalin, resp. plynů, které jich využívají pro diskretizaci NSE.
 
 
             \subsection{Lagrangeův popis}
 
-                Lagrangeův popis je jeden z popisů kontinua, který si většina nejspíše vybaví. Na tekutinu nahlíží jako na systém částic. Na jednotlivé body tekutiny nahlíží jako částice. Částice mohou být na základě potřeby různě velké, např. jako molekule nebo části tekutiny o nějakém objemu. Každé části Lagrangeův popis přiradí jeho pozici $\vec{x}$ a rychlost $\vec{u}$ a sleduje ho, jak se hodnoty v čase mění.
+                Lagrangeův popis je jeden z popisů kontinua, který si většina nejspíše vybaví. Na tekutinu nahlíží jako na systém částic. Na jednotlivé body tekutiny nahlíží jako částice, které mohou být na základě potřeby různě velké, např. jako molekule nebo části tekutiny o nějakém objemu. Ke každé z nich Lagrangeův popis přiřazuje její pozici $\vec{x}$ a rychlost $\vec{u}$ a sleduje ho, jak se tyto hodnoty v\,čase mění.
 
             \subsection{Euleurův popis}
             
-                Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua.
+                Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v\,pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua.
 
             
 
@@ -77,11 +79,11 @@
 
 \chapter{Vlastnosti vodního povrchu}
 
-    Tato kapitola obsahuje popis vizuální vlastnosti vodní hladiny, které v reálném lze zpozorovat a k jejím hlavním rysům jsou vypsané algoritmy, které je simulují. Z\,pohledu počítačové grafiky lze vlastnosti vody lze rozdělit do dvou kategorií:
+    Tato kapitola obsahuje popis vizuálních vlastností vodní hladiny, které v reálném světě lze zpozorovat, a k jejím hlavním rysům jsou vypsané algoritmy, které je simulují. Z\,pohledu počítačové grafiky lze vlastnosti vody rozdělit do dvou kategorií:
 
     \begin{description}
-    \item[dynamické vlastnosti] popisující pohyb vodní hladiny,
-    \item[světelné vlastnosti] popisující interakce povrch vody se světelnými prsky.
+        \item[dynamické vlastnosti] popisující pohyb vodní hladiny,
+        \item[světelné vlastnosti] popisující interakce povrchu vody se světelnými prsky.
     \end{description}
 
     \section{Dynamické vlastnosti}
@@ -96,36 +98,36 @@
             \caption{Ukázka off-line simulace Eulerovy tekutiny [Guendelman05]}\label{fig:guendelman-offline}
         \end{figure}
 
-        Proto real-time simulace vody vhodná pro aplikace jako hry musí nutně splňovat tyto podmínky [MuellerGDC08]:
+        Proto real-time simulace vody vhodné pro aplikace jako hry musí nutně splňovat tyto podmínky [MuellerGDC08]:
 
         \begin{itemize}
-        \item být výpočetně rychlá -- zlomek 15 ms, který je třeba pro vykreslení jednoho snímku,
-        \item být paměťově nenáročná,
-        \item být stabilní -- korektně reagovat i na nefyzikálně pohybující se objekty.
+            \item být výpočetně rychlé -- zlomek 15 ms, který je třeba pro vykreslení jednoho snímku,
+            \item být paměťově nenáročné,
+            \item být stabilní -- korektně reagovat i na nefyzikálně pohybující se objekty.
         \end{itemize}
 
         \newpage 
 
-        Jeden přístup, jak se co nejvíce příblížit off-line simulaci a stále dodržet podmínky pro rea-time simulaci ve hrách, je zachovat stejný algoritmus jako při off-line simulaci, ale zmenšit rozlišení prostoru simulace. Tento postup ale spíše ubírá na realitě vodního povrchu, neboť se voda nefyzikálně shlukuje a detaily z obrazu jsou vynechány.
+        Jeden přístup, jak se nejvíce příblížit off-line simulaci a stále dodržet podmínky pro real-time simulaci ve hrách, je zachovat stejný algoritmus jako při off-line simulaci, ale zmenšit rozlišení prostoru simulace. Tento postup ale spíše ubírá na realitě vodního povrchu, neboť se voda nefyzikálně shlukuje a detaily z obrazu jsou vynechány.
 
-        Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci.
-
-        Podle tohodle principu můžeme dělit metody simulace vodní plochy na [MuellerGDC08]:
+        Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci. Podle tohodle principu můžeme dělit metody simulace vodní plochy na [MuellerGDC08]:
 
         \begin{itemize}
-        \item procedulární
-        \item částicové
-        \item hybridní
+            \item procedulární
+            \item částicové
+            \item hybridní
         \end{itemize}
 
             \subsection{Procedulární metody}
 
                 Procedulární metody simulují konečné efekty jako vlnění vodního povrchu, které nejsou vyvolány fyzikální činitily. Největší výhodou této metody je výpočetní rychlost a versetalita, na druhou stranu ale vodní útvary nereagují na dynamické prostředí.
 
-                Na základě tichto vlastností se procedulární metody používají pro vizualici rozsáhlé vodní plochy, které ve scéně hraje malou roli, např. jako oceán v pozadí scény.
+                Na základě tichto vlastností se procedulární metody používají pro vizualici rozsáhlé vodní plochy, které ve scéně hraje malou roli, např. jako oceán v\,pozadí scény.
 
+                \newpage
+                
                 \subsubsection{Vlnění za pomocí sinusoid}
-                    Mezi prvními, kdo zkoumal procedulární metody pro zobrazení vodního povrchu byl Nelson. L Max ve své práci \uv{Vectorized Procedural Models for Natural Terrain: Wave and Islands in the Sunset}, ve které modeluje vlnění povrchu pomocí sinusoid. Na základě horizontální pozici a času Max manipuloval výšku vrcholů roviny [Max81]. Výšku jednotlivých vrcholů roviny vyjádřil jako funkci
+                    Mezi prvními, kteří zkoumali procedulární metody pro zobrazení vodního povrchu, byl Nelson. L Max ve své práci \uv{Vectorized Procedural Models for Natural Terrain: Wave and Islands in the Sunset}, ve které modeluje vlnění povrchu pomocí sinusoid. Na základě horizontální pozici a času Max manipuloval výšku vrcholů roviny [Max81]. Výšku jednotlivých vrcholů roviny vyjádřil jako funkci
 
                     \begin{equation}
                         h(x, z, t) = -y_0 + A \sin (k_{x}x+k_{z}z-\omega t + \varphi), \label{eq:sin_wave}
@@ -138,7 +140,7 @@
                         \caption{Simulace vlnění pomocí jedné sinusoidy}\label{fig:3d_sin_wave}
                     \end{figure}
                     
-                    Tento model se ale vlní jen v jednom směru a výsledné vlny vypadají nerealisticky hladce. K dosažení větších detailů lze k funkci přičíst další funkce sinus s odlišnými parametry amplitudy, vlnového vektoru nebo úhlové frekvence:  
+                    Tento model se ale vlní jen v jednom směru a výsledné vlny vypadají nerealisticky hladce. K dosažení větších detailů lze k funkci přičíst další sinusoidami s odlišnými parametry amplitudy, vlnového vektoru nebo úhlové frekvence:  
 
                     \begin{equation}
                         h(x, z, t) = -y_0 + \sum_{i=1}^{N_w} A_i \sin (k_{x_i}x+k_{z_i}z-\omega_i t + \varphi_i), \label{eq:sin_wave_sum} 
@@ -153,13 +155,13 @@
                     
                     \newpage 
                     
-                    Realistického řešení však za pomocí jen obyčejných sinusoid nelze dosáhnout. Max si všiml, že vlnění oceánu s vyššími amplitudami mají užší hřeben a mělčí údolí, zatímco vrchol a údolí sinusoidy je oblý. Mark Finch a Cyan Worlds přišly s řešením toho problém ve svém článku \uv, které stále využívá jednoduché funkce sinus. Kromě obyčejných funkcí sinus přičítá navíc funkci
+                    Realistického řešení však za pomocí jen obyčejných sinusoid nelze dosáhnout. Max si všiml, že vlnění oceánu s vyššími amplitudami mají užší hřeben a mělčí údolí, zatímco vrchol a údolí sinusoidy je stejně oblý. Mark Finch a Cyan Worlds přišly s řešením toho problém, které stále využívá jednoduchých sinusoid. Kromě obyčejných funkcí sinusoid přičítá navíc funkci
                     
                     \begin{equation}
                         f_i(x,z,t) = -y_0 + 2 \left( \frac{\sin (k_{x_i} x + k_{z_i} z - \omega_i t + \varphi_i) + 1}{2} \right)^k, \label{eq:sin_better}
                     \end{equation}
                     
-                    \noindent kde $ k \in \mathbb{R}^+ $ určuje míru, jak má být hřeben [GPUGems1].
+                    \noindent kde $ k \in \mathbb{R}^+ $ určuje míru, jak má být hřeben úzký [GPUGems1].
                     
                     \begin{figure}\centering
                         \includegraphics[width=\textwidth]{img/sin_better}
@@ -167,14 +169,15 @@
                     \end{figure}
                 
                 \subsubsection{Vlnění za pomocí Gerstnerovy vlny}
-                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parameter vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých  [Gerstner1802]. Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kotálející se} kružnice po nehybné přímce \url{https://www.fa.cvut.cz/studium/predmety/deskriptivni-geometrie-i-ii/dg_elskripta/krivky/cyklicke_krivky_1.pdf}.
+                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách [Gerstner1802]. Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kotálející se} kružnice po nehybné přímce \url{https://www.fa.cvut.cz/studium/predmety/deskriptivni-geometrie-i-ii/dg_elskripta/krivky/cyklicke_krivky_1.pdf}.
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/trochoidal_wave}
-                        \caption{Gerstnerova vlna s fázovou rychlostí $ c $, vlnovou délkou $ \lambda $ a rozdílem hřebenu a údolí $ H $}\label{fig:trochoidal_wave}
+                        \caption{Gerstnerova vlna s fázovou rychlostí $ c $, vlnovou délkou $ \lambda $ a rozdílem hřebenu a údolí $ H $  \url{https://commons.wikimedia.org/wiki/File:Trochoidal_wave.svg}}
+                        \label{fig:trochoidal_wave}
                     \end{figure}
                     
-                    Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovy vlny. Mezi prvními, kdo se Gerstnerovými vlnami zabýval byli Alain Fournier a William T. Reeves, kteří transformovali vrcholy roviny podle tichto parametrických rovnic [Fournier86]:
+                    Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovými vlnami. Mezi prvními, kteří se Gerstnerovými vlnami zabývali, byli Alain Fournier a William T. Reeves, kteří transformovali vrcholy roviny podle tichto parametrických rovnic [Fournier86]:
                    
                     \begin{equation}
                      x = x_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t )
@@ -218,15 +221,15 @@
                 \subsubsection{Vlnění za pomocí Fourierovy transformace}
                     Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner_x}--\ref{eq:gerstner_z} herní enginy provedly ve vertex shaderech, pro které je však výpočet funkcí sinus a cosinus náročné [\url{https://paroj.github.io/gltut/Positioning/Tut03%20On%20Vertex%20Shader%20Performance.html}].
                     
-                    Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny [Johanson2004]. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee [LeeGL2006], který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny.
+                    Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny [Johanson2004]. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee [LeeGL2006], který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
                     
-                    V současnosti nejlepšího řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa [Tessendorf01]. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
+                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa [Tessendorf01]. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
                     
                     \begin{equation}
                      h(x,z,t) = \sum_k \widetilde{h}(k_x, k_z, t) e^{i(k_x, k_z) \cdot (x, z)},
                     \end{equation}
                     
-                    \noindent $(x, z)$ je pozice vrcholů roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o amplitudě a fázy sinusoidy $e^{i(k_x, k_z) \cdot (x, z)}$ s vlnovým vektorem $(k_x, k_z)$.
+                    \noindent $(x, z)$ je pozice vrcholů roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o amplitudě a fázy sinusoidy $e^{i(k_x, k_z) \cdot (x, z)}$ s vlnovým vektorem $(k_x, k_z)$. Tessendorf následně podle oceánografických dat vhodně volí funkci $ \widetilde{h} $, aby bylo vyslédné vlnění nejvíce realistické. 
                     
                     Časová komplexita triviálního sčítání sinusoid v rovnici \ref{eq:sin_wave_sum}, tj. inverzní Fourierovy transformace, je $\mathcal{O} (n^2)$, kdežto užitím algoritmů pro IFFT se redukuje časová komplexita na $\mathcal{O} (n \log n)$.
                     
