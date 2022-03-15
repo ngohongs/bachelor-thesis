@@ -15,7 +15,7 @@
 \usepackage[utf8]{inputenc} % LaTeX source encoded as UTF-8
 
 % \usepackage{amsmath} %advanced maths
-% \usepackage{amssymb} %additional math symbols
+\usepackage{amssymb} %additional math symbols
 
 \usepackage{dirtree} %directory tree visualisation
 
@@ -26,7 +26,9 @@
 \usepackage{mathtools}
 \usepackage{bm}
 \usepackage{esvect}
-\usepackage{amssymb}
+
+\usepackage[style=iso-numeric]{biblatex}
+\addbibresource{ref.bib}
 
 \newcommand{\tg}{\mathop{\mathrm{tg}}} %cesky tangens
 \newcommand{\cotg}{\mathop{\mathrm{cotg}}} %cesky cotangens
@@ -71,8 +73,10 @@
 %%%%%%%% CONCLUSION %%%%%%%%%%
 \input{text/conclusion}
 
-\bibliographystyle{csn690}
-\bibliography{mybibliographyfile}
+% \bibliographystyle{csn690}
+% \bibliography{mybibliographyfile}
+
+\printbibliography
 
 \appendix
 

@@ -1,163 +1,181 @@
-@inproceedings{JJ92,
-    author = "J. Jiang and S. Jones",
-    title = "Word-based dynamic algorithms for data compression",
-    booktitle = "Communications, Speech and Vision",
-    pages = "582--586",
-    volume = "139",
-    year = "1992",
-    month = "December"
+@inproceedings{Bridson2007,
+    author = {Bridson, Robert and M\"{u}ller-Fischer, Matthias},
+    title = {Fluid Simulation: SIGGRAPH 2007 Course Notes<i>Video Files Associated with This Course Are Available from the Citation Page</i>},
+    year = {2007},
+    isbn = {9781450318235},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/1281500.1281681},
+    doi = {10.1145/1281500.1281681},
+    abstract = {Animating fluids like water, smoke, and fire by physics-based simulation is increasingly important in visual effects and is starting to make an impact in real-time games. This course goes from the basics of 3D fluid flow to the state of the art in graphics. We will begin with an intuitive explanation of the important concepts in fluid simulation, and as we progress demonstrate how to implement an effective smoke and water simulation system, complete with irregular curved boundaries and surface tension. The last half of the course will cover advanced topics such as fire and explosions, adaptive grid methods, real-time-capable algorithms together with the latest technology in hardware acceleration, and non-Newtonian fluids like sand. Intuition and implementation details will be underscored throughout.},
+    booktitle = {ACM SIGGRAPH 2007 Courses},
+    pages = {1–81},
+    numpages = {81},
+    location = {San Diego, California},
+    series = {SIGGRAPH '07}
 }
 
-@inproceedings{HC92,
-    author = "R. Nigel Horspool and Gordon V. Cormack",
-    title = "Constructing Word-Based Text Compression Algorithms",
-    booktitle = "Data Compression Conference",
-    pages = "62--71",
-    year = "1992"
+@unpublished{Mueller2008,
+    title= {Fast Water Simulation for Games Using Height Fields},
+    author = {Matthias Müller-Fischer},
+    year = {2008},
+    note= {Game Developers Conference},
+    URL= {https://www.gdcvault.com/play/203/Fast-Water-Simulation-for-Games},
+    urldate = {2022-03-15}
 }
 
-@ARTICLE{LZ77,
-	AUTHOR       = "Jacob Ziv and Abraham Lempel",
-	TITLE        = "A Universal Algorithm for Sequential Data Compression",
-	JOURNAL      = "IEEE Transactions on Information Theory",
-	YEAR         = "1977",
-	VOLUME       = "23",
-	NUMBER       = "3",
-	PAGES        = "337--343",
-	MONTH        = "May",
-	NOTE         = ""
+@inproceedings{Guendelman2005,
+    author = {Guendelman, Eran and Selle, Andrew and Losasso, Frank and Fedkiw, Ronald},
+    title = {Coupling Water and Smoke to Thin Deformable and Rigid Shells},
+    year = {2005},
+    isbn = {9781450378253},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/1186822.1073299},
+    doi = {10.1145/1186822.1073299},
+    abstract = {We present a novel method for solid/fluid coupling that can treat infinitesimally thin solids modeled by a lower dimensional triangulated surface. Since classical solid/fluid coupling algorithms rasterize the solid body onto the fluid grid, an entirely new approach is required to treat thin objects that do not contain an interior region. Robust ray casting is used to augment a number of interpolation, finite difference and rendering techniques so that fluid does not leak through the triangulated surface. Moreover, we propose a technique for properly enforcing incompressibility so that fluid does not incorrectly compress (and appear to lose mass) near the triangulated surface. This allows for the robust interaction of cloth and shells with thin sheets of water. The proposed method works for both rigid body shells and for deformable manifolds such as cloth, and we present a two way coupling technique that allows the fluid's pressure to affect the solid. Examples illustrate that our method performs well, especially in the difficult case of water and cloth where it produces visually rich interactions between the particle level set method for treating the water/air interface and our newly proposed method for treating the solid/fluid interface. We have implemented the method on both uniform and adaptive octree grids.},
+    booktitle = {ACM SIGGRAPH 2005 Papers},
+    pages = {973–981},
+    numpages = {9},
+    keywords = {smoke, shells, rigid bodies, cloth, water},
+    location = {Los Angeles, California},
+    series = {SIGGRAPH '05}
 }
 
-@ARTICLE{SS82,
-	AUTHOR = "James A. Storer and Thomas G. Szymanski",
-	TITLE = "Data compression via textual substitution",
-	JOURNAL = "J. ACM",
-	YEAR = "1982",
-	VOLUME = "29",
-	NUMBER = "4",
-	PAGES = "928--951",
-	PUBLISHER = "ACM",
-	ADDRESS = "New York, NY, USA"
+@article{Max1981,
+    author = {Max, Nelson L.},
+    title = {Vectorized Procedural Models for Natural Terrain: Waves and Islands in the Sunset},
+    year = {1981},
+    issue_date = {August 1981},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {15},
+    number = {3},
+    issn = {0097-8930},
+    url = {https://doi.org/10.1145/965161.806820},
+    doi = {10.1145/965161.806820},
+    abstract = {A ray-tracing procedural model is described, in which ocean waves and islands are rendered by different but related algorithms. The algorithms are based on analytic formulas involving arithmetic operations, trigonometric functions, and square roots, and are organized for a vectorizing compiler on a Cray 1, a “supercomputer” with a vector pipeline architecture. Height field methods are used, one vertical scan line at a time, to trace the direct rays to the ocean, where they are reflected. Approximate methods are then applied to find whether the reflected rays meet any other object on their way to the sky. The output, at eight bits per pixel, gives information for shading, e.g. the angle of the surface normal for rays meeting the islands, or the angle of elevation from the horizon for rays continuing unobstructed to the sky.The output is recorded on a magnetic tape for each frame in one cycle of the wave motion, and plotted offline on a Dicomed D-48 color film recorder. The eight bits per pixel are interpreted by a color translation table, which is gradually changed as the wave cycle is repeated to simulate the changing illumination during sunset.},
+    journal = {SIGGRAPH Comput. Graph.},
+    month = {aug},
+    pages = {317–324},
+    numpages = {8},
+    keywords = {Color table animation, Natural terrain, Height field, Water waves, Pipeline, Line buffer, Reflection, Procedural model, Piercing, Vectorized, Ray tracing}
 }
 
-@ARTICLE{LZ78,
-    AUTHOR = "Jacob Ziv and Abraham Lempel",
-    TITLE = "Compression of Individual Sequences via Variable-Rate Coding",
-    JOURNAL = "IEEE Transactions on Information Theory",
-    YEAR = "1978",
-    VOLUME = "24",
-    NUMBER = "5",
-    PAGES = "530--536",
-    MONTH = "September"
+@book{Fernando2004,
+    author = {R. Fernando},
+    title = {GPU gems},
+    publisher = {Addison-Wesley},
+    address = {Boston},
+    year = {2004},
+    edition = {Vyd. 1},
+    ISBN = {0-321-22832-4},
 }
 
-@ARTICLE{LZW84,
-    AUTHOR = {T. A. Welch},
-    TITLE = {A Technique for High-Performance Data Compression},
-    JOURNAL = {Computer},
-    VOLUME = {17},
-    NUMBER = {6},
-    YEAR = {1984},
-    PAGES= {8--19},
-    PUBLISHER = {IEEE Computer Society Press},
-    ADDRESS = {Los Alamitos, CA, USA}
+@book{Gerstner1804,
+    title={Theorie der wellen: samt daraus abgeleiteten theorie der deichprofile},
+    author={Gerstner, Franti{\v{s}}ek Josef},
+    year={1804},
+    publisher={Gottlieb Haase}
 }
 
-@ARTICLE{HLLW72,
-  AUTHOR    = {Wilbur D. Hagamen and
-               David J. Linden and
-               Harvey S. Long and
-               John C. Weber},
-  TITLE     = {Encoding Verbal Information as Unique Numbers},
-  JOURNAL   = {IBM Systems Journal},
-  VOLUME    = {11},
-  NUMBER    = {4},
-  YEAR      = {1972},
-  PAGES     = {278--315}
+@incollection{Cycle2022,
+    author = {{Fakulta architektury ČVUT v Praze}},
+    title={Cyklické křivky}, 
+    booktitle = {Deskriptivní geometrie},
+    url={https://www.fa.cvut.cz/studium/predmety/deskriptivni-geometrie-i-ii/dg_elskripta/krivky/cyklicke_krivky_1.pdf},
+    urldate={2022-03-15}
 }
 
-@article{Sh48,
-	title = {A Mathematical Theory of Communication},
-	author = {C. E. Shannon},
-	journal = {The Bell System Technical Journal},
-	month = {July, October},
-	pages = {379--423, 623--656},
-	volume = {27},
-	year = {1948}
+@incollection{Gerstner2022,
+    author={Jasper Flick},
+    title={Waves}, 
+    booktitle = {Catlike Coding},
+    url={https://catlikecoding.com/unity/tutorials/flow/waves/},
+    urldate={2022-03-15}
 }
 
-@article{BS86,
- author = {Jon Louis Bentley and Daniel D. Sleator and Robert E. Tarjan and Victor K. Wei},
- title = {A locally adaptive data compression scheme},
- journal = {Communications ACM},
- volume = {29},
- number = {4},
- year = {1986},
- pages = {320--330},
- publisher = {ACM},
- address = {New York, NY, USA}
+@incollection{Cycle2022,
+    author = {{Fakulta architektury ČVUT v Praze}},
+    title={Cyklické křivky}, 
+    booktitle = {Deskriptivní geometrie},
+    url={https://www.fa.cvut.cz/studium/predmety/deskriptivni-geometrie-i-ii/dg_elskripta/krivky/cyklicke_krivky_1.pdf},
+    urldate={2022-03-15}
 }
 
-@INPROCEEDINGS{HC84,
-	AUTHOR       = {R. Nigel Horspool and Gordon V. Cormack},
-	TITLE        = {A general purpose data compression technique with practical applications},
-	BOOKTITLE    = {Proceedings of the CIPS Session 84},
-	YEAR         = {1984},
-	PAGES        = {138--141}
+@incollection{SinShader2022,
+    title={On Vertex Shader Performance}, 
+    booktitle = {GitHub},
+    url={https://paroj.github.io/gltut/Positioning/Tut03%20On%20Vertex%20Shader%20Performance.html},
+    urldate={2022-03-15}
 }
 
-@ARTICLE{Ry80,
-	AUTHOR       = {Boris Ya. Ryabko},
-	TITLE        = {Data compression by means of a `book stack'},
-	JOURNAL      = {Problems Information Transmission},
-	YEAR         = {1980},
-	VOLUME       = {16},
-	NUMBER       = {4},
-	PAGES        = {265--269}
+@incollection{FFTCompl2022,
+    title={Complexity of FFT algorithms (Cooley-Tukey, Bluestein, Prime-factor)}, 
+    booktitle = {Stack Exchange},
+    url={https://math.stackexchange.com/questions/1704788/complexity-of-fft-algorithms-cooley-tukey-bluestein-prime-factor},
+    urldate={2022-03-15}
 }
 
-@BOOK{BCW90,
- AUTHOR		="T. C. Bell and 
-              J. G. Cleary and 
-              I. H. Witten",
- TITLE		="Text compression",
- ADDRESS		="Englewood Cliffs",
- PUBLISHER	="Prentice Hall",
- YEAR			="1990"
+@article{Johanson2004,
+    title={Real-time water rendering},
+    author={Johanson, Claes and Lejdfors, Calle},
+    journal={Lund University},
+    year={2004},
+    publisher={Citeseer}
 }
 
-@inproceedings{AB97,
- author = {Ross Arnold and Tim Bell},
- title = {A Corpus for the Evaluation of Lossless Compression Algorithms},
- booktitle = {DCC '97: Proceedings of the  Conference on Data Compression},
- year = {1997},
- pages = {201},
- publisher = {IEEE Computer Society},
- address = {Washington, DC, USA},
+@article{Darles2011,
+    author = {Emmanuelle, Darles and Crespin, Benoît and Ghazanfarpour, Djamchid and Gonzato, Jean-Christophe},
+    year = {2011},
+    month = {09},
+    pages = {},
+    title = {A Survey of Ocean Simulation and Rendering Techniques in Computer Graphics},
+    volume = {30},
+    journal = {Computer Graphics Forum - CGF},
+    doi = {10.1111/j.1467-8659.2010.01828.x}
 }
 
-@misc{Po01,
-author = {Matt Powel},
-title = "The Canterbury Corpus {[online]}",
-url = {http://corpus.canterbury.ac.nz/index.html},
-type = {web page},
-month = {{November}},
-year = {{2001}},
-note = "[Cited 2011-10-12]"
+@article{Tessendorf2001,
+    title={Simulating ocean water},
+    author={Tessendorf, Jerry and others},
+    journal={Simulating nature: realistic and interactive techniques. SIGGRAPH},
+    volume={1},
+    number={2},
+    pages={5},
+    year={2001}
 }
 
-@inproceedings{Mo98,
- author    = {Alistair Moffat},
- title     = {Arithmetic coding revisited},
- booktitle = {ACM Trans. on Inf. Systems Vol 16},
- year      = {July 1998},
- pages     = {256-294}
+@article{Fournier1986,
+    author = {Fournier, Alain and Reeves, William T.},
+    title = {A Simple Model of Ocean Waves},
+    year = {1986},
+    issue_date = {Aug. 1986},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {20},
+    number = {4},
+    issn = {0097-8930},
+    url = {https://doi.org/10.1145/15886.15894},
+    doi = {10.1145/15886.15894},
+    abstract = {We present a simple model for the surface of the ocean, suitable for the modeling and rendering of most common waves where the disturbing force is from the wind and the restoring force from gravity.It is based on the Gerstner, or Rankine, model where particles of water describe circular or elliptical stationary orbits. The model can easily produce realistic waves shapes which are varied according to the parameters of the orbits. The surface of the ocean floor affects the refraction and the breaking of waves on the shore. The model can also determine the position, direction, and speed of breakers.The ocean surface is modeled as a parametric surface, permitting the use of traditional rendering methods, including ray-tracing and adaptive subdivision. Animation is easy, since time is built into the model. The foam generated by the breakers is modeled by particle systems whose direction, speed and life expectancy is given by the surface model.To give designers control over the shape of the ocean, the model of the overall surface includes multiple trains of waves, each with its own set of parameters and optional stochastic elements. The overall "randomness" and "short-crestedness" of the ocean is achieved by a combination of small variations within a train and large variations between trains.Rendered examples of oceans waves generated by the model are given and a 10 second animation is described.},
+    journal = {SIGGRAPH Comput. Graph.},
+    month = {aug},
+    pages = {75–84},
+    numpages = {10}
 }
 
-@inproceedings{Br03,
- author    = {N. Brisaboa},
- title     = {An efficient compression code for text databases},
- booktitle = {25th European Conference on IR Research (ECIR 2003)},
- year      = {2003},
- pages     = {468-481}
-} 
+@misc{Kraaiennest2015,
+    author = {Kraaiennest},
+    journal = {Wikimedia Commons},
+    title = {Trochoidal wave},
+    year = {2015},
+    medium = {online},
+    accessed = {2022-03-15},
+    URL = {https://commons.wikimedia.org/wiki/File:Trochoidal_wave.svg},
+}
+
+
+
+
+

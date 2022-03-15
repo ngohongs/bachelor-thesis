@@ -32,7 +32,7 @@
                     \vec{F} = m \frac{D \vec{u}}{D {t}} \label{eq:first_step}
                 \end{equation}
 
-                Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí [Bridson2006]. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g} $.
+                Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí\;\cite{Brid07}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g} $.
     
                 Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své sousední body, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
         
@@ -70,7 +70,9 @@
 
             \subsection{Euleurův popis}
             
-                Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v\,pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua.
+                Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. 
+                
+                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v\,pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla \vec{u}$, které se lépe approximují v pevné Eulerově mřížce oproti shlukům pohybujcích se částic \cite{Brid07}.
 
             
 
@@ -90,15 +92,15 @@
 
         Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje na dynamické prostředí.
 
-        V současnosti nejrealističtější výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacíh metod jako ray-tracing pro realistickou vizualci odrazů, refrakcí a kaustik je výpočetně nemožné simulovaci provést v reálném čase [MuellerGDC08].
+        V současnosti nejrealističtější výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacíh metod jako ray-tracing pro realistickou vizualci odrazů, refrakcí a kaustik je výpočetně nemožné simulovaci provést v reálném čase \cite{Mueller2008}.
 
 
         \begin{figure}\centering
             \includegraphics[width=0.5\textwidth]{img/Guendelman2005}
-            \caption{Ukázka off-line simulace Eulerovy tekutiny [Guendelman05]}\label{fig:guendelman-offline}
+            \caption{Ukázka Guendelmanova off-line simulace Eulerovy tekutiny \cite{Guendelman2005}}\label{fig:guendelman-offline}
         \end{figure}
 
-        Proto real-time simulace vody vhodné pro aplikace jako hry musí nutně splňovat tyto podmínky [MuellerGDC08]:
+        Proto real-time simulace vody vhodné pro aplikace jako hry musí nutně splňovat tyto podmínky \cite{Mueller2008}:
 
         \begin{itemize}
             \item být výpočetně rychlé -- zlomek 15 ms, který je třeba pro vykreslení jednoho snímku,
@@ -110,7 +112,7 @@
 
         Jeden přístup, jak se nejvíce příblížit off-line simulaci a stále dodržet podmínky pro real-time simulaci ve hrách, je zachovat stejný algoritmus jako při off-line simulaci, ale zmenšit rozlišení prostoru simulace. Tento postup ale spíše ubírá na realitě vodního povrchu, neboť se voda nefyzikálně shlukuje a detaily z obrazu jsou vynechány.
 
-        Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci. Podle tohodle principu můžeme dělit metody simulace vodní plochy na [MuellerGDC08]:
+        Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci. Podle tohodle principu můžeme dělit metody simulace vodní plochy na \cite{Mueller2008}:
 
         \begin{itemize}
             \item procedulární
@@ -127,7 +129,7 @@
                 \newpage
                 
                 \subsubsection{Vlnění za pomocí sinusoid}
-                    Mezi prvními, kteří zkoumali procedulární metody pro zobrazení vodního povrchu, byl Nelson. L Max ve své práci \uv{Vectorized Procedural Models for Natural Terrain: Wave and Islands in the Sunset}, ve které modeluje vlnění povrchu pomocí sinusoid. Na základě horizontální pozici a času Max manipuloval výšku vrcholů roviny [Max81]. Výšku jednotlivých vrcholů roviny vyjádřil jako funkci
+                    Mezi prvními, kteří zkoumali procedulární metody pro zobrazení vodního povrchu, byl Nelson. L Max ve své práci \uv{Vectorized Procedural Models for Natural Terrain: Wave and Islands in the Sunset,} ve které modeluje vlnění povrchu pomocí sinusoid. Na základě horizontální pozici a času Max manipuloval výšku vrcholů roviny \cite{Max1981}. Výšku jednotlivých vrcholů roviny vyjádřil jako funkci
 
                     \begin{equation}
                         h(x, z, t) = -y_0 + A \sin (k_{x}x+k_{z}z-\omega t + \varphi), \label{eq:sin_wave}
@@ -161,7 +163,7 @@
                         f_i(x,z,t) = -y_0 + 2 \left( \frac{\sin (k_{x_i} x + k_{z_i} z - \omega_i t + \varphi_i) + 1}{2} \right)^k, \label{eq:sin_better}
                     \end{equation}
                     
-                    \noindent kde $ k \in \mathbb{R}^+ $ určuje míru, jak má být hřeben úzký [GPUGems1].
+                    \noindent kde $ k \in \mathbb{R}^+ $ určuje míru, jak má být hřeben úzký \cite{Fernando2004}.
                     
                     \begin{figure}\centering
                         \includegraphics[width=\textwidth]{img/sin_better}
@@ -169,15 +171,15 @@
                     \end{figure}
                 
                 \subsubsection{Vlnění za pomocí Gerstnerovy vlny}
-                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách [Gerstner1802]. Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kotálející se} kružnice po nehybné přímce \url{https://www.fa.cvut.cz/studium/predmety/deskriptivni-geometrie-i-ii/dg_elskripta/krivky/cyklicke_krivky_1.pdf}.
+                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách \cite{Gerstner1804}. Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kotálející se} kružnice po nehybné přímce \cite{Cycle2022}.
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/trochoidal_wave}
-                        \caption{Gerstnerova vlna s fázovou rychlostí $ c $, vlnovou délkou $ \lambda $ a rozdílem hřebenu a údolí $ H $  \url{https://commons.wikimedia.org/wiki/File:Trochoidal_wave.svg}}
+                        \caption{Gerstnerova vlna s fázovou rychlostí $ c $, vlnovou délkou $ \lambda $ a rozdílem hřebenu a údolí $ H $ \cite{Kraaiennest2015}}
                         \label{fig:trochoidal_wave}
                     \end{figure}
                     
-                    Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovými vlnami. Mezi prvními, kteří se Gerstnerovými vlnami zabývali, byli Alain Fournier a William T. Reeves, kteří transformovali vrcholy roviny podle tichto parametrických rovnic [Fournier86]:
+                    Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovými vlnami. Mezi prvními, kteří se Gerstnerovými vlnami zabývali, byli Alain Fournier a William T. Reeves, kteří transformovali vrcholy roviny podle tichto parametrických rovnic \cite{Fournier1986}:
                    
                     \begin{equation}
                      x = x_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t )
@@ -216,23 +218,25 @@
 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/gerstner_wave}
-                        \caption{Implemetace Gerstnerových vln pro simulování vodního povrchu  \url{https://catlikecoding.com/unity/tutorials/flow/waves/}} \label{fig:gerstner_wave}
+                        \caption{Gerstnerovy vlny v simulaci vodního povrchu podle tutoriálu od Jaspera Flicka \cite{Gerstner2022}}\label{fig:gerstner_wave}
                     \end{figure}
                 \subsubsection{Vlnění za pomocí Fourierovy transformace}
-                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner_x}--\ref{eq:gerstner_z} herní enginy provedly ve vertex shaderech, pro které je však výpočet funkcí sinus a cosinus náročné [\url{https://paroj.github.io/gltut/Positioning/Tut03%20On%20Vertex%20Shader%20Performance.html}].
+                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner_x}--\ref{eq:gerstner_z} herní enginy provedly ve vertex shaderech, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
                     
-                    Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny [Johanson2004]. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee [LeeGL2006], který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
+                    Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny \cite{Darles2011}. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee \cite{Darles2011}, který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
                     
-                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa [Tessendorf01]. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
+                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
                     
                     \begin{equation}
-                     h(x,z,t) = \sum_k \widetilde{h}(k_x, k_z, t) e^{i(k_x, k_z) \cdot (x, z)},
+                        h(x,z,t) = \sum_k \widetilde{h}(k_x, k_z, t) e^{i(k_x, k_z) \cdot (x, z)},
                     \end{equation}
                     
-                    \noindent $(x, z)$ je pozice vrcholů roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o amplitudě a fázy sinusoidy $e^{i(k_x, k_z) \cdot (x, z)}$ s vlnovým vektorem $(k_x, k_z)$. Tessendorf následně podle oceánografických dat vhodně volí funkci $ \widetilde{h} $, aby bylo vyslédné vlnění nejvíce realistické. 
+                    \noindent kde $(x, z)$ je pozice vrcholů roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o amplitudě a fázy sinusoidy $e^{i(k_x, k_z) \cdot (x, z)}$ s vlnovým vektorem $(k_x, k_z)$. Tessendorf následně podle oceánografických dat vhodně volí funkci $ \widetilde{h} $, aby bylo vyslédné vlnění nejvíce realistické. 
                     
-                    Časová komplexita triviálního sčítání sinusoid v rovnici \ref{eq:sin_wave_sum}, tj. inverzní Fourierovy transformace, je $\mathcal{O} (n^2)$, kdežto užitím algoritmů pro IFFT se redukuje časová komplexita na $\mathcal{O} (n \log n)$.
-                    
+                    Časová komplexita triviálního sčítání sinusoid v rovnici \ref{eq:sin_wave_sum}, tj. inverzní Fourierovy transformace, je $\mathcal{O} (n^2)$, kdežto užitím algoritmů pro IFFT se redukuje časová komplexita na $\mathcal{O} (n \log n)$  \cite{FFTCompl2022}.
+            \subsection{Částicové metody}  
+                
+        
                     
 
 
