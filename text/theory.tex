@@ -29,11 +29,14 @@
                 \noindent Zrychlení $ \vec{a} $ lze přepsat je derivací rychlosti podle času.
 
                 \begin{equation}
-                    \vec{F} = m \frac{D \vec{u}}{D {t}} \label{eq:first_step}
+                    \vec{F} = m \frac{D \vec{u}}{D {t}} \label{eq:first_step},
                 \end{equation}
 
-                Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí\;\cite{Brid07}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g} $.
-    
+                \noindent kde $\frac{D \vec{u}}{D {t}}$ značí tzv. materiálovou derivací.
+                
+                Pro odvození celé rovnice je třeba rozvést sílu $ \vec{F} $, které na tekutinu působí\;\cite{Bridson2007}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\vec{g}, $.
+                
+                
                 Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své sousední body, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
         
                 Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny a snaží se vyrovnat rychlost částic rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla \cdot \nabla \vec{u} $ \footnote{Operace $ \nabla \cdot \nabla \vec{u} $ vyjadřuje míru deviace rychlosti částice okolo svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity.
@@ -48,7 +51,7 @@
                     \rho \vec{g} - \nabla p + \mu \nabla \cdot \nabla \vec{u} = \rho \frac{D \vec{u}}{D \vec{t}}  
                 \end{equation}
     
-                Následně po vydělení hustoty $\rho$, vyjádření derivace $\frac{D\vec{u}}{Dt}$ řetízkovým pravidlem a prohození sčítanců získáme druhou Navierovu--Stokesovu rovnici. Kynematická vyskozita $\nu$ je rovna $\frac{\mu}{\rho}$.
+                Následně po vydělení hustoty $\rho$, vyjádření derivace $\frac{D\vec{u}}{Dt}$ podle pravidla pro složené funkce a prohození sčítanců získáme druhou Navierovu--Stokesovu rovnici. Kynematická vyskozita $\nu$ je rovna $\frac{\mu}{\rho}$.
     
                 \begin{equation}
                     \frac{\partial \vec{u}}{\partial \vec{t}} + \vec{u} \cdot \nabla \vec{u} + \frac{1}{\rho} \nabla p = \vec{g}  + \nu \nabla \cdot \nabla \vec{u} 
@@ -72,7 +75,7 @@
             
                 Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny jako např. tlak, rychlost proudu, teplotu, jak se v čase mění. 
                 
-                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v\,pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla \vec{u}$, které se lépe approximují v pevné Eulerově mřížce oproti shlukům pohybujcích se částic \cite{Brid07}.
+                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v\,pevných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla \vec{u}$, které se lépe approximují v pevné Eulerově mřížce oproti shlukům pohybujcích se částic \cite{Bridson2007}.
 
             
 
@@ -128,7 +131,7 @@
 
                 \newpage
                 
-                \subsubsection{Vlnění za pomocí sinusoid}
+                \subsubsection{Simulace podle sinusoid}
                     Mezi prvními, kteří zkoumali procedulární metody pro zobrazení vodního povrchu, byl Nelson. L Max ve své práci \uv{Vectorized Procedural Models for Natural Terrain: Wave and Islands in the Sunset,} ve které modeluje vlnění povrchu pomocí sinusoid. Na základě horizontální pozici a času Max manipuloval výšku vrcholů roviny \cite{Max1981}. Výšku jednotlivých vrcholů roviny vyjádřil jako funkci
 
                     \begin{equation}
@@ -142,7 +145,7 @@
                         \caption{Simulace vlnění pomocí jedné sinusoidy}\label{fig:3d_sin_wave}
                     \end{figure}
                     
-                    Tento model se ale vlní jen v jednom směru a výsledné vlny vypadají nerealisticky hladce. K dosažení větších detailů lze k funkci přičíst další sinusoidami s odlišnými parametry amplitudy, vlnového vektoru nebo úhlové frekvence:  
+                    Tento model se ale vlní jen v jednom směru a výsledné vlny vypadají nerealisticky hladce. K dosažení větších detailů lze k funkci přičíst další sinusoidy s odlišnými parametry amplitudy, vlnového vektoru nebo úhlové frekvence:  
 
                     \begin{equation}
                         h(x, z, t) = -y_0 + \sum_{i=1}^{N_w} A_i \sin (k_{x_i}x+k_{z_i}z-\omega_i t + \varphi_i), \label{eq:sin_wave_sum} 
@@ -170,7 +173,7 @@
                         \caption{Porovnání mezi vlnami funkcí \ref{eq:sin_wave} a \ref{eq:sin_better}}\label{fig:sin_better}
                     \end{figure}
                 
-                \subsubsection{Vlnění za pomocí Gerstnerovy vlny}
+                \subsubsection{Simulace podle Gerstnerovy vlny}
                     Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách \cite{Gerstner1804}. Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kotálející se} kružnice po nehybné přímce \cite{Cycle2022}.
                     
                     \begin{figure}\centering
@@ -195,7 +198,7 @@
                     
                     \noindent kde vektor $(x_0, z_0)$ reprezentuje klidovou pozici vrcholu roviny, $ r $ je délka opisujícího bodu od středu kružnice trochoidní křivky, vektor $\vec{k} = (k_x, k_z)$ určuje rychlost a směr propagace vlnění, $ \omega $ označuje úhlovou frekvenci a $ t $ je čas.
                     
-                    Hodnota $ s = r|\vec{k}| $ určuje, jak strmá bude vlna. Pro hodnutu $ s = 0.2 $ má vlna tvar jako sinusoida, pro $ s = 1 $ má tvar cykloidy a pro $ s > 1 $ dochází samoprotínání trochoidy, a proto by se hodnotám vyšší než jedna mělo vyhýbat pro vizualizaci vodního povrchu. V obrázku \ref{fig:s_comparison} je porovnání hodnot $ s $ pro vlnění ve dvourozměrném prostoru.   
+                    Hodnota $ s = r|\vec{k}| $ určuje, jak strmá bude vlna. Pro hodnutu $ s = 0.2 $ má vlna tvar jako sinusoida, pro $ s = 1 $ má tvar cykloidy a pro $ s > 1 $ dochází samoprotínání trochoidy, a proto by se hodnotám vyšší než jedna pro vizualizaci vodního povrchu mělo vyhýbat. V obrázku \ref{fig:s_comparison} je porovnání hodnot $ s $ pro vlnění ve dvourozměrném prostoru.   
 
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/s_comparison}
@@ -220,7 +223,7 @@
                         \includegraphics[width=0.5\textwidth]{img/gerstner_wave}
                         \caption{Gerstnerovy vlny v simulaci vodního povrchu podle tutoriálu od Jaspera Flicka \cite{Gerstner2022}}\label{fig:gerstner_wave}
                     \end{figure}
-                \subsubsection{Vlnění za pomocí Fourierovy transformace}
+                \subsubsection{Simulace podle Fourierovy transformace}
                     Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner_x}--\ref{eq:gerstner_z} herní enginy provedly ve vertex shaderech, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
                     
                     Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny \cite{Darles2011}. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee \cite{Darles2011}, který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
@@ -234,14 +237,57 @@
                     \noindent kde $(x, z)$ je pozice vrcholů roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o amplitudě a fázy sinusoidy $e^{i(k_x, k_z) \cdot (x, z)}$ s vlnovým vektorem $(k_x, k_z)$. Tessendorf následně podle oceánografických dat vhodně volí funkci $ \widetilde{h} $, aby bylo vyslédné vlnění nejvíce realistické. 
                     
                     Časová komplexita triviálního sčítání sinusoid v rovnici \ref{eq:sin_wave_sum}, tj. inverzní Fourierovy transformace, je $\mathcal{O} (n^2)$, kdežto užitím algoritmů pro IFFT se redukuje časová komplexita na $\mathcal{O} (n \log n)$  \cite{FFTCompl2022}.
-            \subsection{Částicové metody}  
-                
-        
                     
+                    \begin{figure}\centering
+                        \includegraphics[width=0.5\textwidth]{img/fft_ocean}
+                        \caption{Ukázka simulace podle FFT od Asylum Darth \cite{FFTPicture2022}}
+                    \end{figure}
 
+            \subsection{Částicové metody}  
+                Procedulární metody jsou stavěny pro vizualici rozsáhlých vodních ploch jako oceány a moře. Protože jsou tyto vodní útvary rozlehlé, jakýkoliv zásah buď hráče, či prostředí by měl na výsledné zobrazení hladiny minimální efekt. 
+                
+                V někteřých případech se ale hladina vody nechová periodicky nebo reakce na dynamické prostředí je právě při zobrazování žádoucí jako u vody fontány nebo kaluží. Tyto detailní vlastnosti vody řeší částicové modely využívající Langrageova popisu kontinua. Částicové metody simulují vodní útvary jako systém částic, které reprezentují určitý hmotu kapaliny. 
+                
+                Poprvé, kdo využil částicových systémů pro simulaci tekutiny, byl v roce 1983 Reeves \cite{Reeves1983}. Reevesům přístup byl však velmi primitivní oproti dnešním variacím, pohyb částic nekorektně modeloval nezávislé na ostatních. V realitě jeho simulace se více blížila k simulaci shlukům jemných částic, např. prachu.
+                
+                Pro korektní chování je třeba, aby se jednotlivé částice mezi sebou přitahovaly a odpuzovaly. Obecně lze tuto sílu mezi dvěma částicemi vyčíslit jako 
+                
+                \begin{equation}
+                    f(\mathbf{x}_i, \mathbf{x}_j) = F(|\mathbf{x}_i - \mathbf{x}_j|) \cdot \frac{\mathbf{x}_i-\mathbf{x}_j}{|\mathbf{x}_i-\mathbf{x}_j|},
+                \end{equation}
 
+                \noindent kde $\mathbf{x}_i$, resp. $\mathbf{x}_j$ je pozice částice $i$, resp. částice $j$, funkce $F$ je velikost síly \cite{Bridson2007}.
+                
+                Pro simulaci viskózní tekutin Miller a Pearce modelovali tuto sílu, jako by byly jednoltivé částice spojeny pružinou \cite{MillerPearce1989}. Fyzikálně korektnějšího chování lze získat při volbě funkce $ F $ jako hodnotu Lennardovy--Jonesovy síly, která se používá v simulacích molekulární dynamiky,
+                
+                \begin{equation}
+                    f(\mathbf{x}_i, \mathbf{x}_j) =  \left( \frac{k_1}{|\mathbf{x}_i - \mathbf{x}_j|^m} - \frac{k_2}{|\mathbf{x}_i - \mathbf{x}_j|^n} \right) \cdot \frac{\mathbf{x}_i - \mathbf{x}_j}{|\mathbf{x}_i - \mathbf{x}_j|},
+                \end{equation}
+                
+                \noindent kde $k_1, k_2, m, n$ ovládacími parametry. Obvyklou volba je $k_1 = k_2 = k$, $m = 4$ a $n = 2$ \cite{Bridson2007}.
+                
+                \newpage
+                
+                Pro real-time simulace může být tento přístup pomalý. V případě, že vodní útvar obsahuje $n$ částic, musí se funkce $f$ evaluovat $\mathcal{O}(n^2)$. Existují ale optimilizace, které rozdělují částice do pravidelné mřížky, čímž redukují složitost na $\mathcal{O}(n)$. Přestože ji lze vypočítat poměrně rychle, simulace se vůbec neopírá o\,NSE. 
+                
+                \subsection{Simulace podle Smoothed Particle Hydrodynamics}
+                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{Smoothed Particle Hydrodynamics} \cite{Monaghan2005}. Monaghan vychází interpolační metody Smoothed Particle Hydrodynamics (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin.
+                    
+                    SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracují s vlastnostmi částic. SPH distribuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
+                    
+                    \begin{equation}
+                      A_i(\mathbf{x_i}) = \sum_{j} m_j \frac{A_j}{\rho_j} W(\mathbf{x}_i-\mathbf{x}_j, h),
+                    \end{equation}
 
+                    \noindent kde $\mathbf{x}_i$, resp. $\mathbf{x}_j$, je pozice částice $i$, resp. $j$, $j$ iteruje přes všechny částice, $m_j$ je hmotnost částice, $A_j$ je hodnota veličny $A$ a $\rho_j$ je hustota pro částici $j$. Funkce $W(\mathbf{x}_i - \mathbf{x}_j, h)$ se nazývá smoothing kernel s poloměrem $h$, což je analogií jádra u konvoluce. Obrázek \ref{fig:sph}
+                    ilustruje, jak smoothing kernel váží hodnoty částic, ve středu obvykle mají tvar podobné Gaussova rozdělení
+                    \begin{figure}\centering
+                        \includegraphics[width=0.5\textwidth]{img/sph}
+                        \caption{Ilustrace vážení skrz smoothing kernel\cite{Jlcercos2018}}\label{fig:sph}
+                    \end{figure}
+                
 
+\newpage
 
 \section{Světelné vlastnosti}
 
