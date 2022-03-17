@@ -39,7 +39,7 @@
                 
                 Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své sousední body, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
         
-                Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny a snaží se vyrovnat rychlost částic rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla \cdot \nabla \vec{u} $ \footnote{Operace $ \nabla \cdot \nabla \vec{u} $ vyjadřuje míru deviace rychlosti částice okolo svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity.
+                Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny a snaží se vyrovnat rychlost částic rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla \cdot \nabla \vec{u} $ \footnote{Operace $ \nabla \cdot \nabla \vec{u} $ vyjadřuje míru odchýlení rychlosti částice okolo svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity.
     
                 \begin{equation}
                     m \vec{g} - V \nabla p + V \mu \nabla \cdot \nabla \vec{u} = m \frac{D \vec{u}}{Dt} \label{eq:second_step}
@@ -270,21 +270,69 @@
                 
                 Pro real-time simulace může být tento přístup pomalý. V případě, že vodní útvar obsahuje $n$ částic, musí se funkce $f$ evaluovat $\mathcal{O}(n^2)$. Existují ale optimilizace, které rozdělují částice do pravidelné mřížky, čímž redukují složitost na $\mathcal{O}(n)$. Přestože ji lze vypočítat poměrně rychle, simulace se vůbec neopírá o\,NSE. 
                 
-                \subsection{Simulace podle Smoothed Particle Hydrodynamics}
-                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{Smoothed Particle Hydrodynamics} \cite{Monaghan2005}. Monaghan vychází interpolační metody Smoothed Particle Hydrodynamics (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin.
-                    
-                    SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracují s vlastnostmi částic. SPH distribuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
+                \subsubsection{Simulace podle Smoothed Particle Hydrodynamics}
+                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{Smoothed Particle Hydrodynamics} \cite{Monaghan2005}. Monaghan vychází interpolační metody Smoothed Particle Hydrodynamics (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skálárních polí hustoty nebo tlaku.
+                
+                    SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracuje s vlastnostmi částic. SPH distribuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
                     
                     \begin{equation}
-                      A_i(\mathbf{x_i}) = \sum_{j} m_j \frac{A_j}{\rho_j} W(\mathbf{x}_i-\mathbf{x}_j, h),
+                      A_i(\mathbf{x_i}) = \sum_{j} m_j \frac{A_j}{\rho_j} W(|\mathbf{x}_i-\mathbf{x}_j|, h), \label{eq:sph}
                     \end{equation}
 
-                    \noindent kde $\mathbf{x}_i$, resp. $\mathbf{x}_j$, je pozice částice $i$, resp. $j$, $j$ iteruje přes všechny částice, $m_j$ je hmotnost částice, $A_j$ je hodnota veličny $A$ a $\rho_j$ je hustota pro částici $j$. Funkce $W(\mathbf{x}_i - \mathbf{x}_j, h)$ se nazývá smoothing kernel s poloměrem $h$, což je analogií jádra u konvoluce. Obrázek \ref{fig:sph}
-                    ilustruje, jak smoothing kernel váží hodnoty částic, ve středu obvykle mají tvar podobné Gaussova rozdělení
+                    \noindent kde $\mathbf{x}_i$, resp. $\mathbf{x}_j$, je pozice částice $i$, resp. $j$, $j$ iteruje přes všechny částice, $m_j$ je hmotnost částice, $A_j$ je hodnota veličny $A$ a $\rho_j$ je hustota pro částici $j$. Funkce $W(|\mathbf{x}_i - \mathbf{x}_j|, h)$ se nazývá smoothing kernel s poloměrem $h$, což je analogií jádra u konvoluce. Obrázek \ref{fig:sph}
+                    ilustruje, jak smoothing kernel, které mají obvykle tvar podobné Gaussovu rozdělení, váží hodnoty částic. Největší váhu $W$ přiřadí vrchlům nejblíže středu, tj. částici $\mathbf{x}_i$, a nejnižší částicím vzdálené od středu délkou $h$. Validní smoothing kernely musí navíc splnit normaliziční podmínka \cite{Bridson2007, Mueller2003}:
+                    
+                    \begin{equation}
+                        \int W(r) dr = 1
+                    \end{equation}
+                
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sph}
-                        \caption{Ilustrace vážení skrz smoothing kernel\cite{Jlcercos2018}}\label{fig:sph}
+                        \caption{Ilustrace vážení skrz smoothing kernel \cite{Jlcercos2018}}\label{fig:sph}
                     \end{figure}
+    
+                    NSE mimo samotných hodnot veličin dále pracuje s gradientem (operace\;$\nabla$), jehož aplikace na rovnici \ref{eq:sph} ovliňí jen smoothing kernel 
+                    
+                    \begin{equation}
+                      A_i(\mathbf{x_i}) = \sum_{j} m_j \frac{A_j}{\rho_j} \nabla W(|\mathbf{x}_i-\mathbf{x}_j|, h),
+                    \end{equation}
+                    
+                    \noindent výpočet Laplace (operace $\nabla^2$) obdobně jako u gradientu působí jen na jádro $W$ 
+                   
+                    \begin{equation}
+                      A_i(\mathbf{x_i}) = \sum_{j} m_j \frac{A_j}{\rho_j} \nabla^2 W(|\mathbf{x}_i-\mathbf{x}_j|, h).
+                    \end{equation}
+    
+                    Obvyklá volba jádra $W$, které lze využít téměř pro každou interpolaci veličin v simulaci tekutin, je kernel \emph{poly6} \cite{Bridson2007, Mueller2003}
+                    
+                    \begin{equation}
+                        W_{poly6}(r, h) = \frac{315}{64 \pi h^9}
+                        \begin{cases}
+                            (h^2 - r^2)^3 & 0 \le r \le h \\
+                            0 & \text{jindy}
+                        \end{cases}.
+                    \end{equation}
+                    
+                    \noindent \emph{Poly6} ale nekoretně aproximuje tlakové pole, v simulaci se částice pod vysokých nefyzikálně shlukují \cite{Mueller2008}. Desburn řešil tento problém nahrazením jádra \emph{poly6} za kernel \cite{Desburn1996}
+                    
+                    \begin{equation}
+                        W_{spiky}(r, h) = \frac{15}{\pi h^6}
+                        \begin{cases}
+                            (h - r)^3 & 0 \le r \le h \\
+                            0 & \text{jindy}
+                        \end{cases}.
+                    \end{equation}
+                    
+                    Poslední nepřesnost jádra \emph{poly6} se vyskytuje při výpočtu silové pole vytvořené viskozitou tekutiny. Výsledek jeho Laplacovy operace, od kterého se odvíjí síla vyvolaná viskozitou, se u středu jádra pohybuje v záporných číslech, které může vést k nekorektnímu zvýšení rychlosti částice a následné nestabilititě simulace \cite{Mueller2003}. Na základě tohoto nedostatku Müller používá při výpočtu silového pole vyvolané viskozitou jádro  
+                    
+                    \begin{equation}
+                        W_{viskozita}(r, h) = \frac{15}{2\pi h^3}
+                        \begin{cases}
+                            -\frac{r^3}{2h^3} + \frac{r^2}{h^2} + \frac{h}{2r} - 1 & 0 \le r \le h \\
+                            0 & \text{jindy}
+                        \end{cases}.
+                    \end{equation}
+
                 
 
 \newpage
