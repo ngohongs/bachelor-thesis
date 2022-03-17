@@ -303,7 +303,7 @@
                       A_i(\mathbf{x_i}) = \sum_{j} m_j \frac{A_j}{\rho_j} \nabla^2 W(|\mathbf{x}_i-\mathbf{x}_j|, h).
                     \end{equation}
     
-                    Obvyklá volba jádra $W$, které lze využít téměř pro každou interpolaci veličin v simulaci tekutin, je kernel \emph{poly6} \cite{Bridson2007, Mueller2003}
+                    Obvyklá volba jádra $W$, které lze využít až na dvě vyjímky téměř pro každou interpolaci veličin v simulaci tekutin, je kernel \emph{poly6} \cite{Bridson2007, Mueller2003}
                     
                     \begin{equation}
                         W_{poly6}(r, h) = \frac{315}{64 \pi h^9}
@@ -313,7 +313,7 @@
                         \end{cases}.
                     \end{equation}
                     
-                    \noindent \emph{Poly6} ale nekoretně aproximuje tlakové pole, v simulaci se částice pod vysokých nefyzikálně shlukují \cite{Mueller2008}. Desburn řešil tento problém nahrazením jádra \emph{poly6} za kernel \cite{Desburn1996}
+                    \noindent \emph{Poly6} ale nekoretně aproximuje síly tlakového pole, v simulaci se částice pod vysokým tlakem nefyzikálně shlukují \cite{Mueller2008}, neboť $\nabla W$, jež je nutné pro výpočet síly způsobené rozdílem tlaku (rovnice \ref{eq:momentum_conservation}), se ve středu jádra blíží k nule, což vede k zanadbání odpudivých sil. Desburn řešil tento problém nahrazením jádra \emph{poly6} za kernel \cite{Desburn1996}
                     
                     \begin{equation}
                         W_{spiky}(r, h) = \frac{15}{\pi h^6}
@@ -323,7 +323,7 @@
                         \end{cases}.
                     \end{equation}
                     
-                    Poslední nepřesnost jádra \emph{poly6} se vyskytuje při výpočtu silové pole vytvořené viskozitou tekutiny. Výsledek jeho Laplacovy operace, od kterého se odvíjí síla vyvolaná viskozitou, se u středu jádra pohybuje v záporných číslech, které může vést k nekorektnímu zvýšení rychlosti částice a následné nestabilititě simulace \cite{Mueller2003}. Na základě tohoto nedostatku Müller používá při výpočtu silového pole vyvolané viskozitou jádro  
+                    Poslední nepřesnost jádra \emph{poly6} se vyskytuje při výpočtu silové pole vytvořené viskozitou tekutiny. Výsledek jeho Laplacovy operace, od kterého se odvíjí síla vyvolaná viskozitou (rovnice \ref{eq:momentum_conservation}), se u středu jádra pohybuje v záporných číslech, které může vést k nekorektnímu zvýšení rychlosti částice a následné nestabilititě simulace \cite{Mueller2003}. Na základě tohoto nedostatku Müller používá při výpočtu silového pole vyvolané viskozitou jádro  
                     
                     \begin{equation}
                         W_{viskozita}(r, h) = \frac{15}{2\pi h^3}
@@ -333,9 +333,17 @@
                         \end{cases}.
                     \end{equation}
 
-                
+                    \newpage
+                    
+                    Pro konečnou simulaci vody je třeba vyřešit soustavu NSE za pomocí pole rychlostí, pole hustot a pole tlaku, které SPH interpoluje z vlasnost částic. Díky aplikací Langrageova popisu kontinua se některé rovnice výrazně zjednodušší. Rovnice o zachování hmoty \ref{eq:mass_conservation} je automaticky splněna, neboť počet částic zůstane při simulaci konstantní. Dále lze zjednodušit v rovnici o zachování hybnosti \ref{eq:momentum_conservation} výraz  $\frac{\partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u}$, protože se částice pohybují s tekutinou jako celkem, může se z výrazu vynechat člen $\vec{u} \cdot \nabla \vec{u}$, který představuje změnu rychlosti v případě, že se  částice pohybuje \emph{skrz} tekutinu. \cite{Mueller2003}.
+                    
+                    
+                    
+                    
 
-\newpage
+                    
+                    
+                    \newpage
 
 \section{Světelné vlastnosti}
 
