@@ -290,7 +290,7 @@
                         \includegraphics[width=0.5\textwidth]{img/sph}
                         \caption{Ilustrace vážení skrz smoothing kernel \cite{Jlcercos2018}}\label{fig:sph}
                     \end{figure}
-    
+                    
                     NSE mimo samotných hodnot veličin dále pracuje s gradientem (operace\;$\nabla$), jehož aplikace na rovnici \ref{eq:sph} ovliňí jen smoothing kernel 
                     
                     \begin{equation}
@@ -335,11 +335,36 @@
 
                     \newpage
                     
-                    Pro konečnou simulaci vody je třeba vyřešit soustavu NSE za pomocí pole rychlostí, pole hustot a pole tlaku, které SPH interpoluje z vlasnost částic. Díky aplikací Langrageova popisu kontinua se některé rovnice výrazně zjednodušší. Rovnice o zachování hmoty \ref{eq:mass_conservation} je automaticky splněna, neboť počet částic zůstane při simulaci konstantní. Dále lze zjednodušit v rovnici o zachování hybnosti \ref{eq:momentum_conservation} výraz  $\frac{\partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u}$, protože se částice pohybují s tekutinou jako celkem, může se z výrazu vynechat člen $\vec{u} \cdot \nabla \vec{u}$, který představuje změnu rychlosti v případě, že se  částice pohybuje \emph{skrz} tekutinu. \cite{Mueller2003}.
+                    Pro konečnou simulaci vody je třeba vyřešit soustavu NSE za pomocí pole rychlostí, pole hustot a pole tlaku, které SPH interpoluje z vlasnost částic. Díky aplikací Langrageova popisu kontinua se některé rovnice výrazně zjednodušší. Rovnice o zachování hmoty \ref{eq:mass_conservation} je automaticky splněna, neboť počet částic zůstane při simulaci konstantní. Dále lze zjednodušit v rovnici o zachování hybnosti \ref{eq:momentum_conservation} výraz  $\frac{\partial \vec{u}}{\partial t} + \vec{u} \cdot \nabla \vec{u}$, protože se částice pohybují s tekutinou jako celkem, může se z výrazu vynechat člen $\vec{u} \cdot \nabla \vec{u}$, který reprezentuje změnu rychlosti v případě, že se  částice pohybuje \emph{skrz} tekutinu. \cite{Mueller2003}. Konečná NSE pro SPH částicový systém zní takto 
+                    
+                    \begin{equation}
+                      \rho \frac{\partial \vec{u}}{\partial t} = - \nabla p = \rho \vec{g} + \mu \nabla^2 \vec{u}.
+                    \end{equation}
+
                     
                     
+                    Pohyb částíce je následně určený silami vyvolané rozdílem tlaků $-\nabla p$, viskozity tekutiny $\mu \nabla^2 \vec{u}$ a gravitací $\rho \vec{g}$ (na vodu působí i extérní síly, ty lze zakomponovat s gravitací do $\vec{g}$.
                     
+                    Částice si ale udržují informace jen o své pozici, rychlosti a hustotě, zbylé vlastnosti si musí simulátor spočítat sám. Tlak $p$ v částici lze aproximovat pomocí stavové rovnice ideálního plynu \cite{Mueller2003} 
                     
+                    \begin{equation}
+                        p = k \rho, \label{eq:ideal_state}
+                    \end{equation}
+                    
+                   \noindent kde $k$ je konstanta plynu závislá na teplotě a $\rho$ hustota částice. Desburn navrhl úpravu rovnice \ref{eq:ideal_state}, která přispěla k větší stabilitě simulace \cite{Desburn1996}
+                   
+                    \begin{equation}
+                        p = k (\rho - \rho_0), 
+                    \end{equation}
+                   
+                   \noindent kde $\rho_0$ označuje klidovou hustotu tekutiny. Protože síla vyvolaná rozdílem tlaku závisí na gradientu tlaku je toto řešení validní.
+                   
+                    Pak podle SPH \ref{eq:sph} je pole hustot (nutné pro kalkulaci tlaku) na pozici $\mathbf{x}$ určené jako
+                    
+                    \begin{equation}
+                     \rho(\mathbf{x}) = \sum_{j} m_j \frac{\rho_j}{\rho_j} W(| \mathbf{x} - \mathbf{x}_j|, h) = \sum_{j} m_j W(| \mathbf{x} - \mathbf{x}_j|, h).
+                    \end{equation}
+
 
                     
                     
