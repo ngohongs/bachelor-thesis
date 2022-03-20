@@ -411,7 +411,37 @@
                         \caption{Müllerova simulace vody založená na SPH \cite{Mueller2003}}
                     \end{figure}
                     
+                %TODO PSEUDOCODE
                     
+                \subsection{Hybridní metody}
+                    Předešlé dvě metody představují extrémními případy pro simulaci vodního hladiny. Procedulární metody nereagují na okolní prostředí, ale jsou výpočetně rychlé. Částicové systémy na druhou stranu počítají s dynamickým prostředím, ale jsou výpočetně náročné. Hybridní metody jsou kombinací dvou, které zároveň zjednodušují problematiku vodní hladiny jako procedulární metody a zachovávají některé fyzikální vlastnosti.
+                    
+                    Pro simulaci větších vodních ploch jsou částicové metody zbytečně náročné. Většina částic se bude nacházet pod hladinou a ve stojatých vodách se jejich pozice nebude výrazně měnit. Proto by bylo pro ně zbytečné počítat NSE.  Hybridní metody tuto výpočetní překážku řeší podobně jako procedulární, kdy problematiku vodní hladiny redukují z trojrozměrného prostoru do dvourozměrného \cite{Mueller2008}, transformují výšku vrcholů podle aproximací NSE.
+                    
+                    Nuttapongova hybridní metoda využívá \emph{Shallow Water Equations} (SWE) \cite{Nuttapong2010}, soustava parciálních diferenciálních rovnic, které zjednodušují NSE do 2D výškových map. Real-time výpočet SWE je ale stále drahá operace. Bridson zjednodušil její integraci výměnou za stabilitu simulace \cite{Nuttapong2010}.  
+                    
+                    Další variantou je modelování hladiny podle vlnových rovnic \cite{Bridson2007}, hyperbolická parciální diferenciální rovnice. Vlnové rovnice popisují řadu vln od vlnění struny kytary až po vlnění vodní hladiny.
+                    
+                    \subsubsection{Simulace podle vlnové rovnice}
+                        Vlnová rovnice nahlíží na vodní hladinu jako na elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikální korektní pohyb pouhý Newtonův druhý zákon. 
+                        
+                        Síla, která vyvolává pohyb, je v následující části vyvozená. Pro jednoduchost je problém redukován na 1D, kde vypadá vlna jako vibrující napnutá struna (viz. obrázek \ref{fig:wave_eq}), postup lze analogicky převést do 2D. Jednodimenzionální vlnová rovnice předpokládá, že jsou splněny tyto podmínky \cite{WaveEqDerivation}:
+                        \begin{enumerate} \label{en:wave_as}
+                         \item hmotnost na jednotku délky je konstantní,
+                         \item struna je perfektně elestická a neklade neodpor ohybu,
+                         \item gravitační síla je zanedbatelná (dominantní silou je ta, která strunu napíná),
+                         \item výchylky struny v horizontální ose, ose x, jsou zanedbatelné (struna se hýbe jen v vertikální ose y),
+                         \item vertikální výchylky jsou malé a sklony struny od osy x jsou velmi malé.
+                        \end{enumerate}
+
+                        \begin{figure}\centering
+                            \includegraphics[width=\textwidth]{img/waveeq}
+                            \caption{Vlna v 1D: (a) vibrujicí struna, (b) zvětšení segmentu $AB$ \cite{WaveEq2022}} \label{fig:wave_eq}
+                        \end{figure}
+                        
+                        \newpage
+                        
+                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlená od osy x . V případě, že je struna v klidové stavu, struna splývá s osou x. Dále nechť je segment struny $AB$ velmi malý, na který z obou stran působí síly $F_T$ (napínací síla).   
 
 
 
