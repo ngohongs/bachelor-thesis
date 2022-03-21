@@ -23,16 +23,16 @@
                 Druhá rovnice \ref{eq:momentum_conservation} popisuje zákon o zachování hybnosti a je ve své podstatě Newtonův druhý zákon.
                 
                 \begin{equation}
-                    \mathbf{f} = m \mathbf{a} \label{eq:newton_second}
+                    \mathbf{F} = m \mathbf{a} \label{eq:newton_second}
                 \end{equation}
     
                 \noindent Zrychlení $ \mathbf{a} $ lze přepsat jako derivace rychlosti podle času.
 
                 \begin{equation}
-                    \mathbf{f} = m \frac{D \mathbf{v}}{D {t}} \label{eq:first_step},
+                    \mathbf{F} = m \frac{D \mathbf{v}}{D {t}} \label{eq:first_step},
                 \end{equation}
 
-                \noindent kde $\frac{D \mathbf{v}}{D {t}}$ značí tzv. materiálovou derivací. Pro odvození celé rovnice je třeba rozvést sílu $ \mathbf{f} $, které na tekutinu působí\;\cite{Bridson2007}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\mathbf{g} $.
+                \noindent kde $\frac{D \mathbf{v}}{D {t}}$ značí tzv. materiálovou derivací. Pro odvození celé rovnice je třeba rozvést sílu $ \mathbf{F} $, které na tekutinu působí\;\cite{Bridson2007}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\mathbf{g} $.
                 
                 
                 Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují, z jednotlivých bodů na své sousední body, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}. 
@@ -80,7 +80,7 @@
  
  
 
-\chapter{Vlastnosti vodního povrchu}
+\chapter{Vlastnosti vodního povrchu a algoritmy, které je simulují}
 
     Tato kapitola obsahuje popis vizuálních vlastností vodní hladiny, které v reálném světě lze zpozorovat, a k jejím hlavním rysům jsou vypsané algoritmy, které je simulují. Z\,pohledu počítačové grafiky lze vlastnosti vody rozdělit do dvou kategorií:
 
@@ -483,7 +483,7 @@
                             \Delta \theta = \Delta x \frac{\partial^2 u}{\partial^2 x}.
                         \end{equation}
                         
-                        \noindent Po dosazení rovnice \ref{eq:tg_dx_final} do rovnice \ref{eq:wave_newton}, vydělení hodnotou $\Delta x$ a prohození členů získáme 1D vlnovou rovnici 
+                        \noindent Po dosazení rovnice \ref{eq:tg_dx_final} do rovnice \ref{eq:wave_newton}, vydělení hodnotou $\Delta x$ a prohození členů získáme 1D vlnovou rovnici \cite{Lewin2008}
                         
                         \begin{equation} 
                              \frac{\partial^2 u}{\partial t^2} = \frac{F_T}{\mu} \frac{\partial^2 u}{\partial x^2}.
@@ -493,10 +493,52 @@
                         \noindent Pro zdůraznění $\frac{F_T}{\mu}$ pozitvní hodnoty se v literatuře uvádí vlnová rovnice jako 
                         
                         \begin{equation} \label{eq:1d_wave_eq}
-                             \frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}.
+                             \frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2},
                         \end{equation}
                         
-                        \noindent Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že zrychlení funkce $u$ je přímě uměrné změně jejího sklonu. V případě, že   
+                        \noindent kde $c$ značí rychlost šíření vlny. Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že zrychlení funkce $u$ je přímě uměrné změně jejího sklonu. V případě, že křivost segment funkce $u$ je pozitivní, vlna  zrychluje, jestli je křivost negativní, vlna spomaluje (viz obrázek \ref{fig:curvature}). Při konstatním sklonu nedochází žádné změně rychlosti \cite{Mueller2008}.   
+                        
+                        \begin{figure}\centering
+                            \includegraphics[width=0.5\textwidth]{img/curvature}
+                            \caption{Křivost segmentu křiky: zleva kladná křivost, nulová křivost, negativní křivost\cite{Wright2017}} \label{fig:curvature}
+                        \end{figure}
+                        
+                        Ve více rozměrném prostoru vlnová rovnice zní 
+                        
+                        \begin{equation} \label{eq:nd_wave_eq}
+                             \frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u.
+                        \end{equation}
+                        
+                        Pro vyřešení rovnice \ref{eq:nd_wave_eq} Bridson a Müller \cite{Bridson2007, Mueller2008} ji rozdělují do dvou parciálně difereciálních rovnic prvního řádu
+                        
+                        \begin{equation}
+                             \frac{\partial u}{\partial t} = v
+                        \end{equation}
+                        
+                        \begin{equation}
+                             \frac{\partial v}{\partial t} = c^2 \nabla^2 u,
+                        \end{equation}
+                        
+                        \noindent2D prostor dále diskretizují do mřížky s rozestupy o velikosti $h$ a pomocí metody konečných diferencí (FDM) je integrují. Jednotlivé buňky mřížky si následně uchovávají informace: výšku hladiny $u_t$ a rychlost $v_t$ v čase $t$.
+                        
+                        \begin{equation} \label{eq:laplace_heightfield}
+                        \begin{split}
+                             & v_{t+1}[i,j] = v_t[i,j] + \\ 
+                             & \Delta t c^2 (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1]-4u_t[i,j]/h^2)
+                        \end{split}
+                        \end{equation}
+                        
+                        \begin{equation}
+                             u_{t+1}[i,j] = u_{t}[i,j] + \Delta t v_{t+1}[i,j].
+                        \end{equation}
+                        
+                        \newpage 
+                        
+                        \noindent Ihned si lze všimnout, že 
+                        \begin{equation}
+                        (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1]-4u_t[i,j]/h^2)
+                        \end{equation}
+                        je Laplacovské konvoluční jádro. Pro zachování stability simulace musí parametry $\Delta t$, $c$ a $h$ diskretizované vlnové rovnice splňovat Courant--Friedrichs--Lewy podmínku, $c \cdot \Delta t < h$, která říká, že se informace buňky $u[i,j]$ za dobu $\Delta t$ nesmí pohybovat rychleji než jednu buňku \cite{Bridson2007, Mueller2008}.  
                         
                         
                         
