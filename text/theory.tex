@@ -369,34 +369,34 @@
                    S výše uvedenými informacemi lze nakonec spočítat síly působící v tekutině $- \nabla p$ a $\mu \nabla^2 \mathbf{v}$. Na základě SPH \ref{eq:sph} je tlaková síla působící na částici $i$ rovna
                    
                    \begin{equation}
-                        \mathbf{f}_{i}^{tlak} = - \nabla p(\mathbf{x}_i) = - \sum_j m_j \frac{p_j}{\rho_j} \nabla W(|\mathbf{x}_i - \mathbf{x}_j|, h).
+                        \mathbf{F}_{i}^{tlak} = - \nabla p(\mathbf{x}_i) = - \sum_j m_j \frac{p_j}{\rho_j} \nabla W(|\mathbf{x}_i - \mathbf{x}_j|, h).
                    \end{equation}
 
                     \noindent Bohužel takto vypočítané síly nejsou symetrické (nesplňují Newtonův třetí zákon) \cite{Mueller2003}, tento problém je nejvíce patrný, když simulace obsahuje jen dvě částice. Protože gradient \emph{smoothing kernelu} je v středu, tj. na pozici  částice $i$, roven nule, částice použije pro výpočet jen tlak částice $j$. Müller řeší tento problém jednoduchým průměrovaním hodnot $p_i$ a $p_j$
                     
                     \begin{equation}
-                        \mathbf{f}_{i}^{tlak} = - \nabla p(\mathbf{x}_i) = - \sum_j m_j \frac{p_i + p_j}{2 \rho_j} \nabla W(|\mathbf{x}_i - \mathbf{x}_j|, h).
+                        \mathbf{F}_{i}^{tlak} = - \nabla p(\mathbf{x}_i) = - \sum_j m_j \frac{p_i + p_j}{2 \rho_j} \nabla W(|\mathbf{x}_i - \mathbf{x}_j|, h).
                    \end{equation}
                    
                    Podobný problém nastává při výpočtu sil způsobené viskozitou tekutiny 
                    
                    \begin{equation}
-                        \mathbf{f}_{i}^{viskozita} = \mu \nabla^2 \mathbf{v}(\mathbf{x}_i) = \mu \sum_j m_j \frac{\mathbf{v}_j}{\rho_j} \nabla^2 W(|\mathbf{x}_i - \mathbf{x}_j|, h),
+                        \mathbf{F}_{i}^{viskozita} = \mu \nabla^2 \mathbf{v}(\mathbf{x}_i) = \mu \sum_j m_j \frac{\mathbf{v}_j}{\rho_j} \nabla^2 W(|\mathbf{x}_i - \mathbf{x}_j|, h),
                    \end{equation}
 
                     \noindent protože se rychlosti u každé částice liší. Symetrizace, kterou navrhl Müller \cite{Mueller2003}, spočívá v tom, že síla způsobena viskozitou zavisí pouze na rozdílech rychlostí částice od svých sousedů, což přirozeně vede k
                     
                     \begin{equation}
-                        \mathbf{f}_{i}^{viskozita} = \mu \nabla^2 \mathbf{v} (\mathbf{x}_i) = \mu \sum_j m_j \frac{\mathbf{v}_j - \mathbf{v}_i}{\rho_j} \nabla^2 W(|\mathbf{x}_i - \mathbf{x}_j|, h),
+                        \mathbf{F}_{i}^{viskozita} = \mu \nabla^2 \mathbf{v} (\mathbf{x}_i) = \mu \sum_j m_j \frac{\mathbf{v}_j - \mathbf{v}_i}{\rho_j} \nabla^2 W(|\mathbf{x}_i - \mathbf{x}_j|, h),
                     \end{equation}
                     
                     Gravitace a externí síly jsou přímo aplikovány na samotné částice. Se všemi těmito informacemi lze vypočítat NSE, které lze formulovat Newtonovým druhým zákonem
                     
                     \begin{equation}
-                        \mathbf{a}_i = \frac{ D \mathbf{v}_i }{ Dt } = \frac{\mathbf{f}_i}{ \rho_i },
+                        \mathbf{a}_i = \frac{ D \mathbf{v}_i }{ Dt } = \frac{\mathbf{F}_i}{ \rho_i },
                     \end{equation}
                     
-                    \noindent kde $a_i$ je zrychlení, $\rho_i$ je hustota a $\mathbf{f}_i$ součet sil působící na částici $i$. Pro získání rychlosti $\mathbf{v}_i$ stačí integrovat podle času zrychlení $\mathbf{a}_i$. Müllerův simulátor \cite{Mueller2003} pro integraci používal algoritmus Leap--Frog \cite{Pozrikidis2008}, který integruje podle konstantní časových rozestupů, pro lepší výsledky navrhl algoritmy založené na Courant--Friedrichs--Lewy podmínce \cite{Desburn1996}.
+                    \noindent kde $a_i$ je zrychlení, $\rho_i$ je hustota a $\mathbf{F}_i$ součet sil působící na částici $i$. Pro získání rychlosti $\mathbf{v}_i$ stačí integrovat podle času zrychlení $\mathbf{a}_i$. Müllerův simulátor \cite{Mueller2003} pro integraci používal algoritmus Leap--Frog \cite{Pozrikidis2008}, který integruje podle konstantní časových rozestupů, pro lepší výsledky navrhl algoritmy založené na Courant--Friedrichs--Lewy podmínce \cite{Desburn1996}.
                     
                     Posledním krokem je vizualizace částic. Bez žádných speciálních metod by částice měly pouhý tvar kuliček, které nejsou nijak spojeny. Řešením je tzv. \emph{point splatting} \cite{Zwicker2001}, který na základě množiny bodů vytvoří jednolitý útvar.
                     
@@ -423,26 +423,64 @@
                     Další variantou je modelování hladiny podle vlnových rovnic \cite{Bridson2007}, hyperbolická parciální diferenciální rovnice. Vlnové rovnice popisují řadu vln od vlnění struny kytary až po vlnění vodní hladiny.
                     
                     \subsubsection{Simulace podle vlnové rovnice}
-                        Vlnová rovnice nahlíží na vodní hladinu jako na elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikální korektní pohyb pouhý Newtonův druhý zákon. 
+                        Vlnová rovnice nahlíží na vodní hladinu jako na napnutou elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikální korektní pohyb pouhý Newtonův druhý zákon. 
                         
-                        Síla, která vyvolává pohyb, je v následující části vyvozená. Pro jednoduchost je problém redukován na 1D, kde vypadá vlna jako vibrující napnutá struna (viz. obrázek \ref{fig:wave_eq}), postup lze analogicky převést do 2D. Jednodimenzionální vlnová rovnice předpokládá, že jsou splněny tyto podmínky \cite{WaveEqDerivation}:
+                        Vlnová rovnice a síla, která vyvolává pohyb, jsou v následující části vyvozené. Pro jednoduchost je problém redukován na 1D, kde vypadá vlna jako napnutá vibrující struna (viz. obrázek \ref{fig:wave_eq}), postup lze analogicky převést do 2D. Jednodimenzionální vlnová rovnice předpokládá, že jsou splněny tyto podmínky \cite{WaveEqDerivation}:
                         \begin{enumerate} \label{en:wave_as}
-                         \item hmotnost na jednotku délky je konstantní,
+                         \item hmotnost na jednotku délky je konstantní, 
                          \item struna je perfektně elestická a neklade neodpor ohybu,
                          \item gravitační síla je zanedbatelná (dominantní silou je ta, která strunu napíná),
-                         \item výchylky struny v horizontální ose, ose x, jsou zanedbatelné (struna se hýbe jen v vertikální ose y),
-                         \item vertikální výchylky jsou malé a sklony struny od osy x jsou velmi malé.
+                         \item výchylky struny v horizontální ose, ose x, jsou zanedbatelné (struna se hýbe jen ve vertikální ose y),
+                         \item vertikální výchylky jsou malé a sklony struny od osy x jsou velmi malé (v obrázku \ref{fig:wave_eq} úhly $\theta$ a $\theta \Delta  \theta$).
                         \end{enumerate}
-
+                        
                         \begin{figure}\centering
                             \includegraphics[width=\textwidth]{img/waveeq}
                             \caption{Vlna v 1D: (a) vibrujicí struna, (b) zvětšení segmentu $AB$ \cite{WaveEq2022}} \label{fig:wave_eq}
                         \end{figure}
                         
-                        \newpage
+                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlená od osy x . V případě, že je struna v klidové stavu, struna splývá s osou x. Dále nechť na segment struny $AB$, část sturny od $x$ do $x + \Delta x$, kde $\Delta x \xrightarrow{} 0 $, působí napínací síly $\mathbf{F}_{T_1}$ a $\mathbf{F}_{T_2}$. Za překlodu, že se segement $AB$ málo vychyluje od osy x, lze jejich velikosti sil považovat za identické, 
+                        $\mathbf{F}_{T_1} = \mathbf{F}_{T_2} = \mathbf{F}_T$ \cite{Lewin2008}. Kvůli čtvrtému předpokladu \ref{en:wave_as} se horizontální síly vyruší a stačí spočítat síly působící ve vertikální ose.
                         
-                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlená od osy x . V případě, že je struna v klidové stavu, struna splývá s osou x. Dále nechť je segment struny $AB$ velmi malý, na který z obou stran působí síly $F_T$ (napínací síla).   
+                        \begin{equation}
+                            \mathbf{F}_{vert} = -\mathbf{F}_T \sin(\theta) + \mathbf{F}_T \sin(\theta + \Delta \theta)
+                        \end{equation}
+                        
+                        \noindent Síla $-\mathbf{F}_T \sin(\theta)$ působí u bodu $A$ směrem dolů a síla $\mathbf{F}_T \sin(\theta + \Delta \theta)$ u bodu $B$ opačným směrem. Díky pátemu předpokladu \ref{en:wave_as} lze aproximovat $\sin(\theta)$ a $\sin(\theta + \Delta \theta)$ jako velikost jejich úhlu.
+                        
+                        \begin{equation}
+                            \mathbf{F}_{vert} = -\mathbf{F}_T \theta + \mathbf{F}_T (\theta + \Delta \theta) = \mathbf{F}_T \Delta \theta
+                        \end{equation}
+                        
+                        \noindent Po získání síly působící na segment $AB$ lze aplikovat Newtonův druhý zákon.
+                        
+                        \begin{equation}
+                            \mathbf{F}_{vert} = m \mathbf{a} \\
+                        \end{equation}
+                        \begin{equation}
+                            \mathbf{F}_{T} \Delta \theta = (\Delta x \mu) \frac{\partial^2 u}{\partial t^2} \\
+                        \end{equation}
+                        
+                        \noindent $\mu$ značí hmotnost na jednotku délky. Zrychlení $\mathbf{a}$ lze přepsat jako druhou derivací funkce $u$ podle $t$. Dále pro $ \Delta x \xrightarrow{} 0$ platí, že
+                        
+                        \begin{equation}
+                            \tg(\theta) = \frac{\partial u}{\partial x}
+                        \end{equation}
+                        
+                        \noindent a pro derivaci $\tg(\theta)$ podle x
+                        
+                        \begin{equation}
+                            \frac{1}{\cos^2(\theta)} \frac{d \theta}{dx} = \frac{\partial u}{\partial x}
+                        \end{equation}
 
+                        
+                        
+                        
+
+                        
+                        
+
+                        
 
 
                     
