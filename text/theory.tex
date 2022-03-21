@@ -439,40 +439,67 @@
                             \caption{Vlna v 1D: (a) vibrujicí struna, (b) zvětšení segmentu $AB$ \cite{WaveEq2022}} \label{fig:wave_eq}
                         \end{figure}
                         
-                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlená od osy x . V případě, že je struna v klidové stavu, struna splývá s osou x. Dále nechť na segment struny $AB$, část sturny od $x$ do $x + \Delta x$, kde $\Delta x \xrightarrow{} 0 $, působí napínací síly $\mathbf{F}_{T_1}$ a $\mathbf{F}_{T_2}$. Za překlodu, že se segement $AB$ málo vychyluje od osy x, lze jejich velikosti sil považovat za identické, 
-                        $\mathbf{F}_{T_1} = \mathbf{F}_{T_2} = \mathbf{F}_T$ \cite{Lewin2008}. Kvůli čtvrtému předpokladu \ref{en:wave_as} se horizontální síly vyruší a stačí spočítat síly působící ve vertikální ose.
+                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlená od osy x . V případě, že je struna v klidové stavu, struna splývá s osou x. Dále nechť na segment struny $AB$, část sturny od $x$ do $x + \Delta x$, kde $\Delta x \xrightarrow{} 0 $, působí napínací síly $F_{T_1}$ a $F_{T_2}$. Za překlodu, že se segement $AB$ málo vychyluje od osy x, lze jejich velikosti sil považovat za identické, 
+                        $F_{T_1} = F_{T_2} = F_T$ \cite{Lewin2008}. Kvůli čtvrtému předpokladu \ref{en:wave_as} se horizontální síly vyruší a stačí spočítat síly působící ve vertikální ose.
                         
                         \begin{equation}
-                            \mathbf{F}_{vert} = -\mathbf{F}_T \sin(\theta) + \mathbf{F}_T \sin(\theta + \Delta \theta)
+                            F_{vert} = -F_T \sin(\theta) + F_T \sin(\theta + \Delta \theta)
                         \end{equation}
                         
-                        \noindent Síla $-\mathbf{F}_T \sin(\theta)$ působí u bodu $A$ směrem dolů a síla $\mathbf{F}_T \sin(\theta + \Delta \theta)$ u bodu $B$ opačným směrem. Díky pátemu předpokladu \ref{en:wave_as} lze aproximovat $\sin(\theta)$ a $\sin(\theta + \Delta \theta)$ jako velikost jejich úhlu.
+                        \noindent Síla $-F_T \sin(\theta)$ působí u bodu $A$ směrem dolů a síla $F_T \sin(\theta + \Delta \theta)$ u bodu $B$ opačným směrem. Díky pátemu předpokladu \ref{en:wave_as} lze aproximovat $\sin(\theta)$ a $\sin(\theta + \Delta \theta)$ jako velikost jejich úhlu.
                         
                         \begin{equation}
-                            \mathbf{F}_{vert} = -\mathbf{F}_T \theta + \mathbf{F}_T (\theta + \Delta \theta) = \mathbf{F}_T \Delta \theta
+                            F_{vert} = -F_T \theta + F_T (\theta + \Delta \theta) = F_T \Delta \theta
                         \end{equation}
                         
                         \noindent Po získání síly působící na segment $AB$ lze aplikovat Newtonův druhý zákon.
                         
                         \begin{equation}
-                            \mathbf{F}_{vert} = m \mathbf{a} \\
+                            F_{vert} = ma \\
                         \end{equation}
-                        \begin{equation}
-                            \mathbf{F}_{T} \Delta \theta = (\Delta x \mu) \frac{\partial^2 u}{\partial t^2} \\
+                        \begin{equation} \label{eq:wave_newton}
+                            F_{T} \Delta \theta = (\Delta x \mu) \frac{\partial^2 u}{\partial t^2} \\
                         \end{equation}
                         
-                        \noindent $\mu$ značí hmotnost na jednotku délky. Zrychlení $\mathbf{a}$ lze přepsat jako druhou derivací funkce $u$ podle $t$. Dále pro $ \Delta x \xrightarrow{} 0$ platí, že
+                        \noindent $\mu$ značí hmotnost na jednotku délky. Zrychlení $a$ lze přepsat jako druhou derivací funkce $u$ podle $t$. Dále pro $ \Delta x \xrightarrow{} 0$ platí, že
                         
-                        \begin{equation}
+                        \begin{equation} \label{eq:tg}
                             \tg(\theta) = \frac{\partial u}{\partial x}
                         \end{equation}
                         
-                        \noindent a pro derivaci $\tg(\theta)$ podle x
+                        \noindent a pro derivaci celé rovnice \ref{eq:tg} podle x
                         
-                        \begin{equation}
-                            \frac{1}{\cos^2(\theta)} \frac{d \theta}{dx} = \frac{\partial u}{\partial x}
+                        \begin{equation} \label{eq:tg_dx}
+                            \frac{1}{\cos^2(\theta)} \frac{d \theta}{dx} = \frac{\partial^2 u}{\partial x^2}.
                         \end{equation}
 
+                        \noindent Pro aproximaci hodnoty $\cos^2(\theta)$ se opět užije pátého předpokladu, že sklony $\theta$ a $\theta + \Delta \theta$ jsou velmi malé, podle kterého platí $\cos(\theta) \approx \cos(\theta + \Delta \theta) \approx 1$. Následně protože $x \xrightarrow{} 0$, lze přepsat rovnici \ref{eq:tg_dx} jako 
+                        
+                        \begin{equation}
+                            \frac{\Delta \theta}{\Delta x} = \frac{\partial^2 u}{\partial x^2}
+                        \end{equation}
+                        
+                        \begin{equation} \label{eq:tg_dx_final}
+                            \Delta \theta = \Delta x \frac{\partial^2 u}{\partial^2 x}.
+                        \end{equation}
+                        
+                        \noindent Po dosazení rovnice \ref{eq:tg_dx_final} do rovnice \ref{eq:wave_newton}, vydělení hodnotou $\Delta x$ a prohození členů získáme 1D vlnovou rovnici 
+                        
+                        \begin{equation} 
+                             \frac{\partial^2 u}{\partial t^2} = \frac{F_T}{\mu} \frac{\partial^2 u}{\partial x^2}.
+                        \end{equation}
+                        
+                        %% TODO CHECK REFRENCES
+                        \noindent Pro zdůraznění $\frac{F_T}{\mu}$ pozitvní hodnoty se v literatuře uvádí vlnová rovnice jako 
+                        
+                        \begin{equation} \label{eq:1d_wave_eq}
+                             \frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}.
+                        \end{equation}
+                        
+                        \noindent Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že zrychlení funkce $u$ je přímě uměrné změně jejího sklonu. V případě, že   
+                        
+                        
+                        
                         
                         
                         
