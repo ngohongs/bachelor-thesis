@@ -181,15 +181,11 @@
                     Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovými vlnami. Mezi prvními, kteří se Gerstnerovými vlnami zabývali, byli Alain Fournier a William T. Reeves, kteří transformovali vrcholy roviny podle tichto parametrických rovnic \cite{Fournier1986}:
                    
                     \begin{equation}
-                     x = x_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t )
-                    \end{equation}
-                    
-                    \begin{equation}
-                     y = r \sin ( k_x x_0 + k_z z_0 - \omega t  )
-                    \end{equation}
-
-                    \begin{equation}
-                     z = z_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t  ),
+                        \begin{split}
+                             x &= x_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t ) \\
+                             y &= r \sin ( k_x x_0 + k_z z_0 - \omega t  )      \\
+                             z &= z_0 + r \cos ( k_x x_0 + k_z z_0 - \omega t  ),
+                        \end{split}
                     \end{equation}
                     
                     \noindent kde vektor $(x_0, z_0)$ reprezentuje klidovou pozici vrcholu roviny, $ r $ je délka opisujícího bodu od středu kružnice trochoidní křivky, vektor $\mathbf{k} = (k_x, k_z)$ určuje rychlost a směr propagace vlnění, $ \omega $ označuje úhlovou frekvenci a $ t $ je čas.
@@ -203,16 +199,12 @@
                     
                     Detailnějších výsledků lze získat podobně jako u sinusoid pomocí skládání Gerstnerových vln:
                     
-                    \begin{equation}
-                     x = x_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t ) \label{eq:gerstner_x}
-                    \end{equation}
-                    
-                    \begin{equation}
-                     y = \sum_{i=1}^{N_w} r_i \sin ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t  )
-                    \end{equation}
-
-                    \begin{equation}
-                     z = z_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t  ). \label{eq:gerstner_z}
+                    \begin{equation}  \label{eq:gerstner}
+                        \begin{split}
+                            x &= x_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t ) \\
+                            y &= \sum_{i=1}^{N_w} r_i \sin ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t  )      \\
+                            z &= z_0 + \sum_{i=1}^{N_w} r_i \cos ( k_{x_i} x_0 + k_{z_i} z_0 - \omega_i t  ). 
+                        \end{split}   
                     \end{equation}
 
                     \begin{figure}\centering
@@ -220,7 +212,7 @@
                         \caption{Gerstnerovy vlny v simulaci vodního povrchu podle tutoriálu od Jaspera Flicka \cite{Gerstner2022}}\label{fig:gerstner_wave}
                     \end{figure}
                 \subsubsection{Simulace podle Fourierovy transformace}
-                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner_x}--\ref{eq:gerstner_z} herní enginy provedly ve \emph{vertex shaderech}, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
+                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$ v řádech tísíců nebo více. Vysoký počet představuje však výpočetní překažku. Obvykle by  výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner} herní enginy provedly ve \emph{vertex shaderech}, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
                     
                     Johanson řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje vlny \cite{Darles2011}. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvenci. Efektevnějšího výsledku dosáhl Lee \cite{Darles2011}, který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
                     
@@ -431,7 +423,7 @@
                          \item struna je perfektně elestická a neklade neodpor ohybu,
                          \item gravitační síla je zanedbatelná (dominantní silou je ta, která strunu napíná),
                          \item výchylky struny v horizontální ose, ose x, jsou zanedbatelné (struna se hýbe jen ve vertikální ose y),
-                         \item vertikální výchylky jsou malé a sklony struny od osy x jsou velmi malé (v obrázku \ref{fig:wave_eq} úhly $\theta$ a $\theta \Delta  \theta$).
+                         \item vertikální výchylky jsou malé a sklony struny (v obrázku \ref{fig:wave_eq} úhly $\theta$ a $\theta \Delta  \theta$) od osy x jsou velmi malé .
                         \end{enumerate}
                         
                         \begin{figure}\centering
@@ -490,56 +482,86 @@
                         \end{equation}
                         
                         %% TODO CHECK REFRENCES
-                        \noindent Pro zdůraznění $\frac{F_T}{\mu}$ pozitvní hodnoty se v literatuře uvádí vlnová rovnice jako 
+                        \noindent Pro zdůraznění pozitvní hodnoty $\frac{F_T}{\mu}$ se v literatuře uvádí vlnová rovnice jako 
                         
                         \begin{equation} \label{eq:1d_wave_eq}
-                             \frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2},
+                             \frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}.
                         \end{equation}
                         
-                        \noindent kde $c$ značí rychlost šíření vlny. Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že zrychlení funkce $u$ je přímě uměrné změně jejího sklonu. V případě, že křivost segment funkce $u$ je pozitivní, vlna  zrychluje, jestli je křivost negativní, vlna spomaluje (viz obrázek \ref{fig:curvature}). Při konstatním sklonu nedochází žádné změně rychlosti \cite{Mueller2008}.   
+                        \noindent Obecné řešení rovnice \ref{eq:1d_wave_eq} lze zapsat jako 
                         
-                        \begin{figure}\centering
-                            \includegraphics[width=0.5\textwidth]{img/curvature}
-                            \caption{Křivost segmentu křiky: zleva kladná křivost, nulová křivost, negativní křivost\cite{Wright2017}} \label{fig:curvature}
-                        \end{figure}
+                        \begin{equation}
+                            u(x, t) = f(x - ct) + g(x + ct),
+                        \end{equation}
+
                         
-                        Ve více rozměrném prostoru vlnová rovnice zní 
+                        \noindent kterou lze interpretovat tak, že řešením rovnice \ref{eq:1d_wave_eq} jsou vlny, které se šíří doprava podle funkce $f$ a doleva podle funkce $g$ rychlostí $c$. Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že síla působící na vlákno, příp. membránu, je přímě uměrné změně jejího sklonu. S rostoucím sklonem segmentu vlákna, případně membrány, roste i síla, která na něj působí a naopak. Při konstatním sklonu nedochází k žádné změně síly \cite{Bridson2007, Mueller2008}. Ve více rozměrném prostoru vlnová rovnice zní 
                         
                         \begin{equation} \label{eq:nd_wave_eq}
                              \frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u.
                         \end{equation}
                         
-                        Pro vyřešení rovnice \ref{eq:nd_wave_eq} Bridson a Müller \cite{Bridson2007, Mueller2008} ji rozdělují do dvou parciálně difereciálních rovnic prvního řádu
+                        Pro vyřešení rovnice \ref{eq:nd_wave_eq} ji nejdříve Bridson a Müller \cite{Bridson2007, Mueller2008}  rozkládají na dvě parciálně difereciálních rovnice prvního řádu
                         
                         \begin{equation}
-                             \frac{\partial u}{\partial t} = v
+                            \begin{split}
+                                \frac{\partial u}{\partial t} &= v                  \\
+                                \frac{\partial v}{\partial t} &= c^2 \nabla^2 u.
+                             \end{split}
                         \end{equation}
                         
-                        \begin{equation}
-                             \frac{\partial v}{\partial t} = c^2 \nabla^2 u,
-                        \end{equation}
-                        
-                        \noindent2D prostor dále diskretizují do mřížky s rozestupy o velikosti $h$ a pomocí metody konečných diferencí (FDM) je integrují. Jednotlivé buňky mřížky si následně uchovávají informace: výšku hladiny $u_t$ a rychlost $v_t$ v čase $t$.
+                        \noindent Následně 2D prostor diskretizují do mřížky s rozestupy o velikosti $h$, jejíž buňky si uchovávají informace o výšce hladiny $u_t$ a rychlost $v_t$ v čase $t$, a pomocí metody konečných diferencí (FDM) získají $\nabla^2 u$. Nakonec řešení diferianciální rovnice aproximují podle Eulerovy metody s explicitním krokem. Pak pro jednotlivé buňky v čase $t+1$ platí
                         
                         \begin{equation} \label{eq:laplace_heightfield}
+                            \begin{split}
+                                \nabla^2 u_t[i,j] &= (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1]-4u_t)/h^2, \\
+                                v_{t+1}[i,j] &= v_t[i,j] + \Delta t c^2 \nabla^2 u_t[i,j], \\
+                                u_{t+1}[i,j] &= u_{t}[i,j] + \Delta t v_{t+1}[i,j].
+                            \end{split}
+                        \end{equation}
+                        
+                        \noindent Parametry $\Delta t$, $c$ a $h$ diskretizované vlnové rovnice musí splňovat Courant--Friedrichs--Lewy podmínku, $c \cdot \Delta t < h$, která říká, že se informace buňky mohou šířit do svého okolí pouze jednou buňkou za časový krok $\Delta t$ \cite{Bridson2007, Mueller2008}.
+                        
+                        \noindent Všímavý čtenář si může všimnout, že 
+                        \begin{equation}
+                        (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1]-4u_t[i,j])/h^2
+                        \end{equation}
+                        je Laplacovské konvoluční jádro. 
+                        
+                        Integrace Eulerovou metodou požaduje počáteční hodnoty pro $u_t$ a $v_t$ v čase $t = 0$, tj. $u_0$ a $v_0$ \cite{Bridson2007, Mueller2008}. Hodnota $v_0$ je pro všechny buňky rovna nule a hodnota $u_0$ je inicializovaná nějakou funkcí. Kdyby $u_0$, tj. počáteční výška hladiny, byla rovna nule, tak by to znamenalo, že hladina je v úplném klidu a k žádnému vlnění nedojde.
+                        
+                        Bohužel volba explicitního kroku Eulerovy metody vede k podmíněné stabilitě simulace \cite{Bridson2007, Mueller2008}. Krok $\Delta t v_{t+1}$ nekorektně předpokládá, že během časového kroku $\Delta t$ zůstává rychlost $v_{t+1}$ konstatní. Navíc jsou všechny výše zmíněné výpočty aproximacemi. V případě, že se špatně odhadne rychlost, může výška hladiny nekonečně nárůst nebo klesnout. Müller řeší tento problém dvěma způsoby. Jedním je zmenšit velikost rychlosti $v_{t+1}$ koeficientem $s < 1$
+                        
+                        \begin{equation}
+                            u_{t+1}[i,j] = u_{t}[i,j] + s \cdot \Delta t v_{t+1}[i,j].
+                        \end{equation}
+                        
+                        \noindent Další možností je oříznout výšky podle maximálního sklonu
+                        
+                        \begin{equation}
                         \begin{split}
-                             & v_{t+1}[i,j] = v_t[i,j] + \\ 
-                             & \Delta t c^2 (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1]-4u_t[i,j]/h^2)
+                            &\text{offset} = (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1])/4 \\
+                            &\text{maxOffset} = \text{maxSlope} \cdot h \\ 
+                            \\
+                            if ()
                         \end{split}
                         \end{equation}
+
+                        
+
+                        
+                        Mřížka má dále konečný rozměr $n \times n$, a proto je nutné definovat krajní podmínky (pro výpočet Laplace) \cite{Bridson2007, Mueller2008}. Jednou variantou je přiřadit hodnotám mimo rozsah jim nejbližší krajní hodnoty:  
                         
                         \begin{equation}
-                             u_{t+1}[i,j] = u_{t}[i,j] + \Delta t v_{t+1}[i,j].
+                         \begin{split}
+                           u[-1, j] &= u[0, j], \\
+                            u[n,j] &= u[n-1,j],  \\
+                           u[i,-1] &= u[i,0],   \\
+                           u[i,n] &= u[i,n-1].
+                         \end{split}
                         \end{equation}
-                        
-                        \newpage 
-                        
-                        \noindent Ihned si lze všimnout, že 
-                        \begin{equation}
-                        (u_t[i+1,j]+u_t[i-1,j]+u_t[i,j+1]+u_t[i,j-1]-4u_t[i,j]/h^2)
-                        \end{equation}
-                        je Laplacovské konvoluční jádro. Pro zachování stability simulace musí parametry $\Delta t$, $c$ a $h$ diskretizované vlnové rovnice splňovat Courant--Friedrichs--Lewy podmínku, $c \cdot \Delta t < h$, která říká, že se informace buňky $u[i,j]$ za dobu $\Delta t$ nesmí pohybovat rychleji než jednu buňku \cite{Bridson2007, Mueller2008}.  
-                        
+            
+                        \noindent Takto zvolné řešení má v simulaci efekt reflektování vln od hranic mřížky. Další možností je spojit levou hranu s pravou hranou a horní hranu s dolní hranou mřížky. Výsledný efekt je takový, že vlny vycházející z levého, resp. horního, kraje vstupují do mřížky zpět z práveho, resp dolního, kraje. Toto chování může být žádoucí pro skládání vodních povrchů, tzv. \emph{tiling}. 
                         
                         
                         
