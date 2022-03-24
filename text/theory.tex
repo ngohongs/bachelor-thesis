@@ -581,18 +581,58 @@ Během celé simulace opakuj
                         
     \section{Optické vlastnosti}
         
-        U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak intereaktuje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objektu může na základě jeho materiálu dojít k dvěma možnosnostem, foton objekt odrazí nebo pohltí \cite{Light2009}.
+        U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak intereaktuje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objektu může na základě jeho materiálu dojít k třem možnosnostem, pohlcení fotonu, odražení nebo transmisi. Co lidské oko následně uvídí, závísí na světelných paprscích, které oko zásahne \cite{Light2009}.  
         
-        Chování světla zachycují globální zobrazovací metody pro realistické vykreslení scén. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně off-line aplikace. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
+        Chování světla zachycují globální zobrazovací metody pro realistické vykreslení scén. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně off-line aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, real-time aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky se vrhají z pozice oka a na základě toho, kam po odrzech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
     
         Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do rastareziční \emph{pipeliny}. 
                 
         \subsection{Odrazy světla}
         
+            Voda má reflektivní vlastnosti, a proto barva její hladiny zavísí na tom, odkud světelný paprsek, který následně zasáhne příjímač, přijde. Paprsek světla, resp. paprsek vrženého z příjímače (oko, kamera), se od ideálně reflektivního povrchu odráží pod stejným úhlem jako, pod kterým parsek dopadá \cite{LightDir2009}.
+            
         \subsection{Refrakce}
-        \subsection{Fresnelův efekt}
-        \subsection{Kaustiky}
+            
+            Hladina vody ale nemá perfektně odrazivý povrch. Některé světlené paprsky prochází skrz ni, a proto ji vnímame jako průsvitný materiál. Objekty pod hladinou ale vidíme zkresleně důsledkem tzv. refrakcí \cite{LightDir2009}. Světelné paprsky se při přechodu medií lámou, neboť prochází dvěma prostory, ve kterých má světlo různé rychlosti. V hustších prosterech se světlo pohybuje pomaleji, zatímco v řidších rychleji. Lom světla lze popsat Snellovým zákonem
+            
+            \begin{equation}
+             \frac{\sin \theta_1}{\sin \theta_2} = \frac{n_2}{n_1},
+            \end{equation}
+
+            \noindent kde $\theta_1$ značí úhel dopadu příchozího světla, $\theta_2$ je úhel lomoného paprsku, $n_1$ a $n_2$ jsou refraktivní index (IOR) příchozícho a odchozího prostředí.
+    
+            \begin{figure}\centering
+                \includegraphics[width=0.5\textwidth]{img/reflection_and_refraction}
+                \caption{Odraz a refrakce paprsku \cite{ReRe2009}}
+                \label{fig:reflect}
+            \end{figure}
+        
+    
+        \subsection{Fresnelovy rovnice}
+        
+             Protože povrch vody je zároveň odrazivý a refraktvní, je třeba zjistit podle kterých světelných paprsků ho obarvit. Tento problém řeší Fresnelovy rovnice. Fresnelovy rovnice podle úhlu pohledu popisují, jak moc refraktní světlo nebo odražené světlo příspívá finální barvě hladiny. Rovnice zní takto
+             
+             \begin{equation}
+              \begin{split}
+                R_{\parallel} &= \left( \frac{n_2\cos(\theta_1) - n_1\cos\theta_2}{n_2\cos(\theta_1) + n_1\cos\theta_2} \right)^2 \\
+                R_{\perp} &= \left( \frac{n_1\cos(\theta_2) - n_2\cos\theta_1}{n_1\cos(\theta_2) + n_2\cos\theta_1} \right)^2 \\
+                \\
+                R &= \frac{R_{\parallel} + R_{\perp}}{2} \\ 
+                T &= 1 - R
+                \end{split}
+             \end{equation}
+            
+            \noindent Koeficient $R$ popisuje intenzitu odraženého světlo, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{ReRe2009}. V realitě lze tento optický fenomém nejvíce vidět u mělkých stojatých vod (viz obrázek \ref{fig:fresnel}). Místa, na která se díváme pod malým úhlem ($\theta_1$ v obrázku \ref{fig:reflect}), vídíme spíše průhledně, zatímco v místech, na která se díváme pod velkým úhlem, vidíme spíše odraz okolní prostředí.
+            
+            \begin{figure}\centering 
+                \includegraphics[width=0.5\textwidth]{img/fresnel} 
+                \caption{Optický efekt popsaný Fresnelovými rovnicemi  \cite{Fresnel2018}}
+                \label{fig:fresnel}
+            \end{figure}
+    
         \subsection{Útlum světla}
+        \subsection{Kaustiky}
+        
     
 
 
