@@ -607,31 +607,54 @@ Během celé simulace opakuj
                 \label{fig:reflect}
             \end{figure}
         
+        
     
         \subsection{Fresnelovy rovnice}
-        
-             Protože povrch vody je zároveň odrazivý a refraktvní, je třeba zjistit podle kterých světelných paprsků ho obarvit. Tento problém řeší Fresnelovy rovnice. Fresnelovy rovnice podle úhlu pohledu popisují, jak moc refraktní světlo nebo odražené světlo příspívá finální barvě hladiny. Rovnice zní takto
-             
-             \begin{equation}
-              \begin{split}
-                R_{\parallel} &= \left( \frac{n_2\cos(\theta_1) - n_1\cos\theta_2}{n_2\cos(\theta_1) + n_1\cos\theta_2} \right)^2 \\
-                R_{\perp} &= \left( \frac{n_1\cos(\theta_2) - n_2\cos\theta_1}{n_1\cos(\theta_2) + n_2\cos\theta_1} \right)^2 \\
-                \\
-                R &= \frac{R_{\parallel} + R_{\perp}}{2} \\ 
-                T &= 1 - R
-                \end{split}
-             \end{equation}
-            
-            \noindent Koeficient $R$ popisuje intenzitu odraženého světlo, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{ReRe2009}. Úhly $\theta_1$ a $\theta_2$ jsou úhly dopadu příchozího paprsku a lomeného paprsku. Konstanty $n_1$ a $n_2$ jsou IOR příchozího a odchozího prostředí. V realitě lze tento optický fenomém nejvíce vidět u mělkých stojatých vod (viz obrázek \ref{fig:fresnel}). Místa, na která se díváme pod malým úhlem ($\theta_1$ v obrázku \ref{fig:reflect}), vídíme spíše průhledně, zatímco v místech, na která se díváme pod velkým úhlem, vidíme spíše odraz okolní prostředí.
-            
+                
             \begin{figure}\centering 
                 \includegraphics[width=0.5\textwidth]{img/fresnel} 
                 \caption{Optický efekt popsaný Fresnelovými rovnicemi  \cite{Fresnel2018}}
                 \label{fig:fresnel}
             \end{figure}
+            
+             Protože povrch vody je zároveň odrazivý a refraktvní, je třeba zjistit podle kterých světelných paprsků ho obarvit. Tento problém řeší Fresnelovy rovnice. Fresnelovy rovnice podle úhlu pohledu popisují, jak moc refraktní světlo nebo odražené světlo příspívá finální barvě hladiny. Rovnice zní takto
+             
+             \begin{equation}
+              \begin{split}
+                R_{s} &= \left( \frac{n_2\cos(\theta_1) - n_1\cos\theta_2}{n_2\cos(\theta_1) + n_1\cos\theta_2} \right)^2, \\
+                R_{p} &= \left( \frac{n_1\cos(\theta_2) - n_2\cos\theta_1}{n_1\cos(\theta_2) + n_2\cos\theta_1} \right)^2, \\
+                R &= \frac{R_{s} + R_{p}}{2}, \\ 
+                T_s &= 1 - R_s, \\
+                T_p &= 1 - R_p, \\
+                T &= \frac{T_s + T_p}{2} = 1 - R.
+                \end{split}
+             \end{equation}
+            
+            \noindent Koeficient $R$ popisuje intenzitu odraženého světla, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{ReRe2009}. Úhly $\theta_1$ a $\theta_2$ jsou úhly dopadu příchozího paprsku a lomeného paprsku. Konstanty $n_1$ a $n_2$ jsou IOR příchozího a odchozího prostředí. Protože koefecienty $R$ a $T$ závísí na polarizaci světla \cite{Fleck2007}, které rozlišujeme na s-polarizaci a p-polarizaci, jsou hodnoty vyčísleny jako průměry konstant $R_s$ a $R_p$, resp. $T_s$ a $T_r$.
+            
+            V realitě lze tento optický fenomém nejvíce vidět u mělkých stojatých vod (viz obrázek \ref{fig:fresnel}). Místa, na která se díváme pod malým úhlem ($\theta_1$ v obrázku \ref{fig:reflect}), vídíme spíše průhledně, zatímco v místech, na která se díváme pod velkým úhlem, vidíme spíše odraz okolního prostředí.
+            
+            
     
         \subsection{Útlum světla}
-            Potom, co světlo protne hladinu, jeho paprsek prochází ve vodě k dvěma transformacím. Nejprve se světlo ve vodě rozptyje a dále dochází k absorbci světla. Absorbci fotonů a to nejen kvůli jeho délce, ale také kvůli mikroorganismů žíjících ve vodě \cite{Akkaynak2017}. Barva výsledného obraz, tj. konečné světelné paprsky, které zasáhnou naše oko, je
+            Potom, co světlo protne hladinu, jeho paprsek může prochází ve vodě dvěma transformacemi, může dojít k rozptylu parsku nebo k absorbci světla. Absorbci způsobuje nejen délka dráhy paprsku a látky obsažené ve vodě, ale také mikroorganismů žíjících, které v ní žijí\cite{Akkaynak2017}. Jev, který je predominantním důsledkem absorbce, je např. distorze barevného spektra \cite{Fleck2007}. Na základě obsah vody jsou různé vlnové délky pohlceny. V moři kvůli vysokém obsahu soli dochází k vysoké absorbci barev s dlouhými vlnovými délkami jako červená, zatímco u vody s vysokým obsahem chlorofylu pohlcují vše kromě zelených barev \cite{Cerezo2002}. Protože mnoho faktorů hraje roli v absorbci, musí chování značně zjednodušit, aby je počítače stihly vypočítat. Baboud a Décoret \cite{Baboud2006} modelují záření s vlnovou délkou $\lambda$ odraženého z bodu ve vodě $p_g$ do bodu na hladině $p_s$ jako
+            
+            \begin{equation}
+                L_\lambda(p_s, \mathbf{\omega}) = \alpha_{\lambda}(d)L_{\lambda}(p_w, \mathbf{\omega}) + (1 - \alpha_{\lambda}(d))L_{d\lambda},
+                \label{eq:att}
+            \end{equation}
+            
+            \noindent kde $\omega$ značí směr od $p_w$ do $p_s$, $L_\lambda(p_w, \omega)$ je odchozí záření z bodu $p_w$ ve směru $\omega$, $d$ je vzdálenost $p_w$ a $p_s$, konstanta $L_{d \lambda}$ reprezentuje záření z rozptylu světla, $\alpha_\lambda$ je koeficient exponenciální útlum závislý na $d$
+            
+            \begin{equation}
+                \alpha_{\lambda}(d) = e^{-a_{\lambda} d},
+            \end{equation}
+
+            \noindent kde $a_\lambda$ útlumová konstanta závislá na vlasnostech vody. Protože obraz počítače pracuje v RGB barevné spektru rovnice \ref{eq:att} se musí pro jednotlivé kanály RGB
+            \begin{equation}
+             L_{RGB}(p_s, \omega) = (L_{R}(p_s, \omega), L_{B}(p_s, \omega), L_{B}(p_s, \omega)).
+            \end{equation}
+
         \subsection{Kaustiky}
         
     
