@@ -585,11 +585,19 @@ Během celé simulace opakuj
         
         Chování světla zachycují globální zobrazovací metody pro realistické vykreslení scén. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně off-line aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, real-time aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky se vrhají z pozice oka a na základě toho, kam po odrzech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
     
-        Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do rastareziční \emph{pipeliny}. 
+        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je navíc obvzlášt náročná pro zakomponování do rasterizačních \emph{pipeline}. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do rastareziční \emph{pipeliny}. 
                 
         \subsection{Odrazy světla}
         
             Voda má reflektivní vlastnosti, a proto barva její hladiny zavísí na tom, odkud světelný paprsek, který následně zasáhne příjímač, přijde. Paprsek světla, resp. paprsek vrženého z příjímače (oko, kamera), se od ideálně reflektivního povrchu odráží pod stejným úhlem jako, pod kterým parsek dopadá \cite{LightDir2009}.
+            
+            Odrazy scény na vodní hladině lze levně simulovat pomocí tzv. \emph{cubemap}. Jedná se o druh textur, které májí tvar krychle. Hlavní výhodou užití \emph{cubemap} je její způsob vzorkování, které místo 2D souřadnice využivá 3D vektor. Jestliže se střed \emph{cubemapy} (krychle) napozicuje na počátek souřadnic, vzorkovací 3D vektor následně směřuje na jednu jeho stranu krychle a podle toho, kde vektor protne stranu, převezme fragment barvu textury. Pro dosažení efektu odrazu scény pak stačí jako vzorkovací vektor zvolit vektor odrazu \cite{ReflectCubemap2022}. 
+            
+            \begin{figure}\centering
+                \includegraphics[width=0.5\textwidth]{img/cubemap}
+                \caption{Vzorkování odrazů scény, kde odražený pohledový parsek směřuje na horní stranu \emph{cubemapy}. \cite{ReflectCubemap2022}}
+                \label{fig:reflect_cube}
+            \end{figure}
             
         \subsection{Refrakce}
             
@@ -606,8 +614,6 @@ Během celé simulace opakuj
                 \caption{Odraz a refrakce paprsku \cite{ReRe2009}}
                 \label{fig:reflect}
             \end{figure}
-        
-        
     
         \subsection{Fresnelovy rovnice}
                 
@@ -657,8 +663,22 @@ Během celé simulace opakuj
 
         \subsection{Kaustiky}
         
-    
-
+            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Kaustiky jsou komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}, které vytváří nepravidelně osvětlené oblasti. Jedná se oběžný optický jev, lze jej vidět např. při osvětlení průhledné sklenice nebo pod hladinou moře (viz obrázek \ref{fig:caustics}).
+        
+            \begin{figure}\centering
+                \includegraphics[width=0.5\textwidth]{img/caustics}
+                \caption{Kaustika pod hladinou vody \cite{Caustics2009}}
+                \label{fig:caustics}
+            \end{figure}
+            
+            
+            Zobravání kaustik je bohužel náročná operace, neboť pro její simulaci je třeba vypočítat průsečíky paprsků s objekty ve scénách. V případě, že objekty, scény jsou jednoduché útvary jako kvádr nebo koule, lze takové průsečíky vypočítat \cite{Wallace2022}, ale tyto tvary se jen ojediněle vyskytují v hrách. Shah simuluje kaustiky pomocí metody podobné pro vytváření stínových map \cite{Shah2007}. Všechny výpočty pro aproximaci průsečíku počíta v prostoru obrazu. Výhodou této metody je, že dokáže reagovat na různě složité objekty a také na dynamické prostředí. Shahův algoritmus lze rozdělit na tyto části
+            
+            \begin{enumerate}
+             \item \textbf{Získání souřadnic příjímacích objektů:} Vykreslení příjímacích objektů, tj. objekty, na kterých se kaustika může zobrazit, z pohledu světelného zdroje do textury, které místo barvy ukládá světové souřadnice. 
+             \item \textbf{Z9}
+            \end{enumerate}
+        
 
                     
                     
