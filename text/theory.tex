@@ -663,7 +663,7 @@ Během celé simulace opakuj
 
         \subsection{Kaustiky}
         
-            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Kaustiky jsou komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}, které vytváří nepravidelně osvětlené oblasti. Jedná se oběžný optický jev, lze jej vidět např. při osvětlení průhledné sklenice nebo pod hladinou moře (viz obrázek \ref{fig:caustics}).
+            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Kaustiky jsou komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}. Jedná se oběžný optický jev, který vidět např. při osvětlení průhledné sklenice nebo pod hladinou moře (viz obrázek \ref{fig:caustics}).
         
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/caustics}
@@ -672,14 +672,53 @@ Během celé simulace opakuj
             \end{figure}
             
             
-            Zobravání kaustik je bohužel náročná operace, neboť pro její simulaci je třeba vypočítat průsečíky paprsků s objekty ve scénách. V případě, že objekty, scény jsou jednoduché útvary jako kvádr nebo koule, lze takové průsečíky vypočítat \cite{Wallace2022}, ale tyto tvary se jen ojediněle vyskytují v hrách. Shah simuluje kaustiky pomocí metody podobné pro vytváření stínových map \cite{Shah2007}. Všechny výpočty pro aproximaci průsečíku počíta v prostoru obrazu. Výhodou této metody je, že dokáže reagovat na různě složité objekty a také na dynamické prostředí. Shahův algoritmus lze rozdělit na tyto části
+            Zobravání kaustik je bohužel náročná operace, neboť pro její simulaci je třeba vypočítat průsečíky paprsků s objekty ve scénách. V případě, že objekty scény jsou jednoduché útvary jako kvádr nebo koule, lze takové průsečíky vypočítat \cite{Wallace2022}, ale tyto tvary se jen ojediněle vyskytují v hrách. Shah simuluje kaustiky skrz pomocnou mapu kaustik \cite{Shah2007}. Všechny výpočty pro aproximaci průsečíku počítá v prostoru obrazu. Výhodou této metody je, že dokáže reagovat na různě složité objekty a také na dynamické prostředí. Shahův algoritmus lze rozdělit na tyto části \cite{Shah2007}
             
             \begin{enumerate}
-             \item \textbf{Získání souřadnic příjímacích objektů:} Vykreslení příjímacích objektů, tj. objekty, na kterých se kaustika může zobrazit, z pohledu světelného zdroje do textury, které místo barvy ukládá světové souřadnice. 
-             \item \textbf{Z9}
+             \item \textbf{Získání souřadnic příjímacích objektů:} Shah nejdříve vykreslí příjímací objekty, tj. objekty, na kterých se kaustika může zobrazit, z pohledu světelného zdroje do textury, které místo barvy ukládá světové souřadnice. 
+             \item \textbf{Získání souřadnic a normál refraktovaného objektu:} Obdobně jako u prvního bodu refraktovaný objekt, v tomto případě hladina vody, vykreslí do jedné textuty, ale místo barvy uloží světové souřadnice fragmentu. Kromě souřadnic se do další textury navíc vykreslí hodnoty normál povrchu refraktovaného objektu.
+             \item \textbf{Vytvoření mapu kaustik:} Jednotlivé fragmenty refraktovaného objektu, které lze vidět z pohledu světla, promítne po aplikování Snellova zákona na příjímací objekty a zaznamená, na jaké místa příjímacích objektů body dopadly.
+             \item \textbf{Konečné vykreslení:} Každý příjímací objekt promítne do souřadnicového systému světla, aby mohl vypočítat texturovací souřadnice. Nakonec aplikuje mapu kaustik na příjímací objekty za pomocí vypočítaných souřadnic a vykreslí konečnou scénu.
             \end{enumerate}
-        
+            
+            Hlavní krok algoritmu je třetí bod a proto je v této části rozveden do většího detailu. Nejpodstatnější část tvorby mapy kaustik se nachází ve \emph{vertex shaderu}. Nejdříve Shah vykreslí body \cite{Shah2007}, které spolu vytváří mřížku o velikosti textury z druhého bodu, tj. o velikosti textury souřadnic a normál refraktovaného bodu. Učelem tété velikost je, aby pro každý takovýto bod náležel jeden texel textury refraktovaného objektu. Tyto body následně promítne na příjímací objekty. Ve \emph{vertex shaderu} by tento postup vypadal takto
+            
+            \begin{verbatim}
+Pro každý vrchol V proveď:
+    r = lomený směr světla
+    P = OdhadPrůsečíku(pozice V, směr r, textura příjímacích objektů)
+    vrať P
+            \end{verbatim}
 
+            Funkce \verb|OdhadPrůsečíku| provádí promítnutí vrcholu \verb|V| ve směru \verb|r| na příjímací objekty. Shah pro odhad průsečíku \verb|P| vrcholu \verb|V| a příjímacích objektů využívá vztahu \cite{Shah2007}
+            
+            \begin{equation}
+                P = V + d \cdot \mathbf{r}, 
+                \label{eq:approx}
+            \end{equation}
+
+            \noindent kde $V$ je světová pozice vrcholu \verb|V|, $P$ je pozice \verb|P|, $\mathbf{r}$ je směr \verb|r| a $d$ je délka vektoru $\mathbf{r}$. Úloha odhadu průsečíku je pak podle rovnice \ref{eq:approx} přeformulována na odhad délky $d$, protože kdyby byla hodnota $d$ rovna vzdálenosti $P$ od $V$, pak by rovnice \ref{eq:approx} popisovala reálný průsečík \verb|P|. 
+                
+            Shahův konečný odhad průsečíku $P_{2}$ vypočítává dvěma iteracemi vztahu \ref{eq:approx}. Nejdříve za $d$ dosadí hodnotu jedna. Poté vypočítá pozici $P_1 = V + 1 \cdot \mathbf{r}$, jehož souřadnice převede do prostoru světla a následně promítne na texturu příjímacích objektů. Promítnutím vrcholu $P_1$ zjistí jeho světovou souřadnici. Poslední odhad $d$ poté zvolí jako vzdálenost vrcholu $P_1$ od $V$. V pseudokódu vypadá funkce \verb|OdhadPrůsečíku| takto \cite{Shah2007}
+            
+            \begin{verbatim}
+OdhadPrůsečíku(float3 V, float3 r, texture2D recievers) 
+    P_1 = V + 1 * r
+    // převod souřadnic P_1 do systému souřadnic kamery 
+    cameraP_1 = maticeViewProj * float4(P_1, 1)  
+    // promítnutí bodu P_1 do příjímacích objektů
+    uvP_1 = 0.5 * (P_1.xy / P_1.w) + (0.5, 0.5)
+    // zjistění světových souřadnic P_1
+    worldP_1 = texture(recievers, uvP_1)
+    
+    P_2 = V + distance(V, worldP_1.xyz)
+    cameraP_2 = maticeViewProj * float4(P_2, 1)
+    uvP_2 = 0.5 * (P_2.xy / P_2.w) + (0.5, 0.5)
+    worldP_2 = texture(recievers, uvP_1)
+    vrať worldP_2
+            \end{verbatim}
+
+\section{Analýza technologií}
                     
                     
                     
