@@ -259,7 +259,7 @@
                 Pro real-time simulace může být tento přístup pomalý. V případě, že vodní útvar obsahuje $n$ částic, musí se funkce $f$ evaluovat $\mathcal{O}(n^2)$. Existují ale optimilizace, které rozdělují částice do pravidelné mřížky, čímž redukují složitost na $\mathcal{O}(n)$. Přestože ji lze vypočítat poměrně rychle, simulace se vůbec neopírá o\,NSE. 
                 
                 \subsubsection{Simulace podle Smoothed Particle Hydrodynamics}
-                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{\emph{Smoothed Particle Hydrodynamics}} \cite{Monaghan2005}. Monaghan vychází z interpolační metody \emph{Smoothed Particle Hydrodynamics} (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skálárních polí hustoty nebo tlaku. Celý algoritmus simulace vody podle SPH je shrnut tímto pseudokódem \cite{SPHPseudo2020}:  \begin{verbatim}
+                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{\emph{Smoothed Particle Hydrodynamics}} \cite{Monaghan2005}. Monaghan vychází z interpolační metody \emph{Smoothed Particle Hydrodynamics} (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skálárních polí hustoty nebo tlaku. Celý algoritmus simulace vody podle SPH je shrnut tímto pseudokódem \cite{SPHPseudo2020}:  \begin{Verbatim}[frame=single]
 Nastevení počátečních hodnot častíc. 
 Během celé doby simulace opakuj:
     Pro každou částici
@@ -272,7 +272,7 @@ Během celé doby simulace opakuj:
         Detekuj kolize.
     Integrace podle času.
     Vykreslení vody.    
-                    \end{verbatim}
+                    \end{Verbatim}
                     
                     SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracuje s vlastnostmi částic. SPH distribuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
                     
@@ -428,15 +428,19 @@ Během celé doby simulace opakuj:
                     \subsubsection{Simulace podle vlnové rovnice}
                         Vlnová rovnice nahlíží na vodní hladinu jako na napnutou elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikálně korektní pohyb pouhý Newtonův druhý zákon. Simulace je založena na transformaci výšky vrcholů roviny, pro kterou potřebuje dvě 2D pole \verb|u[i,j]| a \verb|v[i,j]|, které si uchovávájí výšku a rychlost buňky v bodě \verb|[i,j]|. Pro mřížku s rozestupy \verb|h| o velikosti \verb|N*N| pak algoritmus vypadá takto
                         
-                        \begin{Verbatim}
-Pro každé i, j proveď u[i, j] = u0[i, j] a v[i, j] = 0
+                        \begin{Verbatim}[frame=single]
+float u[N,N]
+float v[N,N]
+float unew[N,N]
+Pro každé i, j proveď u[i, j] = u0[i, j] a v[i, j] = 0.
 Během celé simulace opakuj
-   Pro každé i, j proveď
-       f = c^2*(u[i+1,j]+u[i-1,j]+u[i,j+1]+u[i,j-1]-4u[i,j])/h^2
-       v[i,j] += f*dt
-       unew[i,j] = u[i,j] + v[i,j]*dt
-   Pro každé i, j proveď
-       u[i,j] = unew[i,j]
+    Pro každé i, j proveď
+      f = c^2*(u[i+1,j]+u[i-1,j]+u[i,j+1]+u[i,j-1]-4u[i,j])/h^2
+      v[i,j] += f*dt;
+      unew[i,j] = u[i,j] + v[i,j]*dt
+    Pro každé i, j proveď
+      u[i,j] = unew[i,j]
+    Vykresli mřížku s výškovou mapou u.
                         \end{Verbatim}
                         
                         \noindent Pole \verb|u0| incializuje výšku jednotlivých bodů rovniny, \verb|dt| značí časový rozdíl mezi vykreslovacími smičkami.
@@ -453,7 +457,7 @@ Během celé simulace opakuj
                         \end{enumerate}
                         
                         \begin{figure}\centering
-                            \includegraphics[width=\textwidth]{img/waveeq}
+                            \includegraphics[width=0.6\textwidth]{img/waveeq}
                             \caption{Vlna v 1D: (a) vibrujicí struna, (b) zvětšení segmentu $AB$ \cite{WaveEq2022}} \label{fig:wave_eq}
                         \end{figure}
                         
@@ -581,17 +585,17 @@ Během celé simulace opakuj
                         
     \section{Optické vlastnosti}
         
-        U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak intereaktuje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objektu může na základě jeho materiálu dojít k třem možnosnostem, pohlcení fotonu, odražení nebo transmisi. Co lidské oko následně uvídí, závísí na světelných paprscích, které oko zásahne \cite{Light2009}.  
+        U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak intereaktuje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objektu může na základě jeho materiálu dojít k třem možnosnostem, pohlcení fotonu, odražení nebo transmisi. Co lidské oko následně uvídí, závísí na světelných paprscích, které oko zásahnou \cite{Light2009}.  
         
-        Chování světla zachycují globální zobrazovací metody pro realistické vykreslení scén. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně off-line aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, real-time aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky se vrhají z pozice oka a na základě toho, kam po odrzech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
+        Chování světla zachycují globální zobrazovací metody pro realistické vykreslení scén. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně \emph{off-line} aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, \emph{real-time} aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky vrhají z pozice oka a na základě toho, kam po odrzech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
     
-        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je navíc obvzlášt náročná pro zakomponování do rasterizačních \emph{pipeline}. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do rastareziční \emph{pipeliny}. 
+        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je obvzlášt náročně zakomponovatelná do rasterizačních \emph{pipeliny} kvůli restrikcím omezující, jaké informace lze zaslat grafickým kartám. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do rastareziční \emph{pipeliny}. 
                 
         \subsection{Odrazy světla}
         
-            Voda má reflektivní vlastnosti, a proto barva její hladiny zavísí na tom, odkud světelný paprsek, který následně zasáhne příjímač, přijde. Paprsek světla, resp. paprsek vrženého z příjímače (oko, kamera), se od ideálně reflektivního povrchu odráží pod stejným úhlem jako, pod kterým parsek dopadá \cite{LightDir2009}.
+            Voda má reflektivní vlastnosti, a proto barva její hladiny zavísí na tom, odkud světelný paprsek, který následně zasáhne příjímač, přijde. Paprsek světla, resp. paprsek vrženého z příjímače (oka, kamery), se od ideálně reflektivního povrchu odráží pod stejným úhlem jako, pod kterým parsek dopadá \cite{LightDir2009}.
             
-            Odrazy scény na vodní hladině lze levně simulovat pomocí tzv. \emph{cubemap}. Jedná se o druh textur, které májí tvar krychle. Hlavní výhodou užití \emph{cubemap} je její způsob vzorkování, které místo 2D souřadnice využivá 3D vektor. Jestliže se střed \emph{cubemapy} (krychle) napozicuje na počátek souřadnic, vzorkovací 3D vektor následně směřuje na jednu jeho stranu krychle a podle toho, kde vektor protne stranu, převezme fragment barvu textury. Pro dosažení efektu odrazu scény pak stačí jako vzorkovací vektor zvolit vektor odrazu \cite{ReflectCubemap2022}. 
+            Odrazy scény na vodní hladině lze levně simulovat pomocí tzv. \emph{cubemap}. Jedná se o druh textur, které májí tvar krychle. Hlavní výhodou užití \emph{cubemap} je její způsob vzorkování, které místo 2D souřadnice využivá 3D vektor. Jestliže se střed \emph{cubemapy} (krychle) napozicuje na počátek souřadnic, vzorkovací 3D vektor od počátku směřuje na jednu jeho stranu a podle toho, kde vektor protne stranu, převezme fragment barvu textury. Pro dosažení efektu odrazu scény pak stačí jako vzorkovací vektor zvolit vektor odrazu \cite{ReflectCubemap2022}. 
             
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/cubemap}
@@ -636,34 +640,35 @@ Během celé simulace opakuj
                 \end{split}
              \end{equation}
             
-            \noindent Koeficient $R$ popisuje intenzitu odraženého světla, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{ReRe2009}. Úhly $\theta_1$ a $\theta_2$ jsou úhly dopadu příchozího paprsku a lomeného paprsku. Konstanty $n_1$ a $n_2$ jsou IOR příchozího a odchozího prostředí. Protože koefecienty $R$ a $T$ závísí na polarizaci světla \cite{Fleck2007}, které rozlišujeme na s-polarizaci a p-polarizaci, jsou hodnoty vyčísleny jako průměry konstant $R_s$ a $R_p$, resp. $T_s$ a $T_r$.
+            \noindent Koeficient $R$ popisuje intenzitu odraženého světla, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{ReRe2009}. Úhly $\theta_1$ a $\theta_2$ jsou úhly dopadu příchozího paprsku a lomeného paprsku. Konstanty $n_1$ a $n_2$ jsou IOR příchozího a odchozího prostředí. Protože koefecienty $R$ a $T$ závísí na polarizaci světla \cite{Fleck2007}, které rozlišujeme na s-polarizaci a p-polarizaci, jsou hodnoty vyčísleny jako průměry konstant $R_s$ a $R_p$, resp. $T_s$ a $T_p$.
             
             V realitě lze tento optický fenomém nejvíce vidět u mělkých stojatých vod (viz obrázek \ref{fig:fresnel}). Místa, na která se díváme pod malým úhlem ($\theta_1$ v obrázku \ref{fig:reflect}), vídíme spíše průhledně, zatímco v místech, na která se díváme pod velkým úhlem, vidíme spíše odraz okolního prostředí.
             
             
     
         \subsection{Útlum světla}
-            Potom, co světlo protne hladinu, jeho paprsek může prochází ve vodě dvěma transformacemi, může dojít k rozptylu parsku nebo k absorbci světla. Absorbci způsobuje nejen délka dráhy paprsku a látky obsažené ve vodě, ale také mikroorganismů žíjících, které v ní žijí\cite{Akkaynak2017}. Jev, který je predominantním důsledkem absorbce, je např. distorze barevného spektra \cite{Fleck2007}. Na základě obsah vody jsou různé vlnové délky pohlceny. V moři kvůli vysokém obsahu soli dochází k vysoké absorbci barev s dlouhými vlnovými délkami jako červená, zatímco u vody s vysokým obsahem chlorofylu pohlcují vše kromě zelených barev \cite{Cerezo2002}. Protože mnoho faktorů hraje roli v absorbci, musí chování značně zjednodušit, aby je počítače stihly vypočítat. Baboud a Décoret \cite{Baboud2006} modelují záření s vlnovou délkou $\lambda$ odraženého z bodu ve vodě $p_g$ do bodu na hladině $p_s$ jako
+            Potom, co světlo protne hladinu, jeho paprsek prochází ve vodě dvěma transformacemi, může dojít k rozptylu parsku nebo k absorbci světla. Absorbci způsobuje nejen délka dráhy paprsku a látky obsažené ve vodě, ale také mikroorganismy žíjící v ní \cite{Akkaynak2017}. Jev, který je predominantním důsledkem absorbce, je např. distorze barevného spektra \cite{Fleck2007}. Na základě obsah vody jsou různé vlnové délky pohlceny. Např. v moři kvůli vysokém obsahu soli dochází k vysoké absorbci barev s dlouhými vlnovými délkami jako červená nebo u vody s vysokým obsahem chlorofylu pohlcují vše kromě zelených barev \cite{Cerezo2002}. Protože mnoho faktorů hraje roli v absorbci, musí se chování značně zjednodušit, aby je počítače stihly vypočítat. Baboud a Décoret \cite{Baboud2006} modelují záření s vlnovou délkou $\lambda$ odraženého z bodu ve vodě $p_w$ do bodu na hladině $p_s$ jako
             
             \begin{equation}
                 L_\lambda(p_s, \mathbf{\omega}) = \alpha_{\lambda}(d)L_{\lambda}(p_w, \mathbf{\omega}) + (1 - \alpha_{\lambda}(d))L_{d\lambda},
                 \label{eq:att}
             \end{equation}
             
-            \noindent kde $\omega$ značí směr od $p_w$ do $p_s$, $L_\lambda(p_w, \omega)$ je odchozí záření z bodu $p_w$ ve směru $\omega$, $d$ je vzdálenost $p_w$ a $p_s$, konstanta $L_{d \lambda}$ reprezentuje záření z rozptylu světla, $\alpha_\lambda$ je koeficient exponenciální útlum závislý na $d$
+            \noindent kde $\omega$ značí směr od $p_w$ do $p_s$, $L_\lambda(p_w, \omega)$ je odchozí záření z bodu $p_w$ ve směru $\omega$, $d$ je vzdálenost $p_w$ mezi $p_s$, konstanta $L_{d \lambda}$ reprezentuje záření z rozptylu světla, $\alpha_\lambda(d)$ je koeficient exponenciálního útlumu závislý na $d$
             
             \begin{equation}
                 \alpha_{\lambda}(d) = e^{-a_{\lambda} d},
             \end{equation}
 
-            \noindent kde $a_\lambda$ útlumová konstanta závislá na vlasnostech vody. Protože obraz počítače pracuje v RGB barevné spektru rovnice \ref{eq:att} se musí pro jednotlivé kanály RGB
+            \noindent kde $a_\lambda$ je útlumová konstanta závislá na vlasnostech vody. Protože obraz počítače pracuje v RGB barevném spektru rovnice \ref{eq:att} se musí aplikovat pro jednotlivé kanály RGB
+            
             \begin{equation}
              L_{RGB}(p_s, \omega) = (L_{R}(p_s, \omega), L_{B}(p_s, \omega), L_{B}(p_s, \omega)).
             \end{equation}
 
         \subsection{Kaustiky}
         
-            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Kaustiky jsou komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}. Jedná se oběžný optický jev, který vidět např. při osvětlení průhledné sklenice nebo pod hladinou moře (viz obrázek \ref{fig:caustics}).
+            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Vytvářejí komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}. Běžně je lze vidět např. při osvětlení sklenice nebo hladiny moře (viz obrázek \ref{fig:caustics}).
         
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/caustics}
@@ -672,23 +677,27 @@ Během celé simulace opakuj
             \end{figure}
             
             
-            Zobravání kaustik je bohužel náročná operace, neboť pro její simulaci je třeba vypočítat průsečíky paprsků s objekty ve scénách. V případě, že objekty scény jsou jednoduché útvary jako kvádr nebo koule, lze takové průsečíky vypočítat \cite{Wallace2022}, ale tyto tvary se jen ojediněle vyskytují v hrách. Shah simuluje kaustiky skrz pomocnou mapu kaustik \cite{Shah2007}. Všechny výpočty pro aproximaci průsečíku počítá v prostoru obrazu. Výhodou této metody je, že dokáže reagovat na různě složité objekty a také na dynamické prostředí. Shahův algoritmus lze rozdělit na tyto části \cite{Shah2007}
+            Zobrazování kaustik je bohužel náročná operace, neboť pro její simulaci je třeba vypočítat průsečíky paprsků s objekty ve scénách. V případě, že objekty scény jsou jednoduché útvary jako kvádr nebo koule, lze takové průsečíky jednoduše analyticky vypočítat \cite{Wallace2022}, ale tyto tvary se jen ojediněle vyskytují v hrách. Shah proto simuluje kaustiky skrz pomocnou mapu kaustik \cite{Shah2007}. Všechny výpočty pro aproximaci průsečíku počítá v prostoru obrazu. Výhodou této metody je, že dokáže reagovat na různě složité objekty a také na dynamické prostředí. Shahův algoritmus lze rozdělit na tyto části \cite{Shah2007}:
             
             \begin{enumerate}
-             \item \textbf{Získání souřadnic příjímacích objektů:} Shah nejdříve vykreslí příjímací objekty, tj. objekty, na kterých se kaustika může zobrazit, z pohledu světelného zdroje do textury, které místo barvy ukládá světové souřadnice. 
+             \item \textbf{Získání souřadnic příjímacích objektů:} Shah nejdříve vykreslí příjímací objekty (nebo příjímače), tj. objekty, na kterých se kaustika může zobrazit, z pohledu světelného zdroje do textury, které místo barvy ukládá světové souřadnice. 
              \item \textbf{Získání souřadnic a normál refraktovaného objektu:} Obdobně jako u prvního bodu refraktovaný objekt, v tomto případě hladina vody, vykreslí do jedné textuty, ale místo barvy uloží světové souřadnice fragmentu. Kromě souřadnic se do další textury navíc vykreslí hodnoty normál povrchu refraktovaného objektu.
              \item \textbf{Vytvoření mapu kaustik:} Jednotlivé fragmenty refraktovaného objektu, které lze vidět z pohledu světla, promítne po aplikování Snellova zákona na příjímací objekty a zaznamená, na jaké místa příjímacích objektů body dopadly.
              \item \textbf{Konečné vykreslení:} Každý příjímací objekt promítne do souřadnicového systému světla, aby mohl vypočítat texturovací souřadnice. Nakonec aplikuje mapu kaustik na příjímací objekty za pomocí vypočítaných souřadnic a vykreslí konečnou scénu.
             \end{enumerate}
             
-            Hlavní krok algoritmu je třetí bod a proto je v této části rozveden do většího detailu. Nejpodstatnější část tvorby mapy kaustik se nachází ve \emph{vertex shaderu}. Nejdříve Shah vykreslí body \cite{Shah2007}, které spolu vytváří mřížku o velikosti textury z druhého bodu, tj. o velikosti textury souřadnic a normál refraktovaného bodu. Učelem tété velikost je, aby pro každý takovýto bod náležel jeden texel textury refraktovaného objektu. Tyto body následně promítne na příjímací objekty. Ve \emph{vertex shaderu} by tento postup vypadal takto
+            Hlavní krok algoritmu je třetí bod, a proto je v této části rozveden do většího detailu. Nejpodstatnější část tvorby mapy kaustik se nachází ve \emph{vertex shaderu}. Nejdříve Shah vykreslí body \cite{Shah2007}, které spolu vytváří mřížku o velikosti textury z druhého bodu, tj. o velikosti textury souřadnic a normál refraktovaného bodu. Učelem této velikost je, aby pro každý takovýto bod náležel jeden texel textury, a v případě, že bod, resp. texel, náleží refraktovanému objektu, promítne ho na příjímací objekty. Ve \emph{vertex shaderu} by tento postup vypadal takto
             
-            \begin{verbatim}
-Pro každý vrchol V proveď:
-    r = lomený směr světla
-    P = OdhadPrůsečíku(pozice V, směr r, textura příjímacích objektů)
-    vrať P
-            \end{verbatim}
+            \begin{Verbatim}[frame=single]
+Pro každý vrchol V proveď
+    Jestli vrchol V patří refraktovanému objektu:
+        r = lomený směr příchozího světla
+        P = OdhadPrůsečíku(pozice V, směr r, textura příjímačů)
+        Vrať P.
+    Jinak
+        Označ, že vrchol V je nevalidní.
+        Vrať pozici V.
+            \end{Verbatim}
 
             Funkce \verb|OdhadPrůsečíku| provádí promítnutí vrcholu \verb|V| ve směru \verb|r| na příjímací objekty. Shah pro odhad průsečíku \verb|P| vrcholu \verb|V| a příjímacích objektů využívá vztahu \cite{Shah2007}
             
@@ -697,26 +706,26 @@ Pro každý vrchol V proveď:
                 \label{eq:approx}
             \end{equation}
 
-            \noindent kde $V$ je světová pozice vrcholu \verb|V|, $P$ je pozice \verb|P|, $\mathbf{r}$ je směr \verb|r| a $d$ je délka vektoru $\mathbf{r}$. Úloha odhadu průsečíku je pak podle rovnice \ref{eq:approx} přeformulována na odhad délky $d$, protože kdyby byla hodnota $d$ rovna vzdálenosti $P$ od $V$, pak by rovnice \ref{eq:approx} popisovala reálný průsečík \verb|P|. 
+            \noindent kde $V$ je světová pozice vrcholu \verb|V|, $P$ je světová pozice \verb|P|, $\mathbf{r}$ je směr \verb|r| a $d$ je délka vektoru $\mathbf{r}$. Úloha odhadu průsečíku je pak podle rovnice \ref{eq:approx} přeformulována na odhad délky $d$, protože kdyby byla hodnota $d$ rovna vzdálenosti $P$ od $V$, pak by rovnice \ref{eq:approx} popisovala reálný průsečík \verb|P|. 
                 
-            Shahův konečný odhad průsečíku $P_{2}$ vypočítává dvěma iteracemi vztahu \ref{eq:approx}. Nejdříve za $d$ dosadí hodnotu jedna. Poté vypočítá pozici $P_1 = V + 1 \cdot \mathbf{r}$, jehož souřadnice převede do prostoru světla a následně promítne na texturu příjímacích objektů. Promítnutím vrcholu $P_1$ zjistí jeho světovou souřadnici. Poslední odhad $d$ poté zvolí jako vzdálenost vrcholu $P_1$ od $V$. V pseudokódu vypadá funkce \verb|OdhadPrůsečíku| takto \cite{Shah2007}
+            Shahův konečný odhad průsečíku $P_{2}$ vypočítává dvěma iteracemi vztahu \ref{eq:approx}. Nejdříve za $d$ dosadí hodnotu jedna. Poté vypočítá pozici $P_1 = V + 1 \cdot \mathbf{r}$, jehož souřadnice převede do prostoru světla a následně promítne na texturu příjímacích objektů. Promítnutním vrcholu $P_1$ zjistí jeho světovou souřadnici na přijímači. Poslední odhad $d$ poté zvolí jako vzdálenost vrcholu $P_1$ od $V$. V pseudokódu vypadá funkce \verb|OdhadPrůsečíku| takto \cite{Shah2007}
             
-            \begin{verbatim}
-OdhadPrůsečíku(float3 V, float3 r, texture2D recievers) 
+            \begin{Verbatim}[frame=single]
+OdhadPrůsečíku(float3 V, float3 r, texture2D receivers) 
     P_1 = V + 1 * r
     // převod souřadnic P_1 do systému souřadnic kamery 
-    cameraP_1 = maticeViewProj * float4(P_1, 1)  
+    cameraP_1 = cameraViewProjectionMatrix * float4(P_1, 1)  
     // promítnutí bodu P_1 do příjímacích objektů
     uvP_1 = 0.5 * (P_1.xy / P_1.w) + (0.5, 0.5)
     // zjistění světových souřadnic P_1
-    worldP_1 = texture(recievers, uvP_1)
+    worldP_1 = texture(receivers, uvP_1)
     
     P_2 = V + distance(V, worldP_1.xyz)
-    cameraP_2 = maticeViewProj * float4(P_2, 1)
+    cameraP_2 = cameraViewProjectionMatrix * float4(P_2, 1)
     uvP_2 = 0.5 * (P_2.xy / P_2.w) + (0.5, 0.5)
-    worldP_2 = texture(recievers, uvP_1)
-    vrať worldP_2
-            \end{verbatim}
+    worldP_2 = texture(receivers, uvP_2)
+    Vrať worldP_2.
+            \end{Verbatim}
 
 \section{Analýza technologií}
                     
