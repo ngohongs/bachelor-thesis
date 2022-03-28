@@ -597,6 +597,12 @@ Během celé simulace opakuj
             
             Odrazy scény na vodní hladině lze levně simulovat pomocí tzv. \emph{cubemap}. Jedná se o druh textur, které májí tvar krychle. Hlavní výhodou užití \emph{cubemap} je její způsob vzorkování, které místo 2D souřadnice využivá 3D vektor. Jestliže se střed \emph{cubemapy} (krychle) napozicuje na počátek souřadnic, vzorkovací 3D vektor od počátku směřuje na jednu jeho stranu a podle toho, kde vektor protne stranu, převezme fragment barvu textury. Pro dosažení efektu odrazu scény pak stačí jako vzorkovací vektor zvolit vektor odrazu \cite{ReflectCubemap2022}. 
             
+            \emph{Cubemapy} ale nedokáží reflektovat geometrie scény, neboť se skládá ze statických obrazů. Řešením může být např. \emph{cubemapy} vykreslit dynamicky, tj. vykreslit šest stran krychle a namapovat je na \emph{cubemapu}. Takto vytvořená textura ale by reflektovala objekty, jakoby stály v dáli. 
+            
+            Pro geometrie, které jsou v blízkém okolí reflektujícího objektu, řeší Lettier \cite{Lettier2019} odrazy světla pomocí zjednodušené metody \emph{raytracingu}, která počítá průsečíku v prostoru obrazu. Lettier nejdříve vykreslí scénu z pohledu kamery do tří pomocných textur, do první vykreslí scénu, jakoby by byla textura displaj monitoru, do druhé místo barvy fragmentu uloží pozice interpolovaných vrcholů a do další hodnoty jejich normál. Následně vyšle z káždého pixelu, resp. texelu, prostoru obrazu, reps. textury, paprsek, a jestli se paprsek odrazí od reflektujícího objektu, prochází podél paprsku po malých inkrementech a kontroluje, zda nepotrl nějakou geometrii ve scéně. Při průniků si daný fragment, z kterého vyšel paprsek, zaznamená barvu zasažené geometrie uložené v textuře.
+            
+            Limitováním prostoru na prostor obrazu přínaší nějaké nedostatky této metody. Tou největší je právě prostor, od kterého se paprsky odráží, neboť kamera vždy směřuje do předu, nemůže metoda odrážet předměty za kamerou. Podobný problém může nastat i ve předu kamery, kdy odražený paprsek narazí na geometrii v nějakém rohu, který ale kamera nevidí.
+            
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/cubemap}
                 \caption{Vzorkování odrazů scény, kde odražený pohledový parsek směřuje na horní stranu \emph{cubemapy}. \cite{ReflectCubemap2022}}
@@ -612,13 +618,17 @@ Během celé simulace opakuj
             \end{equation}
 
             \noindent kde $\theta_1$ značí úhel dopadu příchozího světla, $\theta_2$ je úhel lomoného paprsku (viz obrázek \ref{fig:reflect}), $n_1$ a $n_2$ jsou refraktivní index (IOR) příchozícho a odchozího prostředí.
-    
+            
+            Refrakce lze naimplementovat podobně jako reflekce podle Lettierovy metody \cite{Lettier2019, LettierRefract2019}. Místo ale odrazeného paprsku pracuje s refraktovaným. Další modifikace metody reklecí je, že místo obyčejné scény, kterou si uloží do pomocné textury, si musí vykreslit scénu, ale bez refraktivních objektů. Důvodem je, že textura slouží pro vzorkování barvy odraženého paprsku, u reflekcí odražený paprsek může znovu narazit na reflektující objekt, zatímco u refrakcí paprsek prochází skrz objekt, a proto by vzorkovaná barva by měla být až ta, která je za refraktivním objektem.  
+            
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/reflection_and_refraction}
                 \caption{Odraz a refrakce paprsku \cite{ReRe2009}}
                 \label{fig:reflect}
             \end{figure}
     
+           
+            
         \subsection{Fresnelovy rovnice}
                 
             \begin{figure}\centering 
@@ -727,7 +737,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
     Vrať worldP_2.
             \end{Verbatim}
 
-\section{Analýza technologií}
+\chapter{Analýza technologií}
                     
                     
                     
