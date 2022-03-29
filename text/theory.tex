@@ -589,7 +589,7 @@ Během celé simulace opakuj
         
         Chování světla zachycují globální zobrazovací metody pro realistické vykreslení scén. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně \emph{off-line} aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, \emph{real-time} aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky vrhají z pozice oka a na základě toho, kam po odrzech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
     
-        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je obvzlášt náročně zakomponovatelná do rasterizačních \emph{pipeliny} kvůli restrikcím omezující, jaké informace lze zaslat grafickým kartám. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do rastareziční \emph{pipeliny}. 
+        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je obvzlášt náročně zakomponovatelná do renderovací \emph{pipeliny} kvůli restrikcím omezující, jaké informace lze zaslat grafickým kartám. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do renderovací \emph{pipeliny}. 
                 
         \subsection{Odrazy světla}
         
@@ -737,10 +737,43 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
     Vrať worldP_2.
             \end{Verbatim}
 
-\chapter{Analýza technologií}
-                    
-                    
-                    
-                
+\chapter{Technologie pro real-time simulaci}
+    
+    Techonologie je rozhodujícím faktorem pro výběr algoritmu pro \emph{real-time} simulaci vody. Podle Müllera by její výpočet měla v herních \emph{enginech} trvat jen malý zlomek 15 ms, které je třeba pro vykreslení jednoho snímku scény \cite{Mueller2008}. Simulace lze do jisté míry provádět na procesoru počítače, ale pro větší vodní útvary je přínosné provádět kalkulace parlalelně na grafické kartě. 
+    
+    \section{Renderovací knihovny}
+        Po výpočtu simulace musí aplikace nějakým způsobem zobrazit výslednou geometrii, k tomu slouží tzv. renderovací API. Renderovací API nabízí rozhraní, které umožňuje uživateli manipulovat obrazem skrz grafické karty.
+        
+        \subsection{OpenGL}
+            OpenGL je více platformové grafické API, pro přesnost se jedná o specifikaci grafického API. OpenGL specifikuje, jak a co jednotlivé funkce mají provádět, na základě tichto požadavků si výrobci grafických karet a vývojáří operačních systému implementují vlastní řešení daných funkcí. \cite{Vries2022}
+            
+            Dřívější verze OpenGL, tj. před verzí 3.2, využívaly tzv. fixní \emph{pipelinu}, pro vykreslování obrazu. Její funkce byly téměř omezené jen na renderování jednoduchých primitiv jako čáry, body nebo trojúhelníky a nedávaly programátorům žádnou volnost pro jejich modifikaci. \cite{Vries2022}
+            
+            Od verze 3.2 a výše OpenGL změnilo přístup vykreslování obrazu. Všechný fixní funkce \emph{pipeliny} nahradilo programovatelnými verzemi, které umožnily vývojářům mít větší kontrolu nad výsledným obrazem. Toho bylo docíleno pomocí tzv. vlastních \emph{shader} programů \cite{Vries2022}
+            
+            Proces renderování skrz OpenGL lze rozdělit do dvou hlavních fází: transformace 3D geometrie do 2D prostoru obrazu a vybarvení jednotlivých pixelů obrazu \cite{Vries2022}. Zjednodušený průběh je znázorněn v diagramu \ref{fig:opengl_pipeline}.  
+            \begin{figure}\centering
+                \includegraphics[width=0.75\textwidth]{img/openglpipe}
+                \caption{Diagram zjednodušeného průběhu renderovací \emph{pipeliny} OpenGL \cite{Kwolek2020}}
+                \label{fig:opengl_pipeline}
+            \end{figure}
+            
+            Nejdříve se z aplikační části programu zašlou data o geometrii skrz tzv. \emph{vertex buffer} (VBO) grafické kartě. Data minimálně obsahují informace o pozicích vrcholů objektu a volitelně i vlastní dodatečné informace jako hodnoty jejich normál nebo jejich barvy. 
+            
+            Od této chvíle všechny operace probíhají paralelně na grafické kartě. Nad každým vrcholem z VBO proběhne povinná část \emph{shader} programu tzv. \emph{vertex shader}. \emph{Vertex shader} může pracovat se všemi informacemi jednoho vrcholu, tj. nemá přístup k datům okolních vrcholů. Ve \emph{vertex shaderu} se provedou nad vrcholem vlastně definované operace, ale povinně musí předat grafické kartě jeho finalní pozici. 
+            
+            V další fázi dochází z předaných vrcholů k sestavení primitv (body, usečky, trojúhelníky). Poté lze i s primitivy manipulvat skrz \emph{geometry shader}, volitné části \emph{shader} programu. Vygenerované primitiva lze uložit do \emph{transform feedback bufferu} \cite{TFB2022}.
+            
+            Poté dojde k rasterizaci primitiv z předešlé fáze, která diskretizuje primitiva na fragmenty  (potenciální pixely obrazu). Nad fragmenty proběhne povinná část \emph{shader} programu tzv. \emph{fragment shader}. \emph{Fragment shadery} manipulují zejména s barvami fragmentů, které nakonci musí předat grafické kartě.
+            
+            Nakonec po operacích viditelnosti fragmentů jako testování hloubky je výsledný obraz vykreslen do \emph{framebufferu}.
+            
+        
+        \subsection{DirectX}
+            DirectX je alternativa OpenGL od společnosti Microsoft. Oproti OpenGL je DirectX uzavřený na platformy s operačními systémy od Microsoftu, dále kromě vykreslovacích fukcionalit obsahuje i rozhrání pro práci se zvukem, sítí a vstupními daty od uživatele. Princip vykreslování je stejně jako u OpenGL založené na grafické \emph{pipelině}. \cite{Allain1996}
+       
+       \subsection{Vulkan}            
+            Vulkan je nízkoúroňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává jěště větší kontrolu nad procesech při vykresovální obrazu za účelem optimazace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022}    
 
 
+    \section{Herní enginy}
