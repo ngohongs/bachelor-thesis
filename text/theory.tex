@@ -742,14 +742,15 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
     Techonologie je rozhodujícím faktorem pro výběr algoritmu pro \emph{real-time} simulaci vody. Podle Müllera by její výpočet měla v herních \emph{enginech} trvat jen malý zlomek 15 ms, které je třeba pro vykreslení jednoho snímku scény \cite{Mueller2008}. Simulace lze do jisté míry provádět na procesoru počítače, ale pro větší vodní útvary je přínosné provádět kalkulace parlalelně na grafické kartě. 
     
     \section{Renderovací knihovny}
-        Po výpočtu simulace musí aplikace nějakým způsobem zobrazit výslednou geometrii, k tomu slouží tzv. renderovací API. Renderovací API nabízí rozhraní, které umožňuje uživateli manipulovat obrazem skrz grafické karty.
+        
+        Aby bylo možné předat data o vodní ploše a informace, jak ji vykreslit na obrazovku, grafickým kartám se v programech používá tzv. grafických API. Grafické API nabízí rozhraní, které umožňuje uživateli manipulovat obraz skrz grafické karty.
         
         \subsection{OpenGL}
             OpenGL je více platformové grafické API, pro přesnost se jedná o specifikaci grafického API. OpenGL specifikuje, jak a co jednotlivé funkce mají provádět, na základě tichto požadavků si výrobci grafických karet a vývojáří operačních systému implementují vlastní řešení daných funkcí. \cite{Vries2022}
             
             Dřívější verze OpenGL, tj. před verzí 3.2, využívaly tzv. fixní \emph{pipelinu}, pro vykreslování obrazu. Její funkce byly téměř omezené jen na renderování jednoduchých primitiv jako čáry, body nebo trojúhelníky a nedávaly programátorům žádnou volnost pro jejich modifikaci. \cite{Vries2022}
             
-            Od verze 3.2 a výše OpenGL změnilo přístup vykreslování obrazu. Všechný fixní funkce \emph{pipeliny} nahradilo programovatelnými verzemi, které umožnily vývojářům mít větší kontrolu nad výsledným obrazem. Toho bylo docíleno pomocí tzv. vlastních \emph{shader} programů \cite{Vries2022}
+            Od verze 3.2 a výše OpenGL změnilo přístup vykreslování obrazu. Všechný fixní funkce \emph{pipeliny} nahradilo programovatelnými verzemi, které umožnily vývojářům mít větší kontrolu nad výsledným obrazem. Toho bylo docíleno pomocí tzv. vlastních \emph{shader} programů. \cite{Vries2022}
             
             Proces renderování skrz OpenGL lze rozdělit do dvou hlavních fází: transformace 3D geometrie do 2D prostoru obrazu a vybarvení jednotlivých pixelů obrazu \cite{Vries2022}. Zjednodušený průběh je znázorněn v diagramu \ref{fig:opengl_pipeline}.  
             \begin{figure}\centering
@@ -768,12 +769,21 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             Nakonec po operacích viditelnosti fragmentů jako testování hloubky je výsledný obraz vykreslen do \emph{framebufferu}.
             
+        \subsection{Vulkan}            
+            Vulkan je nízkoúroňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává jěště větší kontrolu nad procesech při vykresovální obrazu za účelem optimazace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
         
         \subsection{DirectX}
-            DirectX je alternativa OpenGL od společnosti Microsoft. Oproti OpenGL je DirectX uzavřený na platformy s operačními systémy od Microsoftu, dále kromě vykreslovacích fukcionalit obsahuje i rozhrání pro práci se zvukem, sítí a vstupními daty od uživatele. Princip vykreslování je stejně jako u OpenGL založené na grafické \emph{pipelině}. \cite{Allain1996}
-       
-       \subsection{Vulkan}            
-            Vulkan je nízkoúroňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává jěště větší kontrolu nad procesech při vykresovální obrazu za účelem optimazace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022}    
+            DirectX je alternativa OpenGL od společnosti Microsoft. Oproti OpenGL je DirectX uzavřený na platformy s operačními systémy od Microsoftu, dále kromě vykreslovacích fukcionalit obsahuje i rozhrání pro práci se zvukem, sítí a vstupními daty od uživatele. Princip vykreslování je stejně jako u OpenGL založené na grafické \emph{pipelině}. \cite{Allain1996} Do verze DirectX 11 se principově podobal OpenGL, ale od verze DirectX 12 změnil svoji filozofii podobně jako Vulkan, který dává uživateli větší kontrolu nad hardwarem \cite{Vulkan2022}.
 
 
     \section{Herní enginy}
+    
+        Jestli je hlavním cílem vyproduktovat hru nebo \emph{real-time} aplikace, programování vlastního herní enginu může být časově neefektivní. OpenGL, DirectX a Vulkan jsou jen grafické API, na kterých jsou založeny renderovací \emph{enginy}, což tvoří jen malou část herních \emph{enginů}. Kromě nich obsahuje herní \emph{engine} AI, fyzikální, kolizový \emph{engine} a nástroje pro práci se vstupy od uživatele aplikace, a proto by bylo časově výhodné použít z některých komerčních herních \emph{enginů}. \cite{GameEngine2022} Lze je využít nejen pro hry, ale obecně i pro ostatní  \emph{real-time} aplikace a v součanosti i ve filmovém průmyslu. 
+        
+        \subsection{Unity}
+        
+            Unity je víceplatformový herní engine se s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platform, pro které lze vyvýjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
+            
+        \subsection{Unreal Engine}
+        
+            Unreal Engine je v oblasti herních \emph{enginů} hlavní kokurentem Unity. Oproti Unity využívá pro práci programovací jazyka C++. Cílové skupina pro Unreal Engine jsou spíše aplikace jako AAA hry, které jsou graficky náročně, díky jeho rychlosti a nástrojům pro fotorealistké zobrazení obrazu. \cite{UnityUnreal2022}
