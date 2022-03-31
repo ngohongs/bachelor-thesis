@@ -790,6 +790,15 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         
             Unity je víceplatformový herní engine se s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platform, pro které lze vyvýjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
             
+            Protože Unity podporuje různou škálu platform, obsahuje abstrakntí vrstvu nad grafickými API, která obsahuje OpenGL, DirectX nebo další jako Metal. Unity pro programování svých \emph{shader} programů používá zejména jazyk HLSL, proprietární jazyk DirectX, ale lze využít i jazyka určený pro OpenGL a Vulkanu GLSL. Výhodou HLSL je jeho univerzálnost, protože Unity nabízí jeho překlad skrz svůj kompilátor do ostatních jazyků. \cite{GLSLUnity2022}
+            
         \subsection{Unreal Engine}
         
             Unreal Engine je v oblasti herních \emph{enginů} hlavní kokurentem Unity. Oproti Unity využívá pro práci programovací jazyka C++. Cílové skupina pro Unreal Engine jsou spíše aplikace jako AAA hry, které jsou graficky náročně, díky jeho rychlosti a nástrojům pro fotorealistké zobrazení obrazu. \cite{UnityUnreal2022}
+            
+            Podobně jako i Unity používá Unreal Engine více grafických API a ve svých \emph{shader} programech používá HLSL, které volitelně může přeložit skrz svůj \emph{HLSL Cross Compiler} do optimalizovaného GLSL programu. \cite{GLSLUnreal2022}
+
+    \chapter{Shrnutí analýzy}
+        \section{Volba algrotimu}
+        \section{Volba technologií}
+        \section{Funkční a nefunkční požadavky}
