@@ -799,6 +799,24 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             Podobně jako i Unity používá Unreal Engine více grafických API a ve svých \emph{shader} programech používá HLSL, které volitelně může přeložit skrz svůj \emph{HLSL Cross Compiler} do optimalizovaného GLSL programu. \cite{GLSLUnreal2022}
 
     \chapter{Shrnutí analýzy}
-        \section{Volba algrotimu}
+        Tato kapitola je věnována shrnutí metod pro simulaci vody a nástrojů, pomocí kterých je lze implementovat. Na základě předešlé analýzy jsou následně zvolené algoritmy a nástroje pro implementační část bakálařské práce. Na závěr jsou zde uvedeny funkční a nefunkční požadavky kladené na prototyp simulace.
+        
+        \section{Volba algoritmu}
+        
+            Procedulární metody jsou určené pro vykreslení rozsáhlých vodních ploch, některého jeho implementace, zejména ty založené na IFFT, mají výsledné vodní hladiny nerozpoznatelné od tich reálných. Na druhou stranu nedovulují stejnou míru interakce jako ostatní.
+            
+            Metody založené na částicových systémech výměnou za výpočetní náročnost se snaží řídít co nejvěruhodněji fyzikálním zákonům. Dokážou reagovat na externí síly a při vysokém počtu částic lze dosáhnout fotorealistických výsledků. Bohužel kvůli její výpočetní náročnosti se je vyplatí využít jen pro malé vodní útvary. Při volbě této metody pro útvary jako moře nebo rybníky nemusí být simulace dostatečně rychlá pro \emph{real-time} pozorování.
+            
+            Hybridní metody jsou kompromisem mezi částicovými systémy a procedulární metody. Problematiku redukují do 2D prostorů jako procedulární, ale zachovávají jistou míru interakce s dynamickým světem. Simulace pomocí vlnové rovnice se navíc řídí i fyzikálními zákony, i když bere v potaz je hladinu vody, výsledné vizuální provedení je dobrou aproximací vodní plochy. Oproti částicovým systému se její výpočet tolik neškáluje s větším rozlohou vodního povrchu, a proto je lze využít pro simulaci jak menší, tak i větších vodních útvarů. Tyto důvody mne přesvědčily pro volbu hybridní metody založené na výpočtu vlnové rovnice pro implementaci do mého prototypu.
+            
+            Většina fyzikálně korektní algoritmů pro simulaci optických vlastností je založena na metodě vrhání paprsků, které bohužel většina současného hardwaru nepodporuje. Proto jsem zvolil pro  simulaci optických vlastností metody aproximující \emph{ray-tracing} pomocí výpočtu v prostoru obrazu. Tyto metody využívají pro simulaci pomocné textury, v kterých jsou uložené podpůrné data pro výpočet průsečíků.
+            
         \section{Volba technologií}
-        \section{Funkční a nefunkční požadavky}
+        
+            Grafické API nabízí rozhraní pro práci s obrazem skrz grafické karty. Poskytují \emph{shader} programy, které dovolují svým uživatelům manipulovat nejenom barvami objektů, ale také i jeho geometrií. Zatímco herní jádra budují nad grafickými API další podpůrné nástroje vhodné pro vývoj her jako AI nebo fyzikální \emph{enginy}.
+            
+            Pro implementaci prototypu jsem se rozhodl vybrat grafického API OpenGL a to z následujících důvodu. Prvním důvodem je, že velká většina algortimů (procedulární, hybridní metody) jsou založeny na transformaci geometrie a jeho následné optické vlastnosti spočívájí ve výpočtu barvy povrchu vody podle pozic kamery (oka) a pozorované bodu hladiny. Tyto operace jsou stěžejními částmi v simulaci, které lze jednoduše paralelizovat pomocí nabízené nástroj API \emph{shader} programů. Dalším důvodem, proč jsem nezvolil herní \emph{engine} pro svůj vývoj prototyp, je, že výše zmíněné algoritmy potřebují ke svému fungování jen renderovací \emph{pipelinu} grafických API a dalších volitelných nástrojů herního jádra by se v prototypu téměř vůbec nevyužilo. Posledním důvodem je, že i při volbě herního \emph{enginu} by stejně výsledná implementace přeložila do grafického API. S použítím samostatného OpenGL bych měl kontrolu nad vykreslování a to bez žádného prostředníka. 
+            
+            Volba mezi grafickými API jako DirectX nebo Vulkan oproti OpenGL je poté jenom z mé preference. OpenGL a DirectX jsou téměř svými ekvivalenty. U Vulkan je oproti ostatním na druhou stranu příliš nízkoúrovňový rozhraním a následná implemetace v něm by byla příliš náročná a zbytečně zdlouhavá.
+            
+        \section{Model požadavků}
