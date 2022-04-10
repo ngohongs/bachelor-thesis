@@ -827,7 +827,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             \begin{table}
                     \centering
-                    \caption{Funkčních požadavků simulátoru a aplikace testovací scény.}
+                    \caption{Funkční požadavky simulátoru a aplikace testovací scény.}
                     \begin{tabular}[t]{ | p{6em} | p{8cm} | } 
                         \hline
                         Požadavek & Pohyb vodní hladiny\\ 
@@ -839,7 +839,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
                         Priorita & Mělo by  \\ 
                         \hline
                         Požadavek & Vykreslení kaustik\\ 
-                        Popis &  Simulátor bude vypočítavat kaustiky formované nerovností vodní hladiny a následně  je vykreslí na objekty pod ní. \\ 
+                        Popis &  Simulátor bude vypočítávat kaustiky formované nerovností vodní hladiny a následně  je vykreslí na objekty pod ní. \\ 
                         Priorita & Musí  \\ 
                         \hline
                         Požadavek & Reflekce\\ 
@@ -849,15 +849,49 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
                         Požadavek & Refrakce\\ 
                         Popis &  Simulátor bude počítat zkreslený obraz pod vodní hladinou a na základě Fresnelových rovnic je zobrazí. \\ 
                         Priorita & Mohlo by  \\
-                        Poznámka & Kvůli obtížnosti výpočtu lze tento požadavek nahradit volbou průhledné barvy pro vodní hladinu. Tato volba nebude brát v potaz zkreslení obrazu. \\
                         \hline
                         Požadavek & Útlum světla \\ 
-                        Popis &  Simulátor bude regulovat osvětlení objektů pod hladinou na základě jejich vzdálenosti od hladi\\ 
+                        Popis &  Simulátor bude regulovat osvětlení objektů na základě jejich vzdálenosti od hladiny vody.\\ 
                         Priorita & Mělo by  \\
+                        \hline
+                        Požadavek & Změna paramaterů simulátoru \\ 
+                        Popis &  Za běhu umožní simulátor za změnu paramaterů jednotlivých vlastností vodní plochy.\\ 
+                        Priorita & Mohlo by \\
+                        \hline
+                        \hline
+                        Požadavek & Ovládání pomocí klávesnice a myši \\ 
+                        Popis &  Aplikace umožní uživateli ovládat kameru pomocí myši a klávesnice. \\
+                        Priorita & Musí \\
+                        \hline
+                        Požadavek & Grafické rozhraní pro změnu \\ 
+                        Popis &  Za běhu umožní simulátor za změnu paramaterů jednotlivých vlastností vodní plochy.\\ 
+                        Priorita & Mohlo by \\
+                        \hline
+                    \end{tabular}
+            
+            \end{table}
+            
+            \begin{table}
+                    \centering
+                    \caption{Nefunkční požadavky simulátoru a aplikace testovací scény.}
+                    \begin{tabular}[t]{ | p{6em} | p{8cm} | } 
+                        \hline
+                        Požadavek & Použítí grafického API OpenGL \\ 
+                        Popis &  Pro akceleraci výpočtu simulace a zobrazování testovací scény bude aplikace využívat grafického API OpenGL. \\ 
+                        Priorita & Musí  \\ 
+                        \hline
+                        Požadavek & Použítí programovacího jazyka C++ \\ 
+                        Popis &  Aplikační část programu bude napsaná v jazyce C++. \\ 
+                        Priorita & Musí  \\ 
+                        \hline
+                        Požadavek & Aplikace určena pro platformu Windows \\ 
+                        Popis &  Cílová platforma pro aplikaci bude Windows 10 a Windows 11. \\ 
+                        Priorita & Musí  \\ 
                         \hline
                     \end{tabular}
             
             \end{table}
                 
+    
             
 
