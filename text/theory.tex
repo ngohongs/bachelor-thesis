@@ -820,3 +820,44 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             Volba mezi grafickými API jako DirectX nebo Vulkan oproti OpenGL je poté jenom z mé preference. OpenGL a DirectX jsou téměř svými ekvivalenty. U Vulkan je oproti ostatním na druhou stranu příliš nízkoúrovňový rozhraním a následná implemetace v něm by byla příliš náročná a zbytečně zdlouhavá.
             
         \section{Model požadavků}
+
+            Tato kapitola obsahuje model požadavků kladený na protyp simulátoru vodního útvaru a aplikaci testovací scény. Model požadavků je rozdělen do dvou tabulek na funkční a nefunkční požadavky. Tabulka funkčních požadavků je dále rozčleněna na požadavky určené pro samotný simulátor vodní hladiny a aplikační část programu. Jednotlivé záznamy požadavků jsou v tabulkách rozvedeny a je jim přiřazena priorita podle metody\emph{MoSCoW} \cite{Moscow2022}.
+            
+            
+            
+            \begin{table}
+                    \centering
+                    \caption{Funkčních požadavků simulátoru a aplikace testovací scény.}
+                    \begin{tabular}[t]{ | p{6em} | p{8cm} | } 
+                        \hline
+                        Požadavek & Pohyb vodní hladiny\\ 
+                        Popis &  Simulátor bude vykreslovat vodní hladinu podle vlnové rovnice. \\ 
+                        Priorita & Musí  \\ 
+                        \hline
+                        Požadavek & Interakce s vodní hladinou \\ 
+                        Popis &  Simulátor umožní svému uživateli měnit tvar vodní hladiny. Tvar vodního povrchu může dále působit na objekty, které na ni leží. \\ 
+                        Priorita & Mělo by  \\ 
+                        \hline
+                        Požadavek & Vykreslení kaustik\\ 
+                        Popis &  Simulátor bude vypočítavat kaustiky formované nerovností vodní hladiny a následně  je vykreslí na objekty pod ní. \\ 
+                        Priorita & Musí  \\ 
+                        \hline
+                        Požadavek & Reflekce\\ 
+                        Popis &  Simulátor bude vypočítavat odrazy okolního prostředí a zobrazovat je na povrchu vodní hladiny na základě Fresnelových rovnic. \\ 
+                        Priorita & Mělo by  \\
+                        \hline
+                        Požadavek & Refrakce\\ 
+                        Popis &  Simulátor bude počítat zkreslený obraz pod vodní hladinou a na základě Fresnelových rovnic je zobrazí. \\ 
+                        Priorita & Mohlo by  \\
+                        Poznámka & Kvůli obtížnosti výpočtu lze tento požadavek nahradit volbou průhledné barvy pro vodní hladinu. Tato volba nebude brát v potaz zkreslení obrazu. \\
+                        \hline
+                        Požadavek & Útlum světla \\ 
+                        Popis &  Simulátor bude regulovat osvětlení objektů pod hladinou na základě jejich vzdálenosti od hladi\\ 
+                        Priorita & Mělo by  \\
+                        \hline
+                    \end{tabular}
+            
+            \end{table}
+                
+            
+
