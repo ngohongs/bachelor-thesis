@@ -583,6 +583,8 @@ Během celé simulace opakuj
             
                         \noindent Takto zvolné řešení má v simulaci efekt reflektování vln od hranic mřížky. Další možností je spojit levou hranu s pravou hranou a horní hranu s dolní hranou mřížky. Výsledný efekt je takový, že vlny vycházející z levého, resp. horního, kraje vstupují do mřížky zpět z práveho, resp dolního, kraje. Toto chování může být žádoucí pro skládání vodních povrchů, tzv. \emph{tiling}. 
                         
+                        Přestože simulace podle vlnové rovnice vypadá jako univerzální metoda pro simulaci vodního povrchu. Má tato metoda i nevýhody, které pramení z redukování prostoru vody z 3D na 2D. Protože si tato metoda udržuje informace ke každému bodu roviny právě jednu hodnotu jeho výšky nelze touto metodou zobrazit jevy jako lámání vln, které vzniká na břehu vodních útvarů. Další chybou je nepřesnost vlnění v mělkých vodách, kde je dalším důležitým faktorem vzdálenost hladiny od dna útvaru, která tato metoda opomíjí.  
+                        
     \section{Optické vlastnosti}
         
         U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak intereaktuje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objektu může na základě jeho materiálu dojít k třem možnosnostem, pohlcení fotonu, odražení nebo transmisi. Co lidské oko následně uvídí, závísí na světelných paprscích, které oko zásahnou \cite{Light2009}.  
@@ -809,7 +811,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             Hybridní metody jsou kompromisem mezi částicovými systémy a procedulární metody. Problematiku redukují do 2D prostorů jako procedulární, ale zachovávají jistou míru interakce s dynamickým světem. Simulace pomocí vlnové rovnice se navíc řídí i fyzikálními zákony, i když bere v potaz je hladinu vody, výsledné vizuální provedení je dobrou aproximací vodní plochy. Oproti částicovým systému se její výpočet tolik neškáluje s větším rozlohou vodního povrchu, a proto je lze využít pro simulaci jak menší, tak i větších vodních útvarů. Tyto důvody mne přesvědčily pro volbu hybridní metody založené na výpočtu vlnové rovnice pro implementaci do mého prototypu.
             
-            Většina fyzikálně korektní algoritmů pro simulaci optických vlastností je založena na metodě vrhání paprsků, které bohužel většina současného hardwaru nepodporuje. Proto jsem zvolil pro  simulaci optických vlastností metody aproximující \emph{ray-tracing} pomocí výpočtu v prostoru obrazu. Tyto metody využívají pro simulaci pomocné textury, v kterých jsou uložené podpůrné data pro výpočet průsečíků.
+            Většina fyzikálně korektní algoritmů pro simulaci optických vlastností je založena na metodě vrhání paprsků, které bohužel většina současného hardwaru nepodporuje. Proto jsem zvolil pro  simulaci optických vlastností metody aproximující \emph{ray-tracing} pomocí výpočtu v prostoru obrazu jako Shahovo mapování kaustik. Tyto metody využívají pro simulaci pomocné textury, v kterých jsou uložené podpůrné data pro výpočet průsečíků.
             
         \section{Volba technologií}
         

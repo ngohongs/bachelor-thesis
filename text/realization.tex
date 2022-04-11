@@ -1,4 +1,13 @@
 \chapter{Návrh}
+Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho další optických vlastností, také i jeho strukuře v aplikaci testovací scény. Nejdříve je zmíněn celkový pohled na strukturu aplikace, která bere v potaz zvolené algoritmy pro simulaci, následně je probrán návrh simulátoru vodního povrchu, od kterých se odvíjí další podkapitoly zaměřené na ostatní vlastnosti vody.
 
-
+    \section{Struktura simulátoru a aplikace}
+        
+        Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implemetanci je třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi paměti aplikační částí a paměti grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny je dále nutným vstupem pro aplikaci optických vlasností vody, kokrétněji k výpočetu povrchových normál. Obyčejná datová sturkutra pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řeším toho problému je použítí textur, které mohou mít v grafických kartách podobu polí.   
+        
+        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslení refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahovo metoda formace kaustik \cite{Shah2007} výpočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnou. Mapa je obdobně ve formátu textury.
+        
+        Reflekace a refrakce lze vykreslit stejným algoritmem, neboť principiálně fungují podobně. Jedna varianta využívá pro vzorkování barvy a světla odražený paprsek od povrchu vody, zatímco druhá varianta počítá s lomeným paprskem. Odhad průsečíků pohledových paprsků se scénou  bude implementován stejně jako u Shahovy metody mapování kaustik \cite{Shah2007}, která příjímá na vstupu texturu s pozicemi vrcholů objektů, vůči kterým se mají průsečíky počítat. 
+        
+        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, které data zapracuje pro vykreslení finální podoby scény.
 \chapter{Implementace}
