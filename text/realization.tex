@@ -9,7 +9,7 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
         
         Reflekace a refrakce lze vykreslit stejným algoritmem, neboť principiálně fungují podobně. Jedna varianta využívá pro vzorkování barvy a světla odražený paprsek od povrchu vody, zatímco druhá varianta počítá s lomeným paprskem. Odhad průsečíků pohledových paprsků se scénou  bude implementován stejně jako u Shahovy metody mapování kaustik \cite{Shah2007}, která příjímá na vstupu texturu s pozicemi vrcholů objektů, vůči kterým se mají průsečíky počítat. 
         
-        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, které data zapracuje pro vykreslení finální podoby scény. Celá vykreslovací smyčka je znázorněna v diagramu \ref{fig:process}. 
+        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, které data zapracuje pro vykreslení finální podoby scény. Celá vykreslovací smyčka je znázorněna v diagramu \ref{fig:process}.
         
         \begin{figure}\centering
             \includegraphics[width=\textwidth]{img/process}
@@ -56,3 +56,119 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
             
             
 \chapter{Implementace aplikace}
+    Tato kapitola se zaobírá implementací simulátoru vodního útvaru. Protože aplikační část řídí jen nepodstatné části celého programu (zobrazení finalní scény, zpracování vstupu nebo předávání instrukcí grafické kartě), bude hlavním obsahem implementace \emph{shader} programů, které v realitě provádí všechny postatné operace algoritmů simulace.
+    
+    \section{Simulace hladiny podle vlnové rovnice}
+        Simulace hladiny podle vlnové rovnice spočívá v tranformaci výšek jednotlivých bodů roviny. Samozřejmě je možné simulátoru rovinu dodat jako model (ve formátu .obj), lze ale také její geometrii procedulárně vygenerovat, což umožňuje větší kontrolu nad detailnosti vodní plochy zvyšováním rozlišení roviny (počtu vrcholů podél strany roviny). Třída \verb|PlaneGenerator| takovou rovinu generuje, geometrie roviny je generátorem normalizovaná, tj. souřadnice jeho vrcholů jsou škálovány do intervalu $[-1,1]$, dále vypočítá vrcholům jejich příslušnou texturovací souřadnici, které budou v simulaci důležitým vstupem. 
+        
+        \begin{verbatim}
+void PlaneGenerator::Generate(const int & res,
+    std::vector<Vertex>& vert, std::vector<unsigned int>& ind)
+        \end{verbatim}
+        
+        Metoda \verb|Generate| podle rozlišení \verb|res|, tj. počet vrcholů podél strany roviny, generuje vrcholy roviny, které uloží do pole \verb|vert|, indexy vrcholů tvořící trojúhelníky, které jsou potřeba pro vykreslení roviny grafickým API OpenGL, jsou dále uloženy v poli \verb|ind|. Výsledná rovina je znázorněna v obrázku \ref{fig:plane}.        
+        
+        \begin{figure}\centering
+            \includegraphics[width=0.5\textwidth]{img/plane}
+            \caption{Vrcholy vygenerované gemeotrie roviny. \cite{Heightfield2022}}
+            \label{fig:plane}
+        \end{figure}
+        
+        Jak bylo v předešlých kapitolách zmíněno pro implementaci výpočtu simulace hladiny podle vlnové rovnice je třeba průběžně ukládat výšky  roviny a rychlost změny výšky v daném bodu roviny v polích \verb|u[i,j]| a \verb|v[i,j]|. Bohužel pole nelze jednoduše předávat mezi pamětí aplikace a paměti grafické karty. Řešením je použití textur. Jednotlivé pixely textury následně reprezentují jednu buňku pole. Protože textury pracují v kanálech RGB, lze zakompnovat pole \verb|u[i,j]| a \verb|v[i,j]| do jedné textury. Výšky budou uloženy v kanálu červené barvy, zatímco rychlost bude uložena v kanálu zelené barvy. Dále je dobré zmínit, že obvykle pracuje s nezápornými desitinými hodnota. Výpočty vlnové rovnice se ale mohou pohybovat v záporných hodnotách. Pro nastavení použití i těchto hodnot je třeba vygenerovat texturu s parametrem \verb|RGBA32F| místo \verb|RGBA|,
+        
+        \begin{verbatim}
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, m_Width, m_Height, 0,
+             GL_RGB, GL_FLOAT, 0).
+        \end{verbatim}
+
+        Další překážkou je, že do textur nelze přistupovat a zároveň zapisovat, a proto je třeba vytvořit dvě textury simulace hladiny a během simulace mezi nimi prohazovat tzv. metodou ping-pongování. Nechť první textura je označena \verb|T_1| a druhá \verb|T_2|. Ping-pongování textury funguje následujícím způsobem, při prvním průchod \verb|i=0| vykreslovací smyčky bude simulátoru hladiny přiřazena textura \verb|T_1| jako vstupní parametr, z kterých výpočte stav vodní hladiny do dalšího průchodu smyčky, výsledek výpočtu následně uloží do textury \verb|T_2|. V dalším průchodu smyčky $i=1$ se prohodí textury \verb|T_1| a \verb|T_2|. Nyní bude textura \verb|T_2| vstupem simulátoru a \verb|T_1| odchozí texturou. Tento proces se neustále opakuje.
+        
+        Výpočet vlnové rovnice je znázorněn tímto kódem \emph{fragment shaderu}
+        
+        \begin{verbatim}
+void main()
+{
+    if (abort) {
+        FragColor = vec4(vec3(0.0), 1.0);
+        return;
+    }
+
+    vec4 old_info = texture(heightField, fTexCoord);
+
+    vec2 offsetX = vec2(0.0, texelSize);
+    vec2 offsetY = vec2(texelSize, 0.0);
+
+    vec2 pdx = fTexCoord + offsetX;
+    vec2 ndx = fTexCoord - offsetX;
+    vec2 pdy = fTexCoord + offsetY;
+    vec2 ndy = fTexCoord - offsetY;
+
+    float vpdx = texture(heightField, pdx).r + AddDrop(pdx);
+    float vndx = texture(heightField, ndx).r + AddDrop(ndx);
+    float vpdy = texture(heightField, pdy).r + AddDrop(pdy);
+    float vndy = texture(heightField, ndy).r + AddDrop(ndy);
+
+    float nsum = vpdx + vndx + vpdy + vndy;
+    float average =  (vpdx + vndx + vpdy + vndy) / 4.0;
+    
+    float h = texelSize;
+    float old_u = old_info.r + AddDrop(fTexCoord);
+    float old_v = old_info.g;
+
+    float offset = average - old_u;
+    float maxslope = waveSlope;
+    float maxoffset = maxslope * h;
+
+    if (offset > maxoffset) 
+        old_u = old_u + offset - maxoffset;
+    if (offset < -maxoffset)
+        old_u = old_u + offset + maxoffset;
+    
+    float c = max(waveSpeed, 0.001f);
+    float f = c * c * (nsum - 4 * old_u) / (h * h);
+    float new_v = old_v + f * deltaTime;
+    new_v = new_v - old_u;
+    new_v = max((1 - waveDamping), 0.001f) * new_v;
+    float new_u = old_u + new_v * deltaTime; 
+    new_u = new_u;
+
+    vec4 new_info = vec4(new_u , new_v, 0, 1);
+
+    FragColor = new_info;
+}.
+        \end{verbatim}
+
+        Hodnota \verb|abort| je pravdivá v případě, že bylo nařizeno textury výškové mapy vynulovat, a tím pádem i resetovat hladinu do klidového stavu. Funkce \verb|AddDrop| reprezentuje deformaci hladiny uživatelem, která připíše podle dané pozice výšku okolním bodům ve tvaru sinusoidy.
+        
+        \begin{verbatim}
+float AddDrop(vec2 pos)
+{
+    if (!drop)
+        return 0.0;
+    float r = max(radius, 0.001f)  * texelSize;
+	float val = max(0.0, 1.0 - length(dropPos - pos) / r);
+    val = 0.5 - cos(val * PI) * 0.5;
+    return amplitude * val;
+}         
+        \end{verbatim}
+
+        Müllerův uvedený algoritmus \cite{Mueller2008}, ale posouvá výšku  klidové roviny podle směru deformace. Jestli se za hladinu \uv{zatáhne} nahoru, posune celá hladina nahoru, což ale v realitě není možné. Wallace \cite{Wallace2022} úpravou rychlosti výškou, tak aby změněná výška konvergovala k výšce klidové hladiny
+        
+        \begin{verbatim}
+new_v = new_v - old_u.
+        \end{verbatim}
+        
+        Zbylý program je dále podle Müllerova algoritmu \cite{Mueller2008} zmíněný v analýze metody podle vlnové rovnice. Deformovaná rovina, tj. vodní hladina, je následně zobrazena podle \emph{vertex shaderu}, který na vstupu příjímá textury výškové mapy a podle jeho texturovací souřadnice přičte ke své výšce hodnotu textury uložené v červeném kanálu
+        
+        \begin{verbatim}
+float height = texture(heightField, aTexCoord).r;
+vec3 offset = vec3(0.0f, height, 0.0f);
+
+vec4 worldCoord = model * vec4(aPosition + offset, 1.0f);
+        \end{verbatim}
+
+    \section{Simulace kaustik}
+    \section{Simulace reflekcí a refrakcí}
+    \section{Simulace útlumu světla}
+    
+    
