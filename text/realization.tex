@@ -1,13 +1,58 @@
-\chapter{Návrh}
-Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho další optických vlastností, také i jeho strukuře v aplikaci testovací scény. Nejdříve je zmíněn celkový pohled na strukturu aplikace, která bere v potaz zvolené algoritmy pro simulaci, následně je probrán návrh simulátoru vodního povrchu, od kterých se odvíjí další podkapitoly zaměřené na ostatní vlastnosti vody.
+\chapter{Návrh aplikace}
+Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho další optických vlastností, také i strukuře aplikace testovací scény. Nejdříve je zmíněn celkový pohled na aplikaci, ve kterém jsou zohledněné procesy zvolených algoritmů pro zobrazení scény, z kterých následně vychází struktura simulátoru a aplikace.
 
-    \section{Struktura simulátoru a aplikace}
+    \section{Procesy simulátoru a aplikace testovací scény}
         
-        Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implemetanci je třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi paměti aplikační částí a paměti grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny je dále nutným vstupem pro aplikaci optických vlasností vody, kokrétněji k výpočetu povrchových normál. Obyčejná datová sturkutra pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řeším toho problému je použítí textur, které mohou mít v grafických kartách podobu polí.   
+        Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implemetanci bude třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi paměti aplikační částí a paměti grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny bude dále nutným vstupem pro aplikaci optických vlasností vody, kokrétněji k výpočetu povrchových normál. Obyčejná datová sturkutra pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řeším toho problému bude předávání textur, které mohou mít v grafických kartách podobu polí.   
         
-        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslení refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahovo metoda formace kaustik \cite{Shah2007} výpočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnou. Mapa je obdobně ve formátu textury.
+        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslení refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahovo metoda formace kaustik \cite{Shah2007} výpočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnou. Mapa bude obdobně ve formátu textury.
         
         Reflekace a refrakce lze vykreslit stejným algoritmem, neboť principiálně fungují podobně. Jedna varianta využívá pro vzorkování barvy a světla odražený paprsek od povrchu vody, zatímco druhá varianta počítá s lomeným paprskem. Odhad průsečíků pohledových paprsků se scénou  bude implementován stejně jako u Shahovy metody mapování kaustik \cite{Shah2007}, která příjímá na vstupu texturu s pozicemi vrcholů objektů, vůči kterým se mají průsečíky počítat. 
         
-        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, které data zapracuje pro vykreslení finální podoby scény.
-\chapter{Implementace}
+        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, které data zapracuje pro vykreslení finální podoby scény. Celá vykreslovací smyčka je znázorněna v diagramu \ref{fig:process}. 
+        
+        \begin{figure}\centering
+            \includegraphics[width=\textwidth]{img/process}
+            \caption{Diagram procesů simulátoru a aplikace testovací scény.}
+            \label{fig:process}
+        \end{figure}
+        
+    \section{Strukutra simulátoru a aplikace testovací scény}
+        
+        Z diagramu procesů \ref{fig:process} je paterné i struktura programu. Simulátor vodního útvaru může být rozdělen na dílčí části. Aplikační část programu bude provádeět jen finální vykreslení a zpracování vstup od uživatele programu. Tyto procesy simulátoru a aplikace zachycují následující třídy znázorněné v UML diagramu tříd \ref{fig:class}.
+        
+        \begin{figure}\centering
+            \includegraphics[width=\textwidth]{img/class}
+            \caption{Diagram tříd simulátoru a aplikace testovací scény.}
+            \label{fig:class}
+        \end{figure}
+        
+        \subsection{Třída Application}
+        
+            Třída \verb|Application| po zavolání funkce \verb|Run| zahájí inicializaci ostatní tříd a začné provádět vykreslovací smyčku. Ve smyčce bude volat jednotlivé fáze simulace jako simulace vodního povrchu pomocí vlnové rovnice, která je reprezentována třídou \verb|SimulationRenderer|, výpočet mapy kaustik reprezentována třídou \verb|CausticsRenderer| a vykreslení reflekcí, refrakcí nebo finalní scény třídou \verb|SceneRenderer|. 
+            
+        \subsection{Třída State}
+            
+            Třída \verb|State| bude zprostředkovávát všechny informace mezi třídami \verb|CausticsRenderer|, \verb|SceneRenderer|,  \verb|SimulationRenderer| a \verb|Application|. Mezivýsledky simulace, které budou ve formátu textur, se ve třídě \verb|State| budou ukládát a budou následně přístupné všem ostatním třídám k použití. 
+            
+        \subsection{Třída SimulationRenderer}
+            
+            \verb|SimulationRenderer| bude provádět po zavolání funkce \verb|Render|  výpočet vlnové rovnice \cite{Mueller2008}. Následně bude  ukládat výšku a rychlost vlnění vodní hladiny do textury \verb|m_HeightField| ve třidě \verb|State|, aby ji v dalších fázích mohli přijmout jako vstupní parameter, např. pro třídu \verb|CausticsRenderer| pro výpočet kaustik.
+            
+            
+        \subsection{Třída CausticsRenderer}
+        
+            Třída \verb|CausticsRenderer| pomocí výškové mapy \verb|m_HeightField| bude vykreslovat podpůrné textury podle Shahovy metody \cite{Shah2007}. Nejdříve vykreslí texturu pozic a normál vrcholů refraktujícího objektu, tj. vodní hladiny. Poté vykreslí pozice vrcholů objektů, na které se kaustiky mohou promíntou. S těmito podpůrnými daty bude následně možné vypočítat mapu kaustik. Pro další fázi simulace bude mapa kaustik uložena ve třidě \verb|State| jako \verb|m_CausticMap|.
+            
+        \subsection{Třída SceneRenderer}
+        
+            Konečná fáze simulace bude vykreslení finální scény. Reflekce a refrakce budou zde též naimplenotané, neboť pro její vykreslení bude  třeba stejných algoritmů jako pro vykreslení finalní scény. 
+            
+            Refrakce a reflekce jsem se rozhodl naimplenotovat pomocí Shahova odhadu průsečíků \cite{Shah2007}. Po vypočtení průsečíku lomeného, resp. odrazeného, paprsku s geometrií scény v prostoru obrazu převedu souřadnice průsečíku do souřadnicového systému textur. V případě, že převedé souřadnice textury nebudou ležet v prostoru obrazovky, budu vzokrovat barvu pro daný paprsek podle textury prostředí uložené ve formátu \emph{cubemapy}. V případe, že bude ležet v prostoru obrazovky, budu vzorkovat barvu z obrazu scény.
+            
+            Útlum světla pod vodní hladinou budu implementovat podle vzdálenosti daného vrcholu od klidové hladiny vody. Podle vzdálenosti budu měnit barvu světla podle předem nastavených barev. Blízko hladiny nebude barva světla téměř modifikována, zatímco v hlubších prosterech vody  bude barva postupně přecházet na tmavě modrou. 
+            
+            Nakonec lze vykreslit finalní scénu. Všechny předešle fáze a operace se následně budou neustále opakovat ve vykreslovací smyčce.
+            
+            
+\chapter{Implementace aplikace}
