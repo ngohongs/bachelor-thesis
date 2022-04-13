@@ -138,7 +138,7 @@ void main()
 }.
         \end{verbatim}
 
-        Hodnota \verb|abort| je pravdivá v případě, že bylo nařizeno textury výškové mapy vynulovat, a tím pádem i resetovat hladinu do klidového stavu. Funkce \verb|AddDrop| reprezentuje deformaci hladiny uživatelem, která připíše podle dané pozice výšku okolním bodům ve tvaru sinusoidy.
+        Hodnota \verb|abort| je pravdivá v případě, že bylo nařizeno textury výškové mapy vynulovat, a tím pádem i resetovat hladinu do klidového stavu. Funkce \verb|AddDrop| provádí deformaci hladiny uživatelem, která připíše podle dané pozice výšku okolním bodům ve tvaru sinusoidy.
         
         \begin{verbatim}
 float AddDrop(vec2 pos)
@@ -146,29 +146,159 @@ float AddDrop(vec2 pos)
     if (!drop)
         return 0.0;
     float r = max(radius, 0.001f)  * texelSize;
-	float val = max(0.0, 1.0 - length(dropPos - pos) / r);
+    float val = max(0.0, 1.0 - length(dropPos - pos) / r);
     val = 0.5 - cos(val * PI) * 0.5;
     return amplitude * val;
 }         
         \end{verbatim}
 
-        Müllerův uvedený algoritmus \cite{Mueller2008}, ale posouvá výšku  klidové roviny podle směru deformace. Jestli se za hladinu \uv{zatáhne} nahoru, posune celá hladina nahoru, což ale v realitě není možné. Wallace \cite{Wallace2022} úpravou rychlosti výškou, tak aby změněná výška konvergovala k výšce klidové hladiny
+        Müllerův uvedený algoritmus \cite{Mueller2008}, ale posouvá výšku  klidové roviny ve směru deformace. Jestli se za hladinu \uv{zatáhne} nahoru, posune celá hladina nahoru, což ale v realitě není možné. Wallace \cite{Wallace2022} řeší tento problém úpravou rychlosti výškou, tak aby změněná výška konvergovala k výšce klidové hladiny
         
         \begin{verbatim}
 new_v = new_v - old_u.
         \end{verbatim}
         
-        Zbylý program je dále podle Müllerova algoritmu \cite{Mueller2008} zmíněný v analýze metody podle vlnové rovnice. Deformovaná rovina, tj. vodní hladina, je následně zobrazena podle \emph{vertex shaderu}, který na vstupu příjímá textury výškové mapy a podle jeho texturovací souřadnice přičte ke své výšce hodnotu textury uložené v červeném kanálu
+        Zbylý program je dále podle Müllerova algoritmu \cite{Mueller2008} zmíněný v analýze metody podle vlnové rovnice. Deformovaná rovina, tj. vodní hladina, je následně zobrazena podle \emph{vertex shaderu}, který na vstupu příjímá textury výškové mapy a podle jeho texturovací souřadnice přičte k výšce vrcholu hodnotu textury uložené v červeném kanálu
         
         \begin{verbatim}
 float height = texture(heightField, aTexCoord).r;
 vec3 offset = vec3(0.0f, height, 0.0f);
 
-vec4 worldCoord = model * vec4(aPosition + offset, 1.0f);
+vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
         \end{verbatim}
 
     \section{Simulace kaustik}
+        Shahova formace kaustik \cite{Shah2007} předpokládá na vstupu tři podpůrné textury. Jedna obsahuje pozice ve a normály interpolavaných vrcholů ve světovém souřadnicovém systému vodního povrchu z pohledu světla , tzn. RGB barva objektu v textuře bude XYZ souřadnice pozice nebo normály. 
+        
+        Normály hladiny, ale nemáme ihned k dispozici, neboť máme jen informace o výšce jednotlivých bodů roviny uložené ve výškové mapě. Naštěstí lze její hodnotu z výškové mapy vypočítat jako vektorový součin horizontální a vertikálních rozdílů výšek.  Nechť je $m$ výška vrcholu, pro který počítáme normálu, a $t$, $b$, $l$ a $r$ jsou výšky horního, dolního, levého a právého sousedního vrcholu $m$. Normála poté je rovna hodnotě $n$ \cite{Normal2022}
+        
+        \begin{equation}
+            \begin{split}
+            v &= (2, r - l, 0) \\
+            h &= (0, t - b, 2) \\ 
+            n &= v \times h. 
+            \end{split}
+        \end{equation}
+
+        \noindent Dále bude třeba vyrenderovat pozice ve světové souřadnicovém systému objektů, na které mohou kaustiky promítnout.
+        
+        Kromě textur je třeba vygenerovat mřížka podobná mřížce v obrázku \ref{fig:plane}. Na rozdíl od mřížky používané v simulaci vodní hladiny je tato mřížka bez jakýkoliv hran, které vrcholy spojují. Ve výsledku má mřížka podobu rovnoněměrně rozložených vrcholů. Třída \verb|PlaneGenerator| pro výpočet kaustik umí vygenerovat požadovanou mřížku vygenerovat ve zvoleném rozlišení.
+        
+        \emph{Vertex shader}, který provadí většinu výpočtu kaustik, poté příjímá podpůrné textury zmíněné výše a mřížku, která má stejné rozlišení jako podpůrné textury, aby jednotlivému bodu mřížky odpovídal právě jeden texelu. Celý výpočet se řídí podle tohoto kódu
+        
+        \begin{verbatim}
+void main()
+{
+    vec4 refractivePosition = texture(refractivePositions,
+                                      aTexCoord);
+    vec4 refractiveNormal = texture(refractiveNormals,
+                                    aTexCoord);
+    vec3 incidentLight = normalize(light.dir);
+    vec3 refractedLight  = normalize(refract(incidentLight,
+        normalize(refractiveNormal.xyz), ETA));
+    vec4 p = EstimateIntersection(refractivePosition.xyz,
+                                  refractedLight);
+    if (refractivePosition.a <= 0.001f || 
+        refractiveNormal.a <= 0.001f || 
+        p.a <= 0.001f ||
+        p.y > refractivePosition.y || 
+        dot(p.xyz - refractivePosition.xyz,
+            refractedLight) < 0.01f)
+        fValid = 0;
+    else
+        fValid = 1;
+
+    fDistance = distance(p, refractivePosition);
+    fPhi = dot(-incidentLight, normalize(refractiveNormal.xyz));
+    gl_Position = projection * view * model * vec4(p.xyz, 1.0);
+}.   
+        \end{verbatim}
+
+        Algoritmus funguje takovým způsob, že prochází všemi body mřížky, a jestli danému bodu odpovídá nějaký validní texel z textury pozic refraktujícího objektu, tj. vodní hladiny, odhadne podle funkce \verb|EstimateIntersection| používající postup navržený Shahem  souřadnice průsečíku pomocí textury pozic příjímacích objektů. 
+        
+        Následuje kontrola validity průsečíku. Nejprve se kontroluje, jestli vrcholu mřížky odpovídá vůbec nějaký vrchol vodní hladiny, dále jestli odhadovaný průsečík vůbec existuje a nakonec jestli neleží odhadovaný průsečík nad hladinou vody.
+        
+        Výraznost kaustiky je pak určena podle počtu vrcholů, které se promítnout na stejné místo. OpenGL ale standardně provadí test hloubky, a proto by se intenzita kaustik nezvyšovala s vyšší počtem vrcholů se stejným průsečíkem. Pro dosažení tohoto efektu je třeba povolit OpenGL míchání barev funkcemi
+        
+        \begin{verbatim}
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE).
+        \end{verbatim}
+        
+        Funkce \verb|glBlendFund(GL_ONE, GL_ONE)| nastavuje způsob míchání barev tak, aby se po vyslání fragmentu pro vykreslení barva sečetla s barvou, která leží na stejné pozici jako vyslaný fragment. Intezita kaustika je dále ve \emph{fragment shaderu} tlumena vzdáleností \verb|fDistance|, kterou promítný vrchol cestoval, a úhelem dopadu světla \verb|fPhi|. 
+
+        Objekty nakonec vzorkují mapu kaustik texturovacími souřadnicemi spočítané transformací světových souřadnic vrcholů do souřadnicové systému obrazu světla
+        
+        \begin{verbatim}
+vec2 calculateCausticsTexCoord()
+{
+    vec4 lightClip = orthogonal *
+                     lightView *
+                     model * vec4(aPosition, 1.0);
+    vec2 texC = 0.5 * (lightClip.xy/lightClip.w) + 0.5;
+    return texC;
+}.
+        \end{verbatim}
+
     \section{Simulace reflekcí a refrakcí}
+
+        Reflekce a refrakce jsou naimplenotované obdobně jako formace kaustik. Po vyslání pohledové paprsku a jeho tranformaci na lomený, resp. odražený, paprsek se spočítá jeho odhadovaný průsečík pomocí textury pozice interpolavaných vrcholů objektů, od kterých se může obraz refrakovat, resp. odrazit. Odhad je stejně implementován jako u kaustik s výjimkou délky prvního odhadu, který je škálován podle úhlu pohledu
+        
+        \begin{verbatim}
+vec2 EstimateIntersection(vec3 v,
+                          vec3 r,
+                          vec3 normal,
+                          sampler2D positions)
+{
+	vec3 p1 = v + firstGuess * 
+                (1 - dot(normal, normalize(toCameraDir))) * r; 
+	vec4 texPt = projection * view * vec4(p1, 1.0);
+	vec2 texC = 0.5 * (texPt.xy/texPt.w) + 0.5;
+	vec4 recPos = texture(positions, texC);
+    if (recPos.a <= 0.0f)
+        return vec2(-1.0f);
+	float d = distance(v, recPos.xyz);
+	vec3 p2 = v + d * r;
+	texPt = projection * view * vec4(p2, 1.0);
+	texC = 0.5 * (texPt.xy/texPt.w) + 0.5;
+    if (texC.x < 0 || texC.x > 1 || texC.y < 0 || texC.y > 1)
+        return vec2(-1.0f);
+	return texC;
+}.
+         \end{verbatim}
+    Hodnota \verb|v| zde značí bod, od kterého se lomený, resp. odražený, paprsek \verb|r| pohybuje dále. 
+    
+    Jestli hledaný průsečík neexistuje nebo texturovací souřadnice jsou mimo obraz displeje, vzorkují se reflekce a refrakce podle textury prostředí uložené jako \emph{cubemapa}. 
+    
+    Po získání texturovacích souřadnic se vzorkuje barva reflekcí a refrakcí podle pomocných textur, ve kterých je uložena scéna. Pro refrakce pomocná textura obsahuje vykreselené objekty, které leží pod hladinou vody, neboť se refrakcí zkreslují jen, co je pod její hladinou. U reflekcí jsou to naopak jen objekty, které leží nad hladinou.  
+    
+        
     \section{Simulace útlumu světla}
     
+    Útlum světla je naivně naimplentován podle vzdálenosti objektů od hladiny vody. Podle vzdálenosti dále postupně přechází barva světla podle předem definovaných barev
     
+    \begin{verbatim}
+vec3 n = vec3(1.0f);
+vec3 f = firstStageColor;
+vec3 s = secondStageColor;
+vec3 t = finalStageColor;
+
+if (diff <= 0)
+    lightColor = n;
+else if (diff <= firstStage)
+    lightColor = 
+      mix(n, f, (diff - 0.0f)/(firstStage - 0.0f));
+else if (diff <= secondStage)
+    lightColor = 
+      mix(f, s, (diff - firstStage)/(secondStage - firstStage));
+else
+    lightColor =
+      mix(s, t, (diff - secondStage)/(3.0f - secondStage));
+
+...
+
+float a = attenuation;
+float I = exp(-a * clamp(diff, 0, diff));
+    \end{verbatim}
+
+\chapter{Výsledky implementace}
