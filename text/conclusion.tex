@@ -1,10 +1,12 @@
  
 \begin{conclusion}
-	%sem napište závěr Vaší práce
-	Jedním z cílů práce bylo provést analýzu současných možností pro simulaci vodního povrchu. Rozbor obsahuje několik metod založených na různých přístupů k simulaci kapalin. 
-    Na základě typu scén her a míry interakce vodní plochy s prostředím jsou jednotlivé metody různě vhodné.
+	Jedním z cílů práce bylo provést analýzu současných možností pro simulaci vodního povrchu. Rozbor obsahuje několik metod založených na různých přístupech k simulaci kapalin. Na základě typu scén her a míry interakce vodní plochy s prostředím jsou jednotlivé metody různě vhodné. 
+	
+	Kromě analýzy samotných metod simulace je proveden i rozbor aktuálních technologií pro \emph{real-time} renderované aplikace. Jsou v něm probrány jak grafické API, tak i herní \emph{enginy}.
     
-    Dalším cílem bylo vytvořit testovací scénu s vybraným algoritmem pro simulace vodní plochy z analýzy. Testovací scéna je naimplementována zapomocí frameworku OpenGL, ale principy simulace jsou lehce přenositelné na různé nástroje. Vodní plocha reaguje jak na prostředí testovací scény, tak i na manipulace hladiny uživatelem.
+    Dalším cílem bylo vytvořit testovací scénu s vybraným algoritmem z analýzy  pro simulaci vodní plochy. Moji volbou byla metoda výpočtu vlnové rovnice a to z důvodu, že zahranuje kladné vlastnosti jak procedulárních, tak i částicových metod simulace. Simulace podle vlnové rovnice zachovává vypočtní rychlost procedulárních metod a fyzikální korektnost částicových systémů. 
+    
+    Testovací scéna je naimplementována za pomocí grafického API OpenGL, ale principy simulace jsou lehce přenositelné na ostatní nástroje. Vodní plocha v aplikaci reaguje opticky na prostředí testovací scény odražením okolní scény, refraktováním obrazu nebo vrháním kaustik na podvodní objekty. Zachovává také jistou míru iterakce, která umožňuje uživateli aplikace rozpohybovat vodní hladinu.
     
     
 \end{conclusion}

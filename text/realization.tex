@@ -81,8 +81,17 @@ glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, m_Width, m_Height, 0,
              GL_RGB, GL_FLOAT, 0).
         \end{verbatim}
 
-        Další překážkou je, že do textur nelze přistupovat a zároveň zapisovat, a proto je třeba vytvořit dvě textury simulace hladiny a během simulace mezi nimi prohazovat tzv. metodou ping-pongování. Nechť první textura je označena \verb|T_1| a druhá \verb|T_2|. Ping-pongování textury funguje následujícím způsobem, při prvním průchod \verb|i=0| vykreslovací smyčky bude simulátoru hladiny přiřazena textura \verb|T_1| jako vstupní parametr, z kterých výpočte stav vodní hladiny do dalšího průchodu smyčky, výsledek výpočtu následně uloží do textury \verb|T_2|. V dalším průchodu smyčky $i=1$ se prohodí textury \verb|T_1| a \verb|T_2|. Nyní bude textura \verb|T_2| vstupem simulátoru a \verb|T_1| odchozí texturou. Tento proces se neustále opakuje.
+        Vzorkování mimo rozsah textury je nastaveno, jak Müller navrhoval, opakování hraničních hodnot nastavením parametru \verb|GL_CLAMP_TO_EDGE|
         
+        \begin{verbatim}
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                GL_CLAMP_TO_EDGE);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                GL_CLAMP_TO_EDGE).
+        \end{verbatim}
+
+        Další překážkou je, že do textur nelze přistupovat a zároveň zapisovat, a proto je třeba vytvořit dvě textury simulace hladiny a během simulace mezi nimi prohazovat tzv. metodou ping-pongování. Nechť první textura je označena \verb|T_1| a druhá \verb|T_2|. Ping-pongování textury funguje následujícím způsobem, při prvním průchod \verb|i=0| vykreslovací smyčky bude simulátoru hladiny přiřazena textura \verb|T_1| jako vstupní parametr, z kterých výpočte stav vodní hladiny do dalšího průchodu smyčky, výsledek výpočtu následně uloží do textury \verb|T_2|. V dalším průchodu smyčky $i=1$ se prohodí textury \verb|T_1| a \verb|T_2|. Nyní bude textura \verb|T_2| vstupem simulátoru a \verb|T_1| odchozí texturou. Tento proces se neustále opakuje.
+        \newpage
         Výpočet vlnové rovnice je znázorněn tímto kódem \emph{fragment shaderu}
         
         \begin{verbatim}
@@ -94,15 +103,9 @@ void main()
     }
 
     vec4 old_info = texture(heightField, fTexCoord);
-
-    vec2 offsetX = vec2(0.0, texelSize);
-    vec2 offsetY = vec2(texelSize, 0.0);
-
-    vec2 pdx = fTexCoord + offsetX;
-    vec2 ndx = fTexCoord - offsetX;
-    vec2 pdy = fTexCoord + offsetY;
-    vec2 ndy = fTexCoord - offsetY;
-
+    
+    ...
+    
     float vpdx = texture(heightField, pdx).r + AddDrop(pdx);
     float vndx = texture(heightField, ndx).r + AddDrop(ndx);
     float vpdy = texture(heightField, pdy).r + AddDrop(pdy);
@@ -110,7 +113,6 @@ void main()
 
     float nsum = vpdx + vndx + vpdy + vndy;
     float average =  (vpdx + vndx + vpdy + vndy) / 4.0;
-    
     float h = texelSize;
     float old_u = old_info.r + AddDrop(fTexCoord);
     float old_v = old_info.g;
@@ -131,9 +133,8 @@ void main()
     new_v = max((1 - waveDamping), 0.001f) * new_v;
     float new_u = old_u + new_v * deltaTime; 
     new_u = new_u;
-
+    
     vec4 new_info = vec4(new_u , new_v, 0, 1);
-
     FragColor = new_info;
 }.
         \end{verbatim}
@@ -170,6 +171,12 @@ vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
     \section{Simulace kaustik}
         Shahova formace kaustik \cite{Shah2007} předpokládá na vstupu tři podpůrné textury. Jedna obsahuje pozice ve a normály interpolavaných vrcholů ve světovém souřadnicovém systému vodního povrchu z pohledu světla , tzn. RGB barva objektu v textuře bude XYZ souřadnice pozice nebo normály. 
         
+         \begin{figure}\centering
+            \includegraphics[width=0.5\textwidth]{img/positions}
+            \caption{Textura souřadnic interpolovaných vrcholů modelů scény z pohledu kamery.}
+            \label{fig:positionstex}
+        \end{figure}
+        
         Normály hladiny, ale nemáme ihned k dispozici, neboť máme jen informace o výšce jednotlivých bodů roviny uložené ve výškové mapě. Naštěstí lze její hodnotu z výškové mapy vypočítat jako vektorový součin horizontální a vertikálních rozdílů výšek.  Nechť je $m$ výška vrcholu, pro který počítáme normálu, a $t$, $b$, $l$ a $r$ jsou výšky horního, dolního, levého a právého sousedního vrcholu $m$. Normála poté je rovna hodnotě $n$ \cite{Normal2022}
         
         \begin{equation}
@@ -181,8 +188,8 @@ vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
         \end{equation}
 
         \noindent Dále bude třeba vyrenderovat pozice ve světové souřadnicovém systému objektů, na které mohou kaustiky promítnout.
-        
-        Kromě textur je třeba vygenerovat mřížka podobná mřížce v obrázku \ref{fig:plane}. Na rozdíl od mřížky používané v simulaci vodní hladiny je tato mřížka bez jakýkoliv hran, které vrcholy spojují. Ve výsledku má mřížka podobu rovnoněměrně rozložených vrcholů. Třída \verb|PlaneGenerator| pro výpočet kaustik umí vygenerovat požadovanou mřížku vygenerovat ve zvoleném rozlišení.
+
+        Kromě textur je třeba vygenerovat mřížku podobné v obrázku \ref{fig:plane}. Na rozdíl od mřížky používané v simulaci vodní hladiny je tato mřížka bez jakýkoliv hran, které vrcholy spojují. Ve výsledku má mřížka podobu rovnoněměrně rozložených vrcholů. Třída \verb|PlaneGenerator| pro výpočet kaustik umí vygenerovat požadovanou mřížku vygenerovat ve zvoleném rozlišení.
         
         \emph{Vertex shader}, který provadí většinu výpočtu kaustik, poté příjímá podpůrné textury zmíněné výše a mřížku, která má stejné rozlišení jako podpůrné textury, aby jednotlivému bodu mřížky odpovídal právě jeden texelu. Celý výpočet se řídí podle tohoto kódu
         
@@ -239,7 +246,18 @@ vec2 calculateCausticsTexCoord()
     return texC;
 }.
         \end{verbatim}
+        
+        Shah dále doporučuje rozmazání mapy kaustik \cite{Shah2007}, aby nešly vidět artefakty zbůsobené promítáním konečného počtu vrcholů. Použití obyčejného rozmazání se z mapy kaustik ztrácí vysoké frekvence, které nejvíce vizuálně atraktivní, a proto provádím rozmázání konvolucí s Gaussovským jádrem.   
 
+         \begin{figure}\centering
+            \includegraphics[width=0.75\textwidth]{img/causticmap}
+            \caption{Nefiltrovaná mapa kaustik.}
+        \end{figure}
+        
+         \begin{figure}\centering
+            \includegraphics[width=0.75\textwidth]{img/causticmapfiltered}
+            \caption{Mapa kaustik filtorvaná Gaussovým rozmazáním.}
+        \end{figure}
     \section{Simulace reflekcí a refrakcí}
 
         Reflekce a refrakce jsou naimplenotované obdobně jako formace kaustik. Po vyslání pohledové paprsku a jeho tranformaci na lomený, resp. odražený, paprsek se spočítá jeho odhadovaný průsečík pomocí textury pozice interpolavaných vrcholů objektů, od kterých se může obraz refrakovat, resp. odrazit. Odhad je stejně implementován jako u kaustik s výjimkou délky prvního odhadu, který je škálován podle úhlu pohledu
@@ -302,3 +320,69 @@ float I = exp(-a * clamp(diff, 0, diff));
     \end{verbatim}
 
 \chapter{Výsledky implementace}
+    
+    Následující kapitola je zaměřena na ukázku konečných vizuálních výsledků implementace. Mimo vykreslených scén jsou zde probrány nedostaky zvolených algoritmů.
+   
+    Největších chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelný v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3} \ref{fig:duckr}.
+    
+    V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. 
+    
+    V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože realný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním.
+    
+    V obrázku \ref{fig:rrerr3} lze vidět chybu mezi míchání barvy odražené a refraktované scény podle Fresnelových ronvic způsobena nepřeností aproximací průsečíků. 
+    
+    Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
+    
+    Tyto nedostatky jsou nejvíce výrazné při rovné vodní hladině. Naštětí se v realitě vodní hladinu neustále hýbe a díky zkreslení obrazu refrakcemi jsou tyto chyby zamaskovány. Korektnost výpočtu průsečíku spočívá ve správném odhadu délky lomeného, resp. odraženého paprsku. V aplikaci testovací scény lze tento parametr měnit v sekci \emph{Reflections/refractions settings} parameter \emph{First guess}.
+
+    Dalších vizuální artefakty mohou nastat při volbě silné intezity kaustik (viz obrázek \ref{fig:causticerr}), které jsou způsobené  Shahovou metodou \cite{Shah2007}, která promítá jen konečný počet paprsků (vrcholů) na skrz vodní hladinu.
+    \begin{figure}\centering
+        \includegraphics[width=0.75\textwidth]{img/rrerr1}
+        \caption{Chyba refrakcí způsobena špatným odhadem průsečíku a restrikcí odhadu na prostor obrazu.}
+        \label{fig:rrerr1}
+    \end{figure}
+    
+    \begin{figure}\centering
+        \includegraphics[width=0.75\textwidth]{img/rrerr2}
+        \caption{Chyba refrakcí způsobena schovaným průsečíkem za cizí geometrií.}
+        \label{fig:rrerr2}
+    \end{figure}
+    
+    \begin{figure}\centering
+        \includegraphics[width=0.75\textwidth]{img/rrerr3}
+        \caption{Chyba refrakcí a reflekcí způsobena nepřeností odhadu průsečíku.}
+        \label{fig:rrerr3}
+    \end{figure}
+    
+    
+     \begin{figure}\centering
+        \includegraphics[width=0.75\textwidth]{img/duckreflection}
+        \caption{Odraz kachničky.}
+     \label{fig:duckr}
+    \end{figure}
+    
+    \begin{figure}\centering
+            \includegraphics[width=0.75\textwidth]{img/heightfield}
+            \caption{Testovací scéna se simulátorem vodního útvaru.}
+    \end{figure}
+    
+    \begin{figure}\centering
+            \includegraphics[width=0.75\textwidth]{img/normal}
+            \caption{Testovací scéna s viditelnými kaustikami.}
+    \end{figure}
+        
+    \begin{figure}\centering
+        \includegraphics[width=0.75\textwidth]{img/caustics}
+        \caption{Formace kaustik kaustik na podvodních objektech.}
+    \end{figure}
+    
+     \begin{figure}\centering
+        \includegraphics[width=0.75\textwidth]{img/causticserror}
+        \caption{Artefakty mapy kaustik způsobené promítáním konečného počtu vrcholů}
+        \label{fig:causticerr}
+    \end{figure}
+    
+    
+    
+    
+    
