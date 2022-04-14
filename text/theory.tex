@@ -259,7 +259,11 @@
                 Pro real-time simulace může být tento přístup pomalý. V případě, že vodní útvar obsahuje $n$ částic, musí se funkce $f$ evaluovat $\mathcal{O}(n^2)$. Existují ale optimilizace, které rozdělují částice do pravidelné mřížky, čímž redukují složitost na $\mathcal{O}(n)$. Přestože ji lze vypočítat poměrně rychle, simulace se vůbec neopírá o\,NSE. 
                 
                 \subsubsection{Simulace podle Smoothed Particle Hydrodynamics}
-                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{\emph{Smoothed Particle Hydrodynamics}} \cite{Monaghan2005}. Monaghan vychází z interpolační metody \emph{Smoothed Particle Hydrodynamics} (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skálárních polí hustoty nebo tlaku. Celý algoritmus simulace vody podle SPH je shrnut tímto pseudokódem \cite{SPHPseudo2020}:  \begin{Verbatim}[frame=single]
+                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{\emph{Smoothed Particle Hydrodynamics}} \cite{Monaghan2005}. Monaghan vychází z interpolační metody \emph{Smoothed Particle Hydrodynamics} (SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skálárních polí hustoty nebo tlaku. Celý algoritmus simulace vody podle SPH je shrnut tímto pseudokódem \cite{SPHPseudo2020}:  \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{c}
 Nastevení počátečních hodnot častíc. 
 Během celé doby simulace opakuj:
     Pro každou částici
@@ -272,7 +276,7 @@ Během celé doby simulace opakuj:
         Detekuj kolize.
     Integrace podle času.
     Vykreslení vody.    
-                    \end{Verbatim}
+                    \end{minted}
                     
                     SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracuje s vlastnostmi částic. SPH distribuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
                     
@@ -428,7 +432,11 @@ Během celé doby simulace opakuj:
                     \subsubsection{Simulace podle vlnové rovnice}
                         Vlnová rovnice nahlíží na vodní hladinu jako na napnutou elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikálně korektní pohyb pouhý Newtonův druhý zákon. Simulace je založena na transformaci výšky vrcholů roviny, pro kterou potřebuje dvě 2D pole \verb|u[i,j]| a \verb|v[i,j]|, které si uchovávájí výšku a rychlost buňky v bodě \verb|[i,j]|. Pro mřížku s rozestupy \verb|h| o velikosti \verb|N*N| pak algoritmus vypadá takto
                         
-                        \begin{Verbatim}[frame=single]
+                        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{c}
 float u[N,N]
 float v[N,N]
 float unew[N,N]
@@ -441,7 +449,7 @@ Během celé simulace opakuj
     Pro každé i, j proveď
       u[i,j] = unew[i,j]
     Vykresli mřížku s výškovou mapou u.
-                        \end{Verbatim}
+                        \end{minted}
                         
                         \noindent Pole \verb|u0| incializuje výšku jednotlivých bodů rovniny, \verb|dt| značí časový rozdíl mezi vykreslovacími smičkami.
                         

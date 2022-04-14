@@ -61,10 +61,14 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
     \section{Simulace hladiny podle vlnové rovnice}
         Simulace hladiny podle vlnové rovnice spočívá v tranformaci výšek jednotlivých bodů roviny. Samozřejmě je možné simulátoru rovinu dodat jako model (ve formátu .obj), lze ale také její geometrii procedulárně vygenerovat, což umožňuje větší kontrolu nad detailnosti vodní plochy zvyšováním rozlišení roviny (počtu vrcholů podél strany roviny). Třída \verb|PlaneGenerator| takovou rovinu generuje, geometrie roviny je generátorem normalizovaná, tj. souřadnice jeho vrcholů jsou škálovány do intervalu $[-1,1]$, dále vypočítá vrcholům jejich příslušnou texturovací souřadnici, které budou v simulaci důležitým vstupem. 
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{c++}
 void PlaneGenerator::Generate(const int & res,
     std::vector<Vertex>& vert, std::vector<unsigned int>& ind)
-        \end{verbatim}
+        \end{minted}
         
         Metoda \verb|Generate| podle rozlišení \verb|res|, tj. počet vrcholů podél strany roviny, generuje vrcholy roviny, které uloží do pole \verb|vert|, indexy vrcholů tvořící trojúhelníky, které jsou potřeba pro vykreslení roviny grafickým API OpenGL, jsou dále uloženy v poli \verb|ind|. Výsledná rovina je znázorněna v obrázku \ref{fig:plane}.        
         
@@ -76,25 +80,37 @@ void PlaneGenerator::Generate(const int & res,
         
         Jak bylo v předešlých kapitolách zmíněno pro implementaci výpočtu simulace hladiny podle vlnové rovnice je třeba průběžně ukládat výšky  roviny a rychlost změny výšky v daném bodu roviny v polích \verb|u[i,j]| a \verb|v[i,j]|. Bohužel pole nelze jednoduše předávat mezi pamětí aplikace a paměti grafické karty. Řešením je použití textur. Jednotlivé pixely textury následně reprezentují jednu buňku pole. Protože textury pracují v kanálech RGB, lze zakompnovat pole \verb|u[i,j]| a \verb|v[i,j]| do jedné textury. Výšky budou uloženy v kanálu červené barvy, zatímco rychlost bude uložena v kanálu zelené barvy. Dále je dobré zmínit, že obvykle pracuje s nezápornými desitinými hodnota. Výpočty vlnové rovnice se ale mohou pohybovat v záporných hodnotách. Pro nastavení použití i těchto hodnot je třeba vygenerovat texturu s parametrem \verb|RGBA32F| místo \verb|RGBA|,
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{c++}
 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, m_Width, m_Height, 0,
              GL_RGB, GL_FLOAT, 0).
-        \end{verbatim}
+        \end{minted}
 
         Vzorkování mimo rozsah textury je nastaveno, jak Müller navrhoval, opakování hraničních hodnot nastavením parametru \verb|GL_CLAMP_TO_EDGE|
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{c++}
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
                 GL_CLAMP_TO_EDGE);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
                 GL_CLAMP_TO_EDGE).
-        \end{verbatim}
+        \end{minted}
 
         Další překážkou je, že do textur nelze přistupovat a zároveň zapisovat, a proto je třeba vytvořit dvě textury simulace hladiny a během simulace mezi nimi prohazovat tzv. metodou ping-pongování. Nechť první textura je označena \verb|T_1| a druhá \verb|T_2|. Ping-pongování textury funguje následujícím způsobem, při prvním průchod \verb|i=0| vykreslovací smyčky bude simulátoru hladiny přiřazena textura \verb|T_1| jako vstupní parametr, z kterých výpočte stav vodní hladiny do dalšího průchodu smyčky, výsledek výpočtu následně uloží do textury \verb|T_2|. V dalším průchodu smyčky $i=1$ se prohodí textury \verb|T_1| a \verb|T_2|. Nyní bude textura \verb|T_2| vstupem simulátoru a \verb|T_1| odchozí texturou. Tento proces se neustále opakuje.
         \newpage
         Výpočet vlnové rovnice je znázorněn tímto kódem \emph{fragment shaderu}
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 void main()
 {
     if (abort) {
@@ -137,11 +153,15 @@ void main()
     vec4 new_info = vec4(new_u , new_v, 0, 1);
     FragColor = new_info;
 }.
-        \end{verbatim}
+        \end{minted}
 
         Hodnota \verb|abort| je pravdivá v případě, že bylo nařizeno textury výškové mapy vynulovat, a tím pádem i resetovat hladinu do klidového stavu. Funkce \verb|AddDrop| provádí deformaci hladiny uživatelem, která připíše podle dané pozice výšku okolním bodům ve tvaru sinusoidy.
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 float AddDrop(vec2 pos)
 {
     if (!drop)
@@ -151,22 +171,30 @@ float AddDrop(vec2 pos)
     val = 0.5 - cos(val * PI) * 0.5;
     return amplitude * val;
 }         
-        \end{verbatim}
+        \end{minted}
 
         Müllerův uvedený algoritmus \cite{Mueller2008}, ale posouvá výšku  klidové roviny ve směru deformace. Jestli se za hladinu \uv{zatáhne} nahoru, posune celá hladina nahoru, což ale v realitě není možné. Wallace \cite{Wallace2022} řeší tento problém úpravou rychlosti výškou, tak aby změněná výška konvergovala k výšce klidové hladiny
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 new_v = new_v - old_u.
-        \end{verbatim}
+        \end{minted}
         
         Zbylý program je dále podle Müllerova algoritmu \cite{Mueller2008} zmíněný v analýze metody podle vlnové rovnice. Deformovaná rovina, tj. vodní hladina, je následně zobrazena podle \emph{vertex shaderu}, který na vstupu příjímá textury výškové mapy a podle jeho texturovací souřadnice přičte k výšce vrcholu hodnotu textury uložené v červeném kanálu
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 float height = texture(heightField, aTexCoord).r;
 vec3 offset = vec3(0.0f, height, 0.0f);
 
 vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
-        \end{verbatim}
+        \end{minted}
 
     \section{Simulace kaustik}
         Shahova formace kaustik \cite{Shah2007} předpokládá na vstupu tři podpůrné textury. Jedna obsahuje pozice ve a normály interpolavaných vrcholů ve světovém souřadnicovém systému vodního povrchu z pohledu světla , tzn. RGB barva objektu v textuře bude XYZ souřadnice pozice nebo normály. 
@@ -181,8 +209,8 @@ vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
         
         \begin{equation}
             \begin{split}
-            v &= (2, r - l, 0) \\
-            h &= (0, t - b, 2) \\ 
+            v &= (2, r - l, 0), \\
+            h &= (0, t - b, 2), \\ 
             n &= v \times h. 
             \end{split}
         \end{equation}
@@ -193,7 +221,11 @@ vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
         
         \emph{Vertex shader}, který provadí většinu výpočtu kaustik, poté příjímá podpůrné textury zmíněné výše a mřížku, která má stejné rozlišení jako podpůrné textury, aby jednotlivému bodu mřížky odpovídal právě jeden texelu. Celý výpočet se řídí podle tohoto kódu
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 void main()
 {
     vec4 refractivePosition = texture(refractivePositions,
@@ -219,7 +251,7 @@ void main()
     fPhi = dot(-incidentLight, normalize(refractiveNormal.xyz));
     gl_Position = projection * view * model * vec4(p.xyz, 1.0);
 }.   
-        \end{verbatim}
+        \end{minted}
 
         Algoritmus funguje takovým způsob, že prochází všemi body mřížky, a jestli danému bodu odpovídá nějaký validní texel z textury pozic refraktujícího objektu, tj. vodní hladiny, odhadne podle funkce \verb|EstimateIntersection| používající postup navržený Shahem  souřadnice průsečíku pomocí textury pozic příjímacích objektů. 
         
@@ -227,16 +259,26 @@ void main()
         
         Výraznost kaustiky je pak určena podle počtu vrcholů, které se promítnout na stejné místo. OpenGL ale standardně provadí test hloubky, a proto by se intenzita kaustik nezvyšovala s vyšší počtem vrcholů se stejným průsečíkem. Pro dosažení tohoto efektu je třeba povolit OpenGL míchání barev funkcemi
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{c++}
             glEnable(GL_BLEND);
             glBlendFunc(GL_ONE, GL_ONE).
-        \end{verbatim}
+        \end{minted}
         
         Funkce \verb|glBlendFund(GL_ONE, GL_ONE)| nastavuje způsob míchání barev tak, aby se po vyslání fragmentu pro vykreslení barva sečetla s barvou, která leží na stejné pozici jako vyslaný fragment. Intezita kaustika je dále ve \emph{fragment shaderu} tlumena vzdáleností \verb|fDistance|, kterou promítný vrchol cestoval, a úhelem dopadu světla \verb|fPhi|. 
 
         Objekty nakonec vzorkují mapu kaustik texturovacími souřadnicemi spočítané transformací světových souřadnic vrcholů do souřadnicové systému obrazu světla
         
-        \begin{verbatim}
+        \newpage
+        
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 vec2 calculateCausticsTexCoord()
 {
     vec4 lightClip = orthogonal *
@@ -245,7 +287,7 @@ vec2 calculateCausticsTexCoord()
     vec2 texC = 0.5 * (lightClip.xy/lightClip.w) + 0.5;
     return texC;
 }.
-        \end{verbatim}
+        \end{minted}
         
         Shah dále doporučuje rozmazání mapy kaustik \cite{Shah2007}, aby nešly vidět artefakty zbůsobené promítáním konečného počtu vrcholů. Použití obyčejného rozmazání se z mapy kaustik ztrácí vysoké frekvence, které nejvíce vizuálně atraktivní, a proto provádím rozmázání konvolucí s Gaussovským jádrem.   
 
@@ -262,28 +304,31 @@ vec2 calculateCausticsTexCoord()
 
         Reflekce a refrakce jsou naimplenotované obdobně jako formace kaustik. Po vyslání pohledové paprsku a jeho tranformaci na lomený, resp. odražený, paprsek se spočítá jeho odhadovaný průsečík pomocí textury pozice interpolavaných vrcholů objektů, od kterých se může obraz refrakovat, resp. odrazit. Odhad je stejně implementován jako u kaustik s výjimkou délky prvního odhadu, který je škálován podle úhlu pohledu
         
-        \begin{verbatim}
+        \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 vec2 EstimateIntersection(vec3 v,
                           vec3 r,
                           vec3 normal,
                           sampler2D positions)
 {
-	vec3 p1 = v + firstGuess * 
-                (1 - dot(normal, normalize(toCameraDir))) * r; 
-	vec4 texPt = projection * view * vec4(p1, 1.0);
-	vec2 texC = 0.5 * (texPt.xy/texPt.w) + 0.5;
-	vec4 recPos = texture(positions, texC);
+    vec3 p1 = v + firstGuess * (1 - dot(normal, normalize(toCameraDir))) * r; 
+    vec4 texPt = projection * view * vec4(p1, 1.0);
+    vec2 texC = 0.5 * (texPt.xy/texPt.w) + 0.5;
+    vec4 recPos = texture(positions, texC);
     if (recPos.a <= 0.0f)
         return vec2(-1.0f);
-	float d = distance(v, recPos.xyz);
-	vec3 p2 = v + d * r;
-	texPt = projection * view * vec4(p2, 1.0);
-	texC = 0.5 * (texPt.xy/texPt.w) + 0.5;
+    float d = distance(v, recPos.xyz);
+    vec3 p2 = v + d * r;
+    texPt = projection * view * vec4(p2, 1.0);
+    texC = 0.5 * (texPt.xy/texPt.w) + 0.5;
     if (texC.x < 0 || texC.x > 1 || texC.y < 0 || texC.y > 1)
         return vec2(-1.0f);
-	return texC;
+    return texC;
 }.
-         \end{verbatim}
+         \end{minted}
     Hodnota \verb|v| zde značí bod, od kterého se lomený, resp. odražený, paprsek \verb|r| pohybuje dále. 
     
     Jestli hledaný průsečík neexistuje nebo texturovací souřadnice jsou mimo obraz displeje, vzorkují se reflekce a refrakce podle textury prostředí uložené jako \emph{cubemapa}. 
@@ -295,7 +340,11 @@ vec2 EstimateIntersection(vec3 v,
     
     Útlum světla je naivně naimplentován podle vzdálenosti objektů od hladiny vody. Podle vzdálenosti dále postupně přechází barva světla podle předem definovaných barev
     
-    \begin{verbatim}
+    \begin{minted}[frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=lightgray,
+fontsize=\footnotesize]{glsl}
 vec3 n = vec3(1.0f);
 vec3 f = firstStageColor;
 vec3 s = secondStageColor;
@@ -316,8 +365,8 @@ else
 ...
 
 float a = attenuation;
-float I = exp(-a * clamp(diff, 0, diff));
-    \end{verbatim}
+float I = exp(-a * clamp(diff, 0, diff)).
+    \end{minted}
 
 \chapter{Výsledky implementace}
     

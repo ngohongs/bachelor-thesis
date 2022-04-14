@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{vec2}\PYG{+w}{ }\PYG{n}{calculateCausticsTexCoord}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{lightClip}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{orthogonal}\PYG{+w}{ }\PYG{o}{*}
+\PYG{+w}{                     }\PYG{n}{lightView}\PYG{+w}{ }\PYG{o}{*}
+\PYG{+w}{                     }\PYG{n}{model}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{k+kt}{vec4}\PYG{p}{(}\PYG{n}{aPosition}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{vec2}\PYG{+w}{ }\PYG{n}{texC}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{lightClip}\PYG{p}{.}\PYG{n}{xy}\PYG{o}{/}\PYG{n}{lightClip}\PYG{p}{.}\PYG{n}{w}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{texC}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}.}
+\end{Verbatim}
