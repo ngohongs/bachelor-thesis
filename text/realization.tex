@@ -325,17 +325,14 @@ float I = exp(-a * clamp(diff, 0, diff));
    
     Největších chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelný v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3} \ref{fig:duckr}.
     
-    V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. 
+    V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože realný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním. V \ref{fig:rrerr3} lze vidět chybu mezi míchání barvy odražené a refraktované scény podle Fresnelových ronvic způsobena nepřeností aproximací průsečíků. Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
     
-    V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože realný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním.
-    
-    V obrázku \ref{fig:rrerr3} lze vidět chybu mezi míchání barvy odražené a refraktované scény podle Fresnelových ronvic způsobena nepřeností aproximací průsečíků. 
-    
-    Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
-    
-    Tyto nedostatky jsou nejvíce výrazné při rovné vodní hladině. Naštětí se v realitě vodní hladinu neustále hýbe a díky zkreslení obrazu refrakcemi jsou tyto chyby zamaskovány. Korektnost výpočtu průsečíku spočívá ve správném odhadu délky lomeného, resp. odraženého paprsku. V aplikaci testovací scény lze tento parametr měnit v sekci \emph{Reflections/refractions settings} parameter \emph{First guess}.
+    Tyto nedostatky jsou nejvíce výrazné při pohledu zblízka a rovné vodní hladině. Naštětí se v realitě vodní hladinu neustále hýbe a díky zkreslení obrazu refrakcemi jsou tyto chyby zamaskovány. Korektnost výpočtu průsečíku spočívá ve správném odhadu délky lomeného, resp. odraženého paprsku. V aplikaci testovací scény lze tento parametr měnit v sekci \emph{Reflections/refractions settings} parameter \emph{First guess}.
 
     Dalších vizuální artefakty mohou nastat při volbě silné intezity kaustik (viz obrázek \ref{fig:causticerr}), které jsou způsobené  Shahovou metodou \cite{Shah2007}, která promítá jen konečný počet paprsků (vrcholů) na skrz vodní hladinu.
+    
+    Kromě optických chyb jsem narazil i na podstatnou nedostatek v integraci vlnové rovnice. Müllerova metoda předpokládá, že časový krok integrace $\Delta t$ je konstatní v průběhu celé simulace \cite{Mueller2008}. V případě že, rychlost výpočtu vlnové rovnice je nad $\mathtt{\sim}100$ FPS, simulace zůstává stabilní, ale při $\mathtt{\sim}40$ FPS může jakýkoliv výkyv rychlosti porušit stabilitu simulace a přivést chybu do výpočtu, která se může později projevit.  
+    
     \begin{figure}\centering
         \includegraphics[width=0.75\textwidth]{img/rrerr1}
         \caption{Chyba refrakcí způsobena špatným odhadem průsečíku a restrikcí odhadu na prostor obrazu.}
@@ -357,7 +354,7 @@ float I = exp(-a * clamp(diff, 0, diff));
     
      \begin{figure}\centering
         \includegraphics[width=0.75\textwidth]{img/duckreflection}
-        \caption{Odraz kachničky.}
+        \caption{Odraz kachničky a chyba způsobena texturovací souřadnicí průsečíku ležící mimo obraz scény.}
      \label{fig:duckr}
     \end{figure}
     
