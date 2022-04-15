@@ -46,13 +46,13 @@
 \authorWithDegrees{Hong Son Ngo} %jméno autora včetně současných akademických titulů
 \author{Hong Son Ngo} %jméno autora bez akademických titulů
 \supervisor{Ing.\,Petr Pauš,\,Ph.D.}
-\acknowledgements{Doplňte, máte-li komu a za co děkovat. V~opačném případě úplně odstraňte tento příkaz.}
+\acknowledgements{Rád bych poděkoval Ing.\,Petru Paušovi,\,Ph.D. za aktivní vedení, cenné rady, věcné připomínky a vstřícnost při konzultacích a vypracování této bakalářské práce.}
 \abstractCS{Tato bakalářská práce se zabývá možnostmi \emph{real-time} simulace vodního povrchu a jeho případných optických vlastností jak na hladině vody, tak i na objekty, které leží pod ní. V analýze jsou kromě aktuálních metod simulace dynamických a optických vlastností vodní hladiny probrány i technologie podporující \emph{real-time} vizualizaci simulace. Praktická část je věnována návrhu simulátoru vodní hladiny využívající vlnové rovnice pro aproximaci jejího pohybu a aplikaci testovací scény a její následné implementaci. Na závěr jsou vyhodnoceny výsledky zvolených algoritmů použité ve finální verzi aplikace.}
 \abstractEN{This bachelor thesis examines current options of real-time water surface simulation and its possible optic properties affecting the water surface itself or object laying underneath it. The contents of the analysis are not only current methods simulating dynamic and optic properties of a water surface but also technologies supporting its real-time rendering. The practial part is dedicated to the design of the water surface simulator, which uses wave equation as the main method for approximation of its movement, and the application of the testing scene and subsequently its implementation. At the end are the results of chosen algorithms used in the final version of the application evaluated.}
 \placeForDeclarationOfAuthenticity{V~Praze}
 \declarationOfAuthenticityOption{4} %volba Prohlášení (číslo 1-6)
-\keywordsCS{simulace vodní hladiny, vlnová rovnice, optické vlastnosti vody, kaustiky, reflekce, refrakce, OpenGL}
-\keywordsEN{water surface simulation, wave equation, water optic properties, caustics, refractions, reflections, OpenGL}
+\keywordsCS{simulace vodní hladiny, vlnová rovnice, optické vlastnosti vody, kaustiky, reflekce, refrakce, OpenGL, real-time}
+\keywordsEN{water surface simulation, wave equation, water optic properties, caustics, refractions, reflections, OpenGL, real-time}
 % \website{https://projects.fit.cvut.cz/theses/4032/assignment-print} %volitelná URL práce, objeví se v tiráži - úplně odstraňte, nemáte-li URL práce
 
 \begin{document}
@@ -85,11 +85,16 @@
 \chapter{Seznam použitých zkratek}
 % \printglossaries
 \begin{description}
+    \item[1D] Jednodimenzionální
+    \item[2D] Dvoudimenzionální
+    \item[3D] Trojdimenzionální
     \item[API] Application programming interface
     \item[AR] Artificial reality
     \item[FDM] Finite difference method
     \item[FFT] Fast Fourier transform
     \item[FPS] Frame per second
+    \item[GLSL] OpenGL Shading Language
+    \item[HLSL] High-Level Shader Language
     \item[IFFT] Inverse fast Fourier transform
     \item[IOR] Index of refraction
     \item[NSE] Navier--Stokes equations
@@ -102,21 +107,21 @@
 \end{description}
 
 
-\chapter{Obsah přiloženého CD}
+\chapter{Obsah přiloženého USB disku}
 
 %upravte podle skutecnosti
 
-% \begin{figure}
-% 	\dirtree{%
-% 		.1 readme.txt\DTcomment{stručný popis obsahu CD}.
-% 		.1 exe\DTcomment{adresář se spustitelnou formou implementace}.
-% 		.1 src.
-% 		.2 impl\DTcomment{zdrojové kódy implementace}.
-% 		.2 thesis\DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
-% 		.1 text\DTcomment{text práce}.
-% 		.2 thesis.pdf\DTcomment{text práce ve formátu PDF}.
-% 		.2 thesis.ps\DTcomment{text práce ve formátu PS}.
-% 	}
-% \end{figure}
+ \begin{figure}
+ 	\dirtree{%
+ 		.1 readme.md\DTcomment{stručný popis obsahu USB disku}.
+ 		.1 exe\DTcomment{adresář se spustitelnou formou implementace}.
+ 		.2 opengl-water.exe\DTcomment{spustitelný binární soubor implementace}.
+ 		.1 src.
+ 		.2 impl\DTcomment{zdrojové kódy implementace}.
+ 		.2 thesis\DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
+ 		.1 text\DTcomment{text práce}.
+ 		.2 thesis.pdf\DTcomment{text práce ve formátu PDF}.
+ 	}
+ \end{figure}
 
 \end{document}
