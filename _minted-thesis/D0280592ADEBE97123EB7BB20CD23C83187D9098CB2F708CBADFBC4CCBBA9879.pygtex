@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{main}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{refractivePosition}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{refractivePositions}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{aTexCoord}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{refractiveNormal}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{refractiveNormals}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{aTexCoord}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{vec3}\PYG{+w}{ }\PYG{n}{incidentLight}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{normalize}\PYG{p}{(}\PYG{n}{light}\PYG{p}{.}\PYG{n}{dir}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{vec3}\PYG{+w}{ }\PYG{n}{refractedLight}\PYG{+w}{  }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{normalize}\PYG{p}{(}\PYG{n}{refract}\PYG{p}{(}\PYG{n}{incidentLight}\PYG{p}{,}
+\PYG{+w}{                                     }\PYG{n}{normalize}\PYG{p}{(}\PYG{n}{refractiveNormal}\PYG{p}{.}\PYG{n}{xyz}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{ETA}\PYG{p}{));}
+\PYG{+w}{    }\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{EstimateIntersection}\PYG{p}{(}\PYG{n}{refractivePosition}\PYG{p}{.}\PYG{n}{xyz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{refractedLight}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{refractivePosition}\PYG{p}{.}\PYG{n}{a}\PYG{+w}{ }\PYG{o}{\PYGZlt{}=}\PYG{+w}{ }\PYG{l+m+mf}{0.001}\PYG{n}{f}\PYG{+w}{ }\PYG{o}{||}
+\PYG{+w}{        }\PYG{n}{refractiveNormal}\PYG{p}{.}\PYG{n}{a}\PYG{+w}{ }\PYG{o}{\PYGZlt{}=}\PYG{+w}{ }\PYG{l+m+mf}{0.001}\PYG{n}{f}\PYG{+w}{ }\PYG{o}{||}
+\PYG{+w}{        }\PYG{n}{p}\PYG{p}{.}\PYG{n}{a}\PYG{+w}{ }\PYG{o}{\PYGZlt{}=}\PYG{+w}{ }\PYG{l+m+mf}{0.001}\PYG{n}{f}\PYG{+w}{ }\PYG{o}{||}
+\PYG{+w}{        }\PYG{n}{p}\PYG{p}{.}\PYG{n}{y}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{refractivePosition}\PYG{p}{.}\PYG{n}{y}\PYG{+w}{ }\PYG{o}{||}
+\PYG{+w}{        }\PYG{n}{dot}\PYG{p}{(}\PYG{n}{p}\PYG{p}{.}\PYG{n}{xyz}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{refractivePosition}\PYG{p}{.}\PYG{n}{xyz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{refractedLight}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mf}{0.01}\PYG{n}{f}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{fValid}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mo}{0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{else}
+\PYG{+w}{        }\PYG{n}{fValid}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{n}{fDistance}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{distance}\PYG{p}{(}\PYG{n}{p}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{refractivePosition}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{fPhi}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{dot}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{incidentLight}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{normalize}\PYG{p}{(}\PYG{n}{refractiveNormal}\PYG{p}{.}\PYG{n}{xyz}\PYG{p}{));}
+\PYG{+w}{    }\PYG{n+nb}{gl\PYGZus{}Position}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{projection}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{view}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{model}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{k+kt}{vec4}\PYG{p}{(}\PYG{n}{p}\PYG{p}{.}\PYG{n}{xyz}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}.}
+\end{Verbatim}

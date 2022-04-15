@@ -1,0 +1,655 @@
+@inproceedings{Bridson2007,
+    author = {Bridson, Robert and M\"{u}ller-Fischer, Matthias},
+    title = {Fluid Simulation: SIGGRAPH 2007 Course Notes Video Files Associated with This Course Are Available from the Citation Page},
+    year = {2007},
+    isbn = {9781450318235},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/1281500.1281681},
+    doi = {10.1145/1281500.1281681},
+    abstract = {Animating fluids like water, smoke, and fire by physics-based simulation is increasingly important in visual effects and is starting to make an impact in real-time games. This course goes from the basics of 3D fluid flow to the state of the art in graphics. We will begin with an intuitive explanation of the important concepts in fluid simulation, and as we progress demonstrate how to implement an effective smoke and water simulation system, complete with irregular curved boundaries and surface tension. The last half of the course will cover advanced topics such as fire and explosions, adaptive grid methods, real-time-capable algorithms together with the latest technology in hardware acceleration, and non-Newtonian fluids like sand. Intuition and implementation details will be underscored throughout.},
+    booktitle = {ACM SIGGRAPH 2007 Courses},
+    pages = {1–81},
+    numpages = {81},
+    location = {San Diego, California},
+    series = {SIGGRAPH '07}
+}
+
+@online{Mueller2008,
+    author = {Matthias Müller-Fischer},
+    journal = {GDC Vault},
+    title = {Fast Water Simulation for Games Using Height Fields},
+    address = {London, England},
+    year = {2008},
+    urldate = {2022-04-15},
+    url = {https://www.gdcvault.com/play/203/Fast-Water-Simulation-for-Games},
+    note = {https://archive.org/details/GDC2008Fischer}
+}
+
+@inproceedings{Guendelman2005,
+  author = {Guendelman, Eran and Selle, Andrew and Losasso, Frank and Fedkiw, Ronald},
+  title = {Coupling Water and Smoke to Thin Deformable and Rigid Shells},
+  year = {2005},
+  isbn = {9781450378253},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/1186822.1073299},
+  doi = {10.1145/1186822.1073299},
+  abstract = {We present a novel method for solid/fluid coupling that can treat infinitesimally thin solids modeled by a lower dimensional triangulated surface. Since classical solid/fluid coupling algorithms rasterize the solid body onto the fluid grid, an entirely new approach is required to treat thin objects that do not contain an interior region. Robust ray casting is used to augment a number of interpolation, finite difference and rendering techniques so that fluid does not leak through the triangulated surface. Moreover, we propose a technique for properly enforcing incompressibility so that fluid does not incorrectly compress (and appear to lose mass) near the triangulated surface. This allows for the robust interaction of cloth and shells with thin sheets of water. The proposed method works for both rigid body shells and for deformable manifolds such as cloth, and we present a two way coupling technique that allows the fluid's pressure to affect the solid. Examples illustrate that our method performs well, especially in the difficult case of water and cloth where it produces visually rich interactions between the particle level set method for treating the water/air interface and our newly proposed method for treating the solid/fluid interface. We have implemented the method on both uniform and adaptive octree grids.},
+  booktitle = {ACM SIGGRAPH 2005 Papers},
+  pages = {973–981},
+  numpages = {9},
+  keywords = {shells, rigid bodies, cloth, water, smoke},
+  location = {Los Angeles, California},
+  series = {SIGGRAPH '05}
+}
+
+@article{Max1981,
+    author = {Max, Nelson L.},
+    title = {Vectorized Procedural Models for Natural Terrain: Waves and Islands in the Sunset},
+    year = {1981},
+    issue_date = {August 1981},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {15},
+    number = {3},
+    issn = {0097-8930},
+    url = {https://doi.org/10.1145/965161.806820},
+    doi = {10.1145/965161.806820},
+    abstract = {A ray-tracing procedural model is described, in which ocean waves and islands are rendered by different but related algorithms. The algorithms are based on analytic formulas involving arithmetic operations, trigonometric functions, and square roots, and are organized for a vectorizing compiler on a Cray 1, a “supercomputer” with a vector pipeline architecture. Height field methods are used, one vertical scan line at a time, to trace the direct rays to the ocean, where they are reflected. Approximate methods are then applied to find whether the reflected rays meet any other object on their way to the sky. The output, at eight bits per pixel, gives information for shading, e.g. the angle of the surface normal for rays meeting the islands, or the angle of elevation from the horizon for rays continuing unobstructed to the sky.The output is recorded on a magnetic tape for each frame in one cycle of the wave motion, and plotted offline on a Dicomed D-48 color film recorder. The eight bits per pixel are interpreted by a color translation table, which is gradually changed as the wave cycle is repeated to simulate the changing illumination during sunset.},
+    journal = {SIGGRAPH Comput. Graph.},
+    month = {08},
+    pages = {317–324},
+    numpages = {8},
+    keywords = {Piercing, Vectorized, Height field, Procedural model, Natural terrain, Reflection, Color table animation, Pipeline, Water waves, Line buffer, Ray tracing}
+}
+
+@book{Fernando2004,
+    author = {R. Fernando},
+    title = {GPU gems},
+    publisher = {Addison-Wesley},
+    address = {Boston},
+    year = {2004},
+    isbn = {03-212-2832-4},
+}
+
+@book{Gerstner1804,
+    title={Theorie der wellen: samt daraus abgeleiteten theorie der deichprofile},
+    author={Gerstner, Franti{\v{s}}ek Josef},
+    year={1804},
+    publisher={Gottlieb Haase}
+}
+
+@online{Cycle2022,
+    author = {{Fakulta architektury ČVUT v Praze}},
+    journal = {Fakulta architektury ČVUT v Praze},
+    title = {Cyklické křivky},
+    booktitle = {Deskriptivní geometrie},
+    year = {2022},
+    address = {Praha},
+    urldate = {2022-04-15},
+    url = {https://www.fa.cvut.cz/studium/predmety/deskriptivni-geometrie-i-ii/dg_elskripta/krivky/cyklicke_krivky_1.pdf},
+}
+
+@online{Light2009,
+    journal = {Scratchapixel},
+    title = {Introduction to Ray Tracing: a Simple Method for Creating 3D Images},
+    year = {2009},
+    urldate = {2022-04-15},
+    url = {https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing/how-does-it-work},
+}
+
+@online{LightDir2009,
+    journal = {Scratchapixel},
+    title = {Introduction to Shading},
+    year = {2009},
+    urldate = {2022-04-15},
+    url = {https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel},
+}
+
+@online{ReRe2009,
+    author = {Epzcaw},
+    journal = {Wikimedia Commons},
+    title = {Reflection and refraction},
+    year = {2011},
+    urldate = {2022-04-15},
+    url = {https://commons.wikimedia.org/wiki/File:Reflection_and_refraction.svg},
+}
+
+@online{SPHPseudo2020,
+    author = {Tom McCracken},
+    journal = {GitHub},
+    title = {SPH Fluid Simulation},
+    address = {San Francisco},
+    year = {2008},
+    urldate = {2022-04-15},
+    url = {https://github.com/tommccracken/sph-fluid-simulation},
+}
+
+@online{Fresnel2018,
+  journal = {Mocah},
+  title = {Lake, Mountain, Nature},
+  year = {2017},
+  urldate = {2022-04-15},
+  url = {https://mocah.org/353879-4k-wallpaper.html},
+}
+
+@online{Gerstner2022,
+  author = {Jasper Flick},
+  journal = {Catlike Coding},
+  title = {Waves},
+  subtitle = {Moving Vertices},
+  year = {2018},
+  urldate = {2022-04-15},
+  url = {https://catlikecoding.com/unity/tutorials/flow/waves/},
+}
+
+@online{SinShader2022,
+  journal = {GitHub},
+  title = {On Vertex Shader Performance},
+  address = {San Francisco},
+  year = {2008},
+  urldate = {2022-04-15},
+  url = {https://paroj.github.io/gltut/Positioning/Tut03\%20On\%20Vertex\%20Shader\%20Performance.html},
+}
+
+@online{FFTCompl2022,
+    journal = {Stack Exchange},
+    title = {Complexity of FFT algorithms (Cooley-Tukey, Bluestein, Prime-factor)},
+    year = {2016},
+    urldate = {2022-04-15},
+    url = {https://math.stackexchange.com/questions/1704788/complexity-of-fft-algorithms-cooley-tukey-bluestein-prime-factor},
+}
+
+@online{Normal2022,
+    journal = {Stack Overflow},
+    title = {Calculating normals for a height map},
+    year = {2015},
+    urldate = {2022-04-15},
+    url = {https://stackoverflow.com/questions/33736199/calculating-normals-for-a-height-map},
+}
+
+@online{WaveEqDerivation,
+  author = {Christopher Lum},
+  journal = {YouTube},
+  title = {Derivation of the 1D Wave Equation},
+  year = {2018},
+  urldate = {2022-04-15},
+  url = {https://www.youtube.com/watch?v=IAut5Y-Ns7g},
+}
+
+@online{Caustics2009,
+  author = {{Brocken Inaglory}},
+  journal = {Wikimedia Commons},
+  title = {Great Barracuda, corals, sea urchin and Caustic (optics) in Kona, Hawaii 2009},
+  year = {2004},
+  urldate = {2022-04-15},
+  url = {https://commons.wikimedia.org/wiki/File:Great_Barracuda,_corals,_sea_urchin_and_Caustic_(optics)_in_Kona,_Hawaii_2009.jpg},
+}
+
+@online{Lewin2008,
+    author = {Walter Lewin},
+    journal = {YouTube},
+    title = {(2:3) The Wave Equation: Derivation (Walter Lewin, MIT)},
+    year = {2008},
+    urldate = {2022-04-15},
+    url = {https://www.youtube.com/watch?v=r2GIY2ZmXPY},
+}
+
+@online{Nse2008,
+    author = {Numberphile},
+    journal = {YouTube},
+    title = {Navier-Stokes Equations - Numberphile},
+    year = {2019},
+    urldate = {2022-04-15},
+    url = {https://www.youtube.com/watch?v=ERBVFcutl3M},
+}
+
+@online{FFTPicture2022,
+  author = {{Asylum Darth}},
+  journal = {YouTube},
+  title = {OpenGL Ocean Rendering (fast Fourier transform on GPU)},
+  year = {2018},
+  urldate = {2022-04-15},
+  url = {https://www.youtube.com/watch?v=CeJCNmI-B7s},
+}
+
+@thesis{Johanson2004,
+  author = {Claes Johanson},
+  title = {Real-time water rendering},
+  subtitle = {Introducing the projected grid concept},
+  address = {Lund},
+  year = {2004},
+  school = {Lund University},
+  type = {Diplomová práce},
+}
+
+@inproceedings{Lee2006,
+    author = {Lee, Ho-Min and Go, Christian and Hyung, Won},
+    year = {2006},
+    month = {01},
+    pages = {302-305},
+    title = {An Efficient Algorithm for Rendering Large Bodies of Water},
+    volume = {4161},
+    isbn = {978-3-540-45259-1},
+    journal = {Entertainment Computing - ICEC},
+    doi = {10.1007/11872320_37}
+}
+
+@article{Darles2011,
+    author = {Emmanuelle, Darles and Crespin, Benoît and Ghazanfarpour, Djamchid and Gonzato, Jean-CHristophe},
+    year = {2011},
+    month = {09},
+    pages = {},
+    title = {A Survey of Ocean Simulation and Rendering Techniques in Computer Graphics},
+    volume = {30},
+    journal = {Computer Graphics Forum - CGF},
+    doi = {10.1111/j.1467-8659.2010.01828.x}
+}
+
+@article{Tessendorf2001,
+  title={Simulating ocean water},
+  author={Tessendorf, Jerry and others},
+  journal={Simulating nature: realistic and interactive techniques. SIGGRAPH},
+  volume={1},
+  number={2},
+  pages={5},
+  year={2001}
+}
+
+@online{Heightfield2022,
+  journal = {Chalmers Computer Graphics Group},
+  title = {Heightfields},
+  subtitle = {Render a large terrain (and then some fractal water) by displacing vertices from height-map data.},
+  year = {2022},
+  urldate = {2022-04-15},
+  url = {http://www.cse.chalmers.se/edu/course/TDA362/tutorials/heightfield.html},
+}
+
+@article{Fournier1986,
+  author = {Fournier, Alain and Reeves, William T.},
+  title = {A Simple Model of Ocean Waves},
+  year = {1986},
+  issue_date = {Aug. 1986},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  volume = {20},
+  number = {4},
+  issn = {0097-8930},
+  url = {https://doi.org/10.1145/15886.15894},
+  doi = {10.1145/15886.15894},
+  abstract = {We present a simple model for the surface of the ocean, suitable for the modeling and rendering of most common waves where the disturbing force is from the wind and the restoring force from gravity.It is based on the Gerstner, or Rankine, model where particles of water describe circular or elliptical stationary orbits. The model can easily produce realistic waves shapes which are varied according to the parameters of the orbits. The surface of the ocean floor affects the refraction and the breaking of waves on the shore. The model can also determine the position, direction, and speed of breakers.The ocean surface is modeled as a parametric surface, permitting the use of traditional rendering methods, including ray-tracing and adaptive subdivision. Animation is easy, since time is built into the model. The foam generated by the breakers is modeled by particle systems whose direction, speed and life expectancy is given by the surface model.To give designers control over the shape of the ocean, the model of the overall surface includes multiple trains of waves, each with its own set of parameters and optional stochastic elements. The overall "randomness" and "short-crestedness" of the ocean is achieved by a combination of small variations within a train and large variations between trains.Rendered examples of oceans waves generated by the model are given and a 10 second animation is described.},
+  journal = {SIGGRAPH Comput. Graph.},
+  month = {08},
+  pages = {75–84},
+  numpages = {10}
+}
+
+@online{Kraaiennest2015,
+  author = {Kraaiennest},
+  journal = {Wikimedia Commons},
+  title = {Trochoidal wave},
+  year = {2015},
+  urldate = {2022-04-15},
+  url = {https://commons.wikimedia.org/wiki/File:Trochoidal_wave.svg},
+}
+
+@online{SPHNvidia2011,
+  author = {Simon Green and Richard Tonge and Miguel Sainz and Dane Johnston and David Schoemehl},
+  journal = {Nvidia Developer},
+  title = {Fluid Simulation in Alice: Madness Returns},
+  year = {2011},
+  urldate = {2022-04-15},
+  url = {https://developer.nvidia.com/content/fluid-simulation-alice-madness-returns},
+}
+
+@online{ReflectCubemap2022,
+  author = {Joey de Vries},
+  journal = {Learn OpenGL},
+  title = {Cubemaps},
+  year = {2014},
+  urldate = {2022-04-15},
+  url = {https://learnopengl.com/Advanced-OpenGL/Cubemaps\#:~:text=A\%20cubemap\%20used\%20to\%20texture,direction\%20vector\%20from\%20the\%20origin.},
+}
+
+@online{Wallace2022,
+  author = {Evan Wallace},
+  journal = {GitHub},
+  title = {WebGL Water Demo},
+  address = {San Francisco},
+  year = {2008},
+  urldate = {2022-04-15},
+  url = {https://github.com/evanw/webgl-water},
+}
+
+@online{Jlcercos2018,
+  author = {Jlcercos},
+  journal = {Wikimedia Commons},
+  title = {SPHInterpolationColorsVerbose},
+  year = {2018},
+  urldate = {2022-04-15},
+  url = {https://commons.wikimedia.org/wiki/File:SPHInterpolationColorsVerbose.svg},
+}
+
+@article{Reeves1983,
+  author = {Reeves, William T.},
+  title = {Particle Systems—a Technique for Modeling a Class of Fuzzy Objects},
+  year = {1983},
+  issue_date = {July 1983},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  volume = {17},
+  number = {3},
+  issn = {0097-8930},
+  url = {https://doi.org/10.1145/964967.801167},
+  doi = {10.1145/964967.801167},
+  journal = {SIGGRAPH Comput. Graph.},
+  month = {07},
+  pages = {359–375},
+  numpages = {17},
+  keywords = {Motion blur, Temporal aliasing, Dynamic objects, Stochastic modeling}
+}
+
+@article{MillerPearce1989,
+  title = {Globular dynamics: A connected particle system for animating viscous fluids},
+  journal = {Computers \& Graphics},
+  volume = {13},
+  number = {3},
+  pages = {305-309},
+  year = {1989},
+  issn = {0097-8493},
+  doi = {https://doi.org/10.1016/0097-8493(89)90078-2},
+  url = {https://www.sciencedirect.com/science/article/pii/0097849389900782},
+  author = {Gavin Miller and Andrew Pearce},
+  abstract = {Connected particle systems can depict many objects difficult to model in any other fashion. We present a method for animating viscous fluids by simulating the forces of such particles interacting with each other. This method allows for collision detection between the particles and obstacles, both stationary and mobile, and it allows solid objects to break and melt. An approximate method for covering the particles with an isosurface for efficient rendering is also presented.}
+}
+
+@article{Monaghan2005,
+	doi = {10.1088/0034-4885/68/8/r01},
+	url = {https://doi.org/10.1088/0034-4885/68/8/r01},
+	year = 2005,
+	month = {07},
+	publisher = {{IOP} Publishing},
+	volume = {68},
+	number = {8},
+	pages = {1703--1759},
+	author = {J J Monaghan},
+	title = {Smoothed particle hydrodynamics},
+	journal = {Reports on Progress in Physics},
+	abstract = {In this review the theory and application of Smoothed particle hydrodynamics (SPH) since its inception in 1977 are discussed. Emphasis is placed on the strengths and weaknesses, the analogy with particle dynamics and the numerous areas where SPH has been successfully applied.}
+}
+
+
+@article{Lucy1977,
+  title = {Numerical approach to the testing of the fission hypothesis},
+  author = {Lucy, L B},
+  abstractNote = {A finite-size particle scheme for the numerical solution of two- and three-dimensional gas dynamical problems of astronomical interest is described and tested. The scheme is then applied to the fission problem for optically thick protostars. Results are given, showing the evolution of one such protostar from an initial state as a single, rotating star to a final state as a triple system whose components contain 60% of the original mass. The decisiveness of this numerical test of the fission hypothesis and its relevance to observed binaries are briefly discussed.},
+  doi = {10.1086/112164},
+  url = {https://www.osti.gov/biblio/7077277}, 
+  journal = {Astron. J.; (United States)},
+  volume = {82:12},
+  place = {United States},
+  year = {1977},
+  month = {12}
+}
+
+@inproceedings{Mueller2003,
+  author = {M\"{u}ller, Matthias and Charypar, David and Gross, Markus},
+  title = {Particle-Based Fluid Simulation for Interactive Applications},
+  year = {2003},
+  isbn = {1581136595},
+  publisher = {Eurographics Association},
+  address = {Goslar, DEU},
+  abstract = {Realistically animated fluids can add substantial realism to interactive applications such as virtual surgery simulators or computer games. In this paper we propose an interactive method based on Smoothed Particle Hydrodynamics (SPH) to simulate fluids with free surfaces. The method is an extension of the SPH-based technique by Desbrun to animate highly deformable bodies. We gear the method towards fluid simulation by deriving the force density fields directly from the Navier-Stokes equation and by adding a term to model surface tension effects. In contrast to Eulerian grid-based approaches, the particle-based approach makes mass conservation equations and convection terms dispensable which reduces the complexity of the simulation. In addition, the particles can directly be used to render the surface of the fluid. We propose methods to track and visualize the free surface using point splatting and marching cubes-based surface reconstruction. Our animation method is fast enough to be used in interactive systems and to allow for user interaction with models consisting of up to 5000 particles.},
+  booktitle = {Proceedings of the 2003 ACM SIGGRAPH/Eurographics Symposium on Computer Animation},
+  pages = {154–159},
+  numpages = {6},
+  location = {San Diego, California},
+  series = {SCA '03}
+}
+
+@inproceedings{Desburn1996,
+    author = {Desbrun, Mathieu and Gascuel, Marie-Paule},
+    title = {Smoothed Particles: A New Paradigm for Animating Highly Deformable Bodies},
+    year = {1996},
+    isbn = {3211828850},
+    publisher = {Springer-Verlag},
+    address = {Berlin, Heidelberg},
+    booktitle = {Proceedings of the Eurographics Workshop on Computer Animation and Simulation '96},
+    pages = {61–76},
+    numpages = {16},
+    location = {Poitiers, France}
+}
+
+@book{Pozrikidis2008,
+  author = {C. Pozrikidis},
+  title = {Numerical Computation in Science and Engineering},
+  publisher = {Oxford University Press},
+  address = {New York},
+  year = {2008},
+  edition = {2nd ed},
+  isbn = {978-0-19-537611-1},
+}
+
+@inproceedings{Zwicker2001,
+  author = {Zwicker, Matthias and Pfister, Hanspeter and van Baar, Jeroen and Gross, Markus},
+  title = {Surface Splatting},
+  year = {2001},
+  isbn = {158113374X},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/383259.383300},
+  doi = {10.1145/383259.383300},
+  abstract = {Modern laser range and optical scanners need rendering techniques that can handle millions of points with high resolution textures. This paper describes a point rendering and texture filtering technique called surface splatting which directly renders opaque and transparent surfaces from point clouds without connectivity. It is based on a novel screen space formulation of the Elliptical Weighted Average (EWA) filter. Our rigorous mathematical analysis extends the texture resampling framework of Heckbert to irregularly spaced point samples. To render the points, we develop a surface splat primitive that implements the screen space EWA filter. Moreover, we show how to optimally sample image and procedural textures to irregular point data during pre-processing. We also compare the optimal algorithm with a more efficient view-independent EWA pre-filter. Surface splatting makes the benefits of EWA texture filtering available to point-based rendering. It provides high quality anisotropic texture filtering, hidden surface removal, edge anti-aliasing, and order-independent transparency.},
+  booktitle = {Proceedings of the 28th Annual Conference on Computer Graphics and Interactive Techniques},
+  pages = {371–378},
+  numpages = {8},
+  keywords = {image-based rendering, antialiasing, frame buffer algorithms, texture mapping, rendering systems},
+  series = {SIGGRAPH '01}
+}
+
+@inproceedings{Nuttapong2010,
+  author = {Chentanez, Nuttapong and Müller, Matthias},
+  year = {2010},
+  month = {01},
+  pages = {197-206},
+  title = {Real-time Simulation of Large Bodies of Water with Small Scale Details.},
+  doi = {10.2312/SCA/SCA10/197-206}
+}
+
+@online{WaveEq2022,
+  author = {{The University of Reading}},
+  journal = {PPLATO: Promoting Physics Learning And Teaching Opportunities},
+  title = {Deriving the wave equation},
+  address = {Reading},
+  year = {2004},
+  urldate = {2022-04-15},
+  url = {http://www.met.reading.ac.uk/pplato2/h-flap/math6_4.html\#top},
+}
+
+@phdthesis{Wright2017,
+  author = {Wright, Timothy},
+  year = {2007},
+  month = {11},
+  pages = {},
+  title = {CHARACTERIZATION OF FAULT CURVATURE: IMPLICATIONS FOR WALL ROCK DEFORMATION \& THE ENHANCEMENT OF AUTOMATED FAULT INTERPRETATION SOFTWARE},
+  doi = {10.13140/RG.2.1.1660.6800}
+}
+
+@inproceedings{Akkaynak2017,
+  author = {Akkaynak, Derya and Treibitz, Tali and Shlesinger, Tom and Tamir, Raz and Loya, Yossi and Iluz, David},
+  year = {2017},
+  month = {07},
+  pages = {},
+  title = {What Is the Space of Attenuation Coefficients in Underwater Computer Vision?},
+  doi = {10.1109/CVPR.2017.68}
+}
+
+@inproceedings{Fleck2007,
+  title={Real-Time Rendering of Water in Computer Graphics},
+  author={Bernhard Fleck},
+  year={2007}
+}
+
+@article{Cerezo2002,
+  author = {Cerezo, Eva and Serón, Francisco},
+  year = {2002},
+  month = {01},
+  pages = {},
+  title = {Rendering Natural Waters: Merging Computer Graphics with Physics and Biology},
+  doi = {10.1007/978-1-4471-0103-1_31}
+}
+
+@inproceedings{Baboud2006,
+  TITLE = {{Realistic Water Volumes in Real-Time}},
+  AUTHOR = {Baboud, Lionel and D{\'e}coret, Xavier},
+  URL = {https://hal.inria.fr/inria-00510227},
+  BOOKTITLE = {{Eurographics Workshop on Natural Phenomena}},
+  ADDRESS = {Vienne, Austria},
+  ORGANIZATION = {{Eurographics}},
+  YEAR = {2006},
+  KEYWORDS = {Three-Dimensional Graphics ; Realism},
+  PDF = {https://hal.inria.fr/inria-00510227/file/article.pdf},
+  HAL_ID = {inria-00510227},
+  HAL_VERSION = {v1},
+}
+
+@INPROCEEDINGS{Premoze2000,
+    author={Premoze, S. and Ashikhmin, M.},
+    booktitle={Proceedings the Eighth Pacific Conference on Computer Graphics and Applications}, 
+    title={Rendering natural waters},  
+    year={2000}, 
+    volume={}, 
+    number={}, 
+    pages={23-434},
+    doi={10.1109/PCCGA.2000.883856}
+}
+
+@article{Shah2007,
+  author = {Shah, Musawir and Konttinen, Jaakko and Pattanaik, Sumanta},
+  year = {2007},
+  month = {03},
+  pages = {272-280},
+  title = {Caustics Mapping: An Image-Space Technique for Real-Time Caustics},
+  volume = {13},
+  journal = {IEEE transactions on visualization and computer graphics},
+  doi = {10.1109/TVCG.2007.32}
+}
+
+@online{Lettier2019,
+  author = {David Lettier},
+  journal = {GitHub},
+  title = {3D Game Shaders For Beginners},
+  subtitle = {Screen Space Reflection (SSR)},
+  address = {San Francisco},
+  year = {2008},
+  urldate = {2022-04-15},
+  url = {https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-reflection.html},
+}
+
+@online{LettierRefract2019,
+  author = {David Lettier},
+  journal = {GitHub},
+  title = {3D Game Shaders For Beginners},
+  subtitle = {Screen Space Refraction (SSR)},
+  address = {San Francisco},
+  year = {2008},
+  urldate = {2022-04-15},
+  url = {https://lettier.github.io/3d-game-shaders-for-beginners/screen-space-refraction.html},
+}
+
+@online{Vries2022,
+  author = {Joey de Vries},
+  journal = {Learn OpenGL},
+  title = {OpenGL},
+  year = {2014},
+  urldate = {2022-04-15},
+  url = {https://learnopengl.com/Getting-started/OpenGL},
+}
+
+@article{Kwolek2020,
+  author = {Kwolek, Bogdan and Rymut, Boguslaw},
+  title = {Reconstruction of 3D Human Motion in Real-Time Using Particle Swarm Optimization with GPU-Accelerated Fitness Function},
+  year = {2020},
+  issue_date = {Aug 2020},
+  publisher = {Springer-Verlag},
+  address = {Berlin, Heidelberg},
+  volume = {17},
+  number = {4},
+  issn = {1861-8200},
+  url = {https://doi.org/10.1007/s11554-018-0825-5},
+  doi = {10.1007/s11554-018-0825-5},
+  abstract = {In this paper, a novel framework for acceleration of 3D model-based, markerless visual tracking in multi-camera videos is proposed. The objective function being the most computationally demanding part of model-based 3D motion reconstruction is calculated on a GPU. The proposed framework effectively utilizes the rendering power of OpenGL to render the 3D models in the predicted poses, whereas the CUDA threads are used to match such rendered models with the image observations and to perform particle swarm optimization-based tracking. We demonstrate effective parallelization of the particle swarm optimization on GPU. Execution of time-consuming parts of the algorithm on GPU using CUDA-OpenGL significantly accelerates the 3D motion reconstruction, making our method capable of tracking full-body movements with a maximum speed of 15 fps. Qualitative and quantitative experimental results on various four-camera benchmark datasets demonstrate the efficiency and accuracy of our method for real-time motion tracking.},
+  journal = {J. Real-Time Image Process.},
+  month = {08},
+  pages = {821–838},
+  numpages = {18},
+  keywords = {Parallelization of fitness function, 3D motion tracking, Particle swarm optimization}
+}
+
+@online{TFB2022,
+  journal = {Khronos},
+  title = {Transform Feedback},
+  year = {2021},
+  urldate = {2022-04-15},
+  url = {https://www.khronos.org/opengl/wiki/Transform_Feedback\#:~:text=Transform\%20Feedback\%20is\%20the\%20process,resubmit\%20this\%20data\%20multiple\%20times.},
+}
+
+@online{Allain1996,
+  author = {Alex Allain},
+  journal = {Cprogramming},
+  title = {OpenGL vs. DirectX: A Comparison},
+  year = {2019},
+  urldate = {2022-04-15},
+  url = {https://www.cprogramming.com/tutorial/openglvsdirectx.html\#:~:text=DirectX\%20supports\%20sound\%2C\%20music\%2C\%20input,only\%20on\%20Windows\%20and\%20XBox.},
+}
+
+@online{Vulkan2022,
+  journal = {Stack Exchange},
+  title = {What is Vulkan and how does it differ from OpenGL?},
+  year = {2015},
+  urldate = {2022-04-15},
+  url = {https://gamedev.stackexchange.com/questions/96014/what-is-vulkan-and-how-does-it-differ-from-opengl},
+}
+
+@online{GameEngine2022,
+  journal = {Reddit},
+  title = {OpenGL vs Commercial Engines?},
+  year = {2008},
+  urldate = {2022-04-15},
+  url = {https://www.reddit.com/r/gamedev/comments/7s2l7z/opengl_vs_commercial_engines/},
+}
+
+@online{UnityUnreal2022,
+  author = {Dejan Gajsek},
+  journal = {Circuit Stream},
+  title = {Unity vs Unreal Engine for XR Development: Which One Is Better? [2021 Updated]},
+  year = {2022},
+  urldate = {2022-04-15},
+  url = {https://circuitstream.com/blog/unity-vs-unreal/},
+}
+
+@online{GLSLUnity2022,
+  journal = {Unity Documentation},
+  title = {GLSL in Unity},
+  year = {2022},
+  urldate = {2022-04-15},
+  url = {https://docs.unity3d.com/Manual/SL-GLSLShaderPrograms.html},
+}
+
+@online{GLSLUnreal2022,
+  journal = {Unreal Engine},
+  title = {HLSL Cross Compiler},
+  year = {2004},
+  urldate = {2022-04-15},
+  url = {https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/Rendering/ShaderDevelopment/HLSLCrossCompiler/},
+}
+
+@online{Moscow2022,
+  journal = {Agile Business},
+  title = {10 MOSCOW PRIORITISATION},
+  address = {Kent},
+  year = {2022},
+  urldate = {2022-04-15},
+  url = {https://www.agilebusiness.org/page/ProjectFramework_10_MoSCoWPrioritisation},
+}

@@ -1,6 +1,6 @@
 \chapter{Základ teorie mechaniky tekutin}
  
- V této kapitole je shrnutí teorie mechaniky tekutin, která je nezbytnou součástí simulace fyzikálně korektního chování vody. Teorie je zde vyložena takovým způsobem, aby byl čtenář s ní seznámem a co nejrychleji pochopil principy chování tekutin, neobsahuje žádné rigorózní vysvětlení problematiky.
+ V této kapitole je shrnutí teorie mechaniky tekutin, která je nezbytnou součástí simulace fyzikálně korektního chování vody. Teorie je zde vyložena takovým způsobem, aby byl čtenář s ní seznámen a co nejrychleji pochopil principy chování tekutin, neobsahuje žádné rigorózní vysvětlení problematiky.
  
     \section{Navierovy--Stokesovy rovnice}
     
@@ -16,7 +16,7 @@
         \noindent kde vektor $ \mathbf{v} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \mathbf{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kynematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla^2 $ označují diferenciální operátory nabla, divergence a Laplacův operátor. \cite{Bridson2007}  
     
             \subsection{Vysvětlení}
-                Před vysvětlením jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektrové analýzy a pracují s\,vektorovými poli, resp. skalárními poli. NSE např. pracují s vektorovým poli, resp. se skalárními poli, které jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
+                Před vysvětlením jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektorové analýzy a pracují s\,vektorovými poli, resp. skalárními poli. NSE např. pracují s vektorovým poli, resp. se skalárními poli, které jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
     
                 Na první pohled vypadají rovnice těžce pochopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě z ničeho vznikla nebo zanikla. \cite{Bridson2007}
     
@@ -55,10 +55,10 @@
                     \frac{\partial \mathbf{v}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{v} + \frac{1}{\rho} \nabla p = \mathbf{g}  + \nu \nabla^2 \mathbf{v} 
                 \end{equation}
                 
-        \newpage
+            \newpage
                 
-        \section{Využití}
-            Výhodou NSE je, že je lze aplikovat na téměř jakékoliv tekutiny. V praxi se využívají pro modelování počasí a podnebí pro jejich předpověď, proudění v\;oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují aplikovat se zanedbatelnými chybami v modelovacích systémech. \cite{Nse2008}
+            \subsection{Využití}
+                Výhodou NSE je, že je lze aplikovat na téměř jakékoliv tekutiny. V praxi se využívají pro modelování počasí a podnebí pro jejich předpověď, proudění v\;oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují aplikovat se zanedbatelnými chybami v modelovacích systémech. \cite{Nse2008}
             
         \section{Popisy tekutiny}
 
@@ -73,7 +73,7 @@
             
                 Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny, např. tlak, rychlost proudu, teplotu, jak se v čase mění. 
                 
-                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v pevně daných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla \mathbf{v}$, které se lépe aproximují v\,pevné Eulerově mřížce oproti shlukům pohybujcích se částic. \cite{Bridson2007}
+                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v pevně daných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla^2 \mathbf{v}$, které se lépe aproximují v\,pevné Eulerově mřížce oproti shlukům pohybujcích se částic. \cite{Bridson2007}
 
             
 
@@ -147,7 +147,7 @@
                         h(x, z, t) = -y_0 + \sum_{i=1}^{N_w} A_i \sin (k_{x_i}x+k_{z_i}z-\omega_i t + \varphi_i), \label{eq:sin_wave_sum} 
                     \end{equation}
 
-                    \noindent kde $N_w$ je celkový počet vln.
+                    \noindent kde $N_w$ je celkový počet vln. \cite{Max1981}
 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sin_wave_sum}
@@ -156,7 +156,7 @@
                     
                     \newpage 
                     
-                    Realistického řešení však za pomocí jen obyčejných sinusoid nelze dosáhnout. Max \cite{Max1981} si všiml, že vlnění oceánu s vyššími amplitudami mají užší hřeben a mělčí údolí, zatímco vrchol a údolí sinusoidy jsou stejně oblé. Mark Finch \cite{Fernando2004} přišel s\;řešením tohoto problém, které stále využívá jednoduchých sinusoid. Kromě obyčejných funkcí sinusoid přičítá navíc funkce
+                    Realistického řešení však za pomocí jen obyčejných sinusoid nelze dosáhnout. Max \cite{Max1981} si všiml, že vlnění oceánu s vyššími amplitudami mají užší hřeben a mělčí údolí, zatímco vrchol a údolí sinusoidy jsou stejně oblé. Mark Finch \cite{Fernando2004} přišel s\;řešením tohoto problém, které stále využívá jednoduchých sinusoid. Kromě obyčejných funkcí sinusoid přičítává navíc funkce
                     
                     \begin{equation}
                         f_i(x,z,t) = 2 \left( \frac{\sin (k_{x_i} x + k_{z_i} z - \omega_i t + \varphi_i) + 1}{2} \right)^k, \label{eq:sin_better}
@@ -214,9 +214,9 @@
                 \subsubsection{Simulace podle Fourierovy transformace}
                     Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$, který se pohybuje v řádech tísíců nebo více. Vysoký počet $N_w$ představuje však výpočetní překážku. Obvykle by výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner} herní \emph{enginy} provedly ve \emph{vertex shaderech}, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
                     
-                    Johanson \cite{Johanson2004} řešil výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje některá vlnění. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvencemi. Efektivnějšího výsledku dosáhl Lee \cite{Lee2006}, který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
+                    Johanson \cite{Johanson2004} řeší výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje některá vlnění. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvencemi. Efektivnějšího výsledku dosáhl Lee \cite{Lee2006}, který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
                     
-                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. rychlé inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
+                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. rychlé inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve své podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
                     
                     \begin{equation}
                         h(\mathbf{x},t) = \sum_k \widetilde{h}(\mathbf{k}, t) e^{i \mathbf{k} \cdot \mathbf{x}},
@@ -615,7 +615,7 @@ Během celé simulace opakuj
             
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/cubemap}
-                \caption{Vzorkování odrazů scény, kde odražený pohledový parsek směřuje na horní stranu \emph{cubemapy}. \cite{ReflectCubemap2022}}
+                \caption{Vzorkování odrazů scény, kde odražený pohledový parsek směřuje na horní stranu \emph{cubemapy}. (CC BY 4.0)  \cite{ReflectCubemap2022}}
                 \label{fig:reflect_cube}
             \end{figure}
             

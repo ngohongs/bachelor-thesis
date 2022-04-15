@@ -1,0 +1,44 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{main}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{abort}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n}{FragColor}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k+kt}{vec4}\PYG{p}{(}\PYG{k+kt}{vec3}\PYG{p}{(}\PYG{l+m+mf}{0.0}\PYG{p}{),}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{);}
+\PYG{+w}{        }\PYG{k}{return}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{    }\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{old\PYGZus{}info}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{heightField}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{fTexCoord}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{p}{...}
+
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{vpdx}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{heightField}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pdx}\PYG{p}{).}\PYG{n}{r}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{AddDrop}\PYG{p}{(}\PYG{n}{pdx}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{vndx}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{heightField}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ndx}\PYG{p}{).}\PYG{n}{r}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{AddDrop}\PYG{p}{(}\PYG{n}{ndx}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{vpdy}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{heightField}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pdy}\PYG{p}{).}\PYG{n}{r}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{AddDrop}\PYG{p}{(}\PYG{n}{pdy}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{vndy}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{heightField}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ndy}\PYG{p}{).}\PYG{n}{r}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{AddDrop}\PYG{p}{(}\PYG{n}{ndy}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{nsum}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{vpdx}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{vndx}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{vpdy}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{vndy}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{average}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{  }\PYG{p}{(}\PYG{n}{vpdx}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{vndx}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{vpdy}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{vndy}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{l+m+mf}{4.0}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{h}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texelSize}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{old\PYGZus{}info}\PYG{p}{.}\PYG{n}{r}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{AddDrop}\PYG{p}{(}\PYG{n}{fTexCoord}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{old\PYGZus{}v}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{old\PYGZus{}info}\PYG{p}{.}\PYG{n}{g}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{offset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{average}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{maxslope}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{waveSlope}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{maxoffset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{maxslope}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{h}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{offset}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{maxoffset}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{old\PYGZus{}u}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{offset}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{maxoffset}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{offset}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{maxoffset}\PYG{p}{)}
+\PYG{+w}{        }\PYG{n}{old\PYGZus{}u}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{offset}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{maxoffset}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{c}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max}\PYG{p}{(}\PYG{n}{waveSpeed}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.001}\PYG{n}{f}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{f}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{c}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{c}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{nsum}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{4}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{h}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{h}\PYG{p}{);}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{new\PYGZus{}v}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{old\PYGZus{}v}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{f}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{deltaTime}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{new\PYGZus{}v}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{new\PYGZus{}v}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{new\PYGZus{}v}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max}\PYG{p}{((}\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{waveDamping}\PYG{p}{),}\PYG{+w}{ }\PYG{l+m+mf}{0.001}\PYG{n}{f}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{new\PYGZus{}v}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{new\PYGZus{}u}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{old\PYGZus{}u}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{new\PYGZus{}v}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{deltaTime}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{new\PYGZus{}u}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{new\PYGZus{}u}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{new\PYGZus{}info}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k+kt}{vec4}\PYG{p}{(}\PYG{n}{new\PYGZus{}u}\PYG{+w}{ }\PYG{p}{,}\PYG{+w}{ }\PYG{n}{new\PYGZus{}v}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mo}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{+w}{    }\PYG{n}{FragColor}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{new\PYGZus{}info}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}.}
+\end{Verbatim}
