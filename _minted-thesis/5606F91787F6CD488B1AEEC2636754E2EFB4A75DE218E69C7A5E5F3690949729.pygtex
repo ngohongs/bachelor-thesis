@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{OdhadPrůsečíku}\PYG{p}{(}\PYG{n}{float3}\PYG{+w}{ }\PYG{n}{V}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{float3}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{texture2D}\PYG{+w}{ }\PYG{n}{receivers}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{P\PYGZus{}1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{V}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{r}
+\PYG{+w}{    }\PYG{c+c1}{// převod souřadnic P\PYGZus{}1 do systému souřadnic pohledu světla}
+\PYG{+w}{    }\PYG{n}{lightP\PYGZus{}1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lightViewProjectionMatrix}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{float4}\PYG{p}{(}\PYG{n}{P\PYGZus{}1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{+w}{    }\PYG{c+c1}{// promítnutí bodu P\PYGZus{}1 na přijímací objekty}
+\PYG{+w}{    }\PYG{n}{uvP\PYGZus{}1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{P\PYGZus{}1}\PYG{p}{.}\PYG{n}{xy}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{P\PYGZus{}1}\PYG{p}{.}\PYG{n}{w}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{0.5}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{p}{)}
+\PYG{+w}{    }\PYG{c+c1}{// zjistění světových souřadnic P\PYGZus{}1}
+\PYG{+w}{    }\PYG{n}{worldP\PYGZus{}1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{receivers}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{uvP\PYGZus{}1}\PYG{p}{)}
+
+\PYG{+w}{    }\PYG{n}{P\PYGZus{}2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{V}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{distance}\PYG{p}{(}\PYG{n}{V}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{worldP\PYGZus{}1}\PYG{p}{.}\PYG{n}{xyz}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{r}
+\PYG{+w}{    }\PYG{n}{lightP\PYGZus{}2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{lightViewProjectionMatrix}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{float4}\PYG{p}{(}\PYG{n}{P\PYGZus{}2}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{uvP\PYGZus{}2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{P\PYGZus{}2}\PYG{p}{.}\PYG{n}{xy}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{P\PYGZus{}2}\PYG{p}{.}\PYG{n}{w}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{0.5}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{worldP\PYGZus{}2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{receivers}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{uvP\PYGZus{}2}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{Vrať}\PYG{+w}{ }\PYG{n}{worldP\PYGZus{}2}\PYG{p}{.}
+\end{Verbatim}

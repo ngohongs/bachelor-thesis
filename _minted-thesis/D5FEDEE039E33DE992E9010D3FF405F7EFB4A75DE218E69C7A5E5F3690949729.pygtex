@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{Nastevení}\PYG{+w}{ }\PYG{n}{počátečních}\PYG{+w}{ }\PYG{n}{hodnot}\PYG{+w}{ }\PYG{n}{častíc}\PYG{p}{.}
+\PYG{n}{Během}\PYG{+w}{ }\PYG{n}{celé}\PYG{+w}{ }\PYG{n}{doby}\PYG{+w}{ }\PYG{n}{simulace}\PYG{+w}{ }\PYG{n}{opakuj}\PYG{o}{:}
+\PYG{+w}{    }\PYG{n}{Pro}\PYG{+w}{ }\PYG{n}{každou}\PYG{+w}{ }\PYG{n}{částici}
+\PYG{+w}{        }\PYG{n}{Najdi}\PYG{+w}{ }\PYG{n}{jeho}\PYG{+w}{ }\PYG{n}{sousedy}\PYG{p}{.}
+\PYG{+w}{        }\PYG{n}{Pomocí}\PYG{+w}{ }\PYG{n}{SPH}\PYG{+w}{ }\PYG{n}{vypočíti}\PYG{+w}{ }\PYG{n}{hustotu}\PYG{p}{.}
+\PYG{+w}{        }\PYG{n}{Z}\PYG{+w}{ }\PYG{n}{hustoty}\PYG{+w}{ }\PYG{n}{aproximuj}\PYG{+w}{ }\PYG{n}{tlak}\PYG{p}{.}
+\PYG{+w}{        }\PYG{n}{Pomocí}\PYG{+w}{ }\PYG{n}{SPH}\PYG{+w}{ }\PYG{n}{vypočti}\PYG{+w}{ }\PYG{n}{tlakovou}\PYG{+w}{ }\PYG{n}{sílu}\PYG{p}{.}
+\PYG{+w}{        }\PYG{n}{Pomocí}\PYG{+w}{ }\PYG{n}{SPH}\PYG{+w}{ }\PYG{n}{vypočti}\PYG{+w}{ }\PYG{n}{sílu}\PYG{+w}{ }\PYG{n}{viskozity}\PYG{p}{.}
+\PYG{+w}{        }\PYG{n}{Aplikuj}\PYG{+w}{ }\PYG{n}{na}\PYG{+w}{ }\PYG{n}{částici}\PYG{+w}{ }\PYG{n}{externí}\PYG{+w}{ }\PYG{n}{síly}\PYG{p}{.}
+\PYG{+w}{        }\PYG{n}{Detekuj}\PYG{+w}{ }\PYG{n}{kolize}\PYG{p}{.}
+\PYG{+w}{    }\PYG{n}{Integrace}\PYG{+w}{ }\PYG{n}{podle}\PYG{+w}{ }\PYG{n}{času}\PYG{p}{.}
+\PYG{+w}{    }\PYG{n}{Vykreslení}\PYG{+w}{ }\PYG{n}{částicového}\PYG{+w}{ }\PYG{n}{systému}\PYG{p}{.}
+\end{Verbatim}
