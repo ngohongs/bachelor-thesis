@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k+kt}{float}\PYG{+w}{ }\PYG{n}{height}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{texture}\PYG{p}{(}\PYG{n}{heightField}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{aTexCoord}\PYG{p}{).}\PYG{n}{r}\PYG{p}{;}
-\PYG{k+kt}{vec3}\PYG{+w}{ }\PYG{n}{offset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k+kt}{vec3}\PYG{p}{(}\PYG{l+m+mf}{0.0}\PYG{n}{f}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{height}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.0}\PYG{n}{f}\PYG{p}{);}
-
-\PYG{k+kt}{vec4}\PYG{+w}{ }\PYG{n}{worldCoord}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{model}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{k+kt}{vec4}\PYG{p}{(}\PYG{n}{aPosition}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{offset}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{n}{f}\PYG{p}{).}
-\end{Verbatim}

@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{glTexImage2D}\PYG{p}{(}\PYG{n}{GL\PYGZus{}TEXTURE\PYGZus{}2D}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{GL\PYGZus{}RGBA32F}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{m\PYGZus{}Width}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{m\PYGZus{}Height}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}
-\PYG{+w}{             }\PYG{n}{GL\PYGZus{}RGB}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{GL\PYGZus{}FLOAT}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{).}
-\end{Verbatim}
