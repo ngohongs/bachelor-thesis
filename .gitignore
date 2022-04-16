@@ -9,8 +9,10 @@
 *.log
 *.lol
 *.lot
-_minted-ctufit-thesis/
+_minted-thesis/
 *.out
 *.ps
 *.run.xml
 *.toc
+*.pygtex
+*.pygstyle
