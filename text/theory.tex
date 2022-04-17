@@ -4,7 +4,7 @@
  
     \section{Navierovy--Stokesovy rovnice}
     
-        Proud tekutin se v reálném světě řídí podle Navierových--Stokesových rovnic (NSE), soustavou nelinearních diferenciálních rovnic:
+        Proud tekutin se v reálném světě řídí podle Navierových--Stokesových rovnic (NSE), soustavou nelineárních diferenciálních rovnic:
     
         \begin{equation}
             \nabla \cdot \mathbf{v} = 0, \label{eq:mass_conservation}
@@ -13,7 +13,7 @@
             \frac{ \partial \mathbf{v}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{v} + \frac{1}{\rho} \nabla p = \mathbf{g} + \nu \nabla^2 \mathbf{v}, \label{eq:momentum_conservation}
         \end{equation}
     
-        \noindent kde vektor $ \mathbf{v} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \mathbf{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kynematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla^2 $ označují diferenciální operátory nabla, divergence a Laplacův operátor. \cite{Bridson2007}  
+        \noindent kde vektor $ \mathbf{v} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \mathbf{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kinematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla^2 $ označují diferenciální operátory nabla, divergence a Laplacův operátor. \cite{Bridson2007}  
     
             \subsection{Vysvětlení}
                 Před vysvětlením jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektorové analýzy a pracují s\,vektorovými poli, resp. skalárními poli. NSE např. pracují s vektorovým poli, resp. se skalárními poli, které jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
@@ -32,12 +32,12 @@
                     \mathbf{F} = m \frac{D \mathbf{v}}{D {t}} \label{eq:first_step},
                 \end{equation}
 
-                \noindent kde $\frac{D \mathbf{v}}{D {t}}$ značí tzv. materiálovou derivaci. Pro odvození celé rovnice je třeba rozvést sílu $ \mathbf{F} $, které na tekutinu působí \cite{Bridson2007}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\mathbf{g} $.
+                \noindent kde $\frac{D \mathbf{v}}{D {t}}$ značí tzv. materiálovou derivaci. Pro odvození celé rovnice je třeba rozvést síly $ \mathbf{F} $, které na tekutinu působí \cite{Bridson2007}. Jedna z nich je samozřejmě gravitace, jejíž hodnota je vyčíslena jako $ m\mathbf{g} $.
                 
                 
-                Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují z jednotlivých bodů na své sousední body, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}.  \cite{Bridson2007}
+                Další síly vytváří tekutina sama na sobě. První z nich je síla způsobena rozdílem tlaků v tekutině. Tekutina se v oblastech s vyšším tlakem přesouvá do oblastí s nižším tlakem. Její hodnotu můžeme zapsat jako $ \minus V \nabla p $ \footnote{Operace $\nabla p$ vyjadřuje vektorové pole, ve kterém vektory směřují z jednotlivých bodů na své sousední body tak, aby jeho hodnota ve skalárním poli nejrychleji vzrostla.}.  \cite{Bridson2007}
         
-                Další síla působící na tekutinu je ovliněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny a snaží se vyrovnat rychlost částice rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla^2 \mathbf{v} $ \footnote{Operace $ \nabla^2 \mathbf{v} $ vyjadřuje míru odchýlení rychlosti částice od rychlosti svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity. \cite{Bridson2007}
+                Další síla působící na tekutinu je ovlivněna její viskozitou. Viskozita působí při každém pohybu částic tekutiny a snaží se vyrovnat rychlost částice rychlostí svých sousedních částic. Její hodnotu můžeme vyjádřit jako\:$  V \mu \nabla^2 \mathbf{v} $ \footnote{Operace $ \nabla^2 \mathbf{v} $ vyjadřuje míru odchýlení rychlosti částice od rychlosti svého okolí.}, kde $ \mu $ označuje koeficient dynamické viskozity. \cite{Bridson2007}
     
                 \begin{equation}
                     m \mathbf{g} - V \nabla p + V \mu \nabla^2 \mathbf{v} = m \frac{D \mathbf{v}}{Dt} \label{eq:second_step}
@@ -49,7 +49,7 @@
                     \rho \mathbf{g} - \nabla p + \mu \nabla^2 \mathbf{v} = \rho \frac{D \mathbf{v}}{D \mathbf{t}}  
                 \end{equation}
     
-                Následně po vydělení hustoty $\rho$, vyjádření derivace $\frac{D \mathbf{v}}{ Dt}$ podle pravidla pro složené funkce a prohození sčítanců získáme druhou Navierovu--Stokesovu rovnici. Kynematická vyskozita $\nu$ je rovna $\frac{\mu}{\rho}$. \cite{Bridson2007}
+                Následně po vydělení hustoty $\rho$, vyjádření derivace $\frac{D \mathbf{v}}{ Dt}$ podle pravidla pro složené funkce a prohození sčítanců získáme druhou Navierovu--Stokesovu rovnici. Kinematická viskozita $\nu$ je rovna $\frac{\mu}{\rho}$. \cite{Bridson2007}
     
                 \begin{equation}
                     \frac{\partial \mathbf{v}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{v} + \frac{1}{\rho} \nabla p = \mathbf{g}  + \nu \nabla^2 \mathbf{v} 
@@ -58,22 +58,22 @@
             \newpage
                 
             \subsection{Využití}
-                Výhodou NSE je, že je lze aplikovat na téměř jakékoliv tekutiny. V praxi se využívají pro modelování počasí a podnebí pro jejich předpověď, proudění v\;oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují aplikovat se zanedbatelnými chybami v modelovacích systémech. \cite{Nse2008}
+                Výhodou NSE je, že je lze aplikovat na téměř jakékoliv tekutiny. V praxi se využívají pro předpověď počasí, modelování podnebí, proudění v\;oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují aplikovat se zanedbatelnými chybami v modelovacích systémech. \cite{Nse2008}
             
-        \section{Popisy tekutiny}
+        \section{Popisy tekutin}
 
             V teorii mechaniky tekutin existují dva různé pohledy popisu tekutin. Na základě těchto popisů jsou následně založeny algoritmy pro simulaci kapalin, resp. plynů, které jich využívají pro diskretizaci NSE. \cite{Bridson2007}
 
 
             \subsection{Lagrangeův popis}
 
-                Lagrangeův popis je jeden z popisů kontinua, který si většina nejspíše vybaví. Na tekutinu nahlíží jako na systém částic. Na jednotlivé body tekutiny nahlíží jako částice, které mohou být na základě potřeby různě velké, např. jako molekule nebo části tekutiny o nějakém objemu. Ke každé z nich Lagrangeův popis přiřazuje její pozici $\mathbf{x}$ a rychlost $\mathbf{v}$ a sleduje je, jak se tyto hodnoty v\,čase mění. \cite{Bridson2007}
+                Lagrangeův popis je jeden z popisů kontinua, který si většina nejspíše vybaví. Na tekutinu nahlíží jako na systém částic. Na jednotlivé body tekutiny nahlíží jako částice, které mohou být na základě potřeby různě velké, např. jako molekule nebo části tekutiny o nějakém objemu. Ke každé z nich Lagrangeův popis přiřazuje pozici $\mathbf{x}$ a rychlost $\mathbf{v}$ a sleduje je, jak se tyto hodnoty v\,čase mění. \cite{Bridson2007}
 
-            \subsection{Euleurův popis}
+            \subsection{Eulerův popis}
             
-                Euleurův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny, např. tlak, rychlost proudu, teplotu, jak se v čase mění. 
+                Eulerův popis kontinua je na první pohled neintuitivní. Eulerův postup diskretizuje prostor tekutiny na pevně dané oblasti, ve kterých měří vlastnosti tekutiny, např. tlak, rychlost proudu, teplotu, a sleduje, jak se v čase mění. 
                 
-                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v pevně daných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla^2 \mathbf{v}$, které se lépe aproximují v\,pevné Eulerově mřížce oproti shlukům pohybujcích se částic. \cite{Bridson2007}
+                Přestože tento postup vypadá omezující a složitý kvůli sledování veličin tekutin jen v pevně daných bodech, je v metodách pro simulování tekutin preferovaným popisem kontinua. Hlavní výhodou Eulerova pohledu je jednoduchost výpočtu prostorových derivací jako $\nabla p $ nebo $ \nabla^2 \mathbf{v}$, které se lépe aproximují v\,pevné Eulerově mřížce oproti shlukům pohybujících se částic. \cite{Bridson2007}
 
             
 
@@ -86,12 +86,12 @@
 
     \begin{description}
         \item[dynamické vlastnosti] popisující pohyb vodní hladiny,
-        \item[optické vlastnosti] popisující interakce povrchu vody s prsky světla.
+        \item[optické vlastnosti] popisující interakce povrchu vody s paprsky světla.
     \end{description}
 
     \section{Dynamické vlastnosti}
 
-        Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje na dynamické prostředí. V současnosti nejrealističtějších výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacích metod jako \emph{ray-tracing} pro realistickou vizualci odrazů, refrakcí a kaustik je výpočetně nemožné simulaci provést v reálném čase. \cite{Mueller2008}
+        Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje na dynamické prostředí. V současnosti nejrealističtějších výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacích metod jako \emph{ray-tracing} pro realistickou vizualizaci odrazů, refrakcí a kaustik je výpočetně nemožné simulaci provést v reálném čase. \cite{Mueller2008}
 
 
         \begin{figure}\centering
@@ -109,9 +109,9 @@
 
         \newpage 
 
-        Jeden přístup, jak se nejvíce příblížit \emph{off-line} simulaci a stále dodržet podmínky pro \emph{real-time} simulaci ve hrách, je zachovat stejný algoritmus, ale zmenšit rozlišení prostoru simulace. Tento postup ale spíše ubírá na realitě vodního povrchu, neboť se voda nefyzikálně shlukuje a detaily z obrazu jsou vynechány. \cite{Mueller2008}
+        Jeden přístup, jak se nejvíce přiblížit \emph{off-line} simulaci a stále dodržet podmínky pro \emph{real-time} simulaci ve hrách, je zachovat stejný algoritmus, ale zmenšit rozlišení prostoru simulace. Tento postup ale spíše ubírá na realitě vodního povrchu, neboť se voda nefyzikálně shlukuje a detaily jsou z obrazu vynechány. \cite{Mueller2008}
 
-        Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci. Podle tohodle principu můžeme dělit metody simulace vodní plochy na:
+        Další z možností, jak splnit výše zmíněné podmínky, je omezit míru interakce s vnějším prostředím, která tvoří největší výpočetní překážku. Na základě významnosti vodních útvarů ve scéně může simulace reagovat na všechny rigidní tělesa nebo u případů, ve kterých voda slouží jako pozadí, opominout jakoukoliv interakci. Podle tohoto principu můžeme dělit metody simulace vodní plochy na:
 
         \begin{itemize}
             \item procedulární,
@@ -121,9 +121,9 @@
 
             \subsection{Procedulární metody}
 
-                Procedulární metody simulují konečné efekty jako vlnění vodního povrchu, které nejsou vyvolány fyzikálními činitely. Největší výhodou této metody je výpočetní rychlost a versetalita, na druhou stranu ale vodní útvary nereagují na dynamické prostředí.
+                Procedulární metody simulují konečné efekty jako vlnění vodního povrchu, které nejsou vyvolány fyzikálními činiteli. Největší výhodou této metody je výpočetní rychlost a versatilita, na druhou stranu ale vodní útvary nereagují na dynamické prostředí.
 
-                Na základě tichto vlastností se procedulární metody používají pro vizualici rozsáhlých vodních ploch, které ve scéně hrají malou roli, např. jako oceán v\,pozadí scény.
+                Na základě těchto vlastností se procedulární metody používají pro vizualizaci rozsáhlých vodních ploch, které ve scéně hrají malou roli, např. jako oceán v\,pozadí scény.
 
                 \newpage
                 
@@ -170,7 +170,7 @@
                     \end{figure}
                 
                 \subsubsection{Simulace podle Gerstnerovy vlny}
-                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy \footnote{Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kotálející se} kružnicí po nehybné přímce \cite{Cycle2022}.}, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách \cite{Gerstner1804}. 
+                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy \footnote{Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kutálející se} kružnicí po nehybné přímce \cite{Cycle2022}.}, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách \cite{Gerstner1804}. 
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/trochoidal_wave}
@@ -178,7 +178,7 @@
                         \label{fig:trochoidal_wave}
                     \end{figure}
                     
-                    Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovými vlnami. Mezi prvními, kteří se Gerstnerovými vlnami zabývali, byli Alain Fournier a William T. Reeves \cite{Fournier1986}, kteří transformovali vrcholy roviny podle tichto parametrických rovnic:
+                    Dnes v teorii dynamiky tekutin vlnění založené na trochoidních křivkách nazýváme Gerstnerovými vlnami. Mezi prvními, kteří se Gerstnerovými vlnami zabývali, byli Alain Fournier a William T. Reeves \cite{Fournier1986}, kteří transformovali vrcholy roviny podle těchto parametrických rovnic:
                    
                     \begin{equation}
                         \begin{split}
@@ -188,9 +188,9 @@
                         \end{split}
                     \end{equation}
                     
-                    \noindent kde vektor $(x_0, z_0)$ reprezentuje klidovou pozici vrcholu roviny, $ r $ je délka opisujícího bodu od středu kružnice trochoidní křivky, vektor $\mathbf{k} = (k_x, k_z)$ určuje rychlost a směr propagace vlnění, $ \omega $ označuje úhlovou frekvenci a $ t $ je čas.
+                    \noindent kde vektor $(x_0, z_0)$ reprezentuje klidovou pozici vrcholu roviny, $ r $ je vzdálenost opisujícího bodu od středu kružnice trochoidní křivky, vektor $\mathbf{k} = (k_x, k_z)$ určuje rychlost a směr propagace vlnění, $ \omega $ označuje úhlovou frekvenci a $ t $ je čas.
                     
-                    Hodnota $ s = r|\mathbf{k}| $ určuje, jak strmá bude vlna. Pro hodnutu $ s = 0.2 $ má vlna tvar jako sinusoida, pro $ s = 1 $ má tvar cykloidy a pro $ s > 1 $ dochází samoprotínání trochoidy, a proto by se hodnotám vyšší než jedna pro vizualizaci vodního povrchu mělo vyhýbat \cite{Fournier1986}. V obrázku \ref{fig:s_comparison} je porovnání hodnot $ s $ ve dvourozměrném prostoru.   
+                    Hodnota $ s = r|\mathbf{k}| $ určuje, jak strmá bude vlna. Pro hodnotu $ s = 0.2 $ má vlna tvar jako sinusoida, pro $ s = 1 $ má tvar cykloidy a pro $ s > 1 $ dochází samoprotínání trochoidy, a proto by se hodnotám vyšší než jedna pro vizualizaci vodního povrchu mělo vyhýbat \cite{Fournier1986}. V obrázku \ref{fig:s_comparison} je porovnání hodnot $ s $ ve dvourozměrném prostoru.   
 
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/s_comparison}
@@ -212,17 +212,17 @@
                         \caption{Gerstnerovy vlny v simulaci vodního povrchu podle tutoriálu od Jaspera Flicka. \cite{Gerstner2022}}\label{fig:gerstner_wave}
                     \end{figure}
                 \subsubsection{Simulace podle Fourierovy transformace}
-                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomocí lze i získat fotorealistických výsledků pro vysoký počet vln $N_w$, který se pohybuje v řádech tísíců nebo více. Vysoký počet $N_w$ představuje však výpočetní překážku. Obvykle by výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner} herní \emph{enginy} provedly ve \emph{vertex shaderech}, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
+                    Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomoci lze i s vysokým počtem vln $N_w$, který se pohybuje v řádech tisíců nebo více, získat fotorealistických výsledků . Vysoký počet $N_w$ představuje však výpočetní překážku. Obvykle by výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner} herní \emph{enginy} provedly ve \emph{vertex shaderech}, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
                     
-                    Johanson \cite{Johanson2004} řeší výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje některá vlnění. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvencemi. Efektivnějšího výsledku dosáhl Lee \cite{Lee2006}, který před vykreslení vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
+                    Johanson \cite{Johanson2004} řeší výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje některá vlnění. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvencemi. Efektivnějšího výsledku dosáhl Lee \cite{Lee2006}, který před vykreslením vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
                     
-                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformce (FFT), resp. rychlé inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve své podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle stastických dat vlnění oceánů, např. ze satalitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
+                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformace (FFT), resp. rychlé inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve své podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle statických dat vlnění oceánů, např. ze satelitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
                     
                     \begin{equation}
                         h(\mathbf{x},t) = \sum_k \widetilde{h}(\mathbf{k}, t) e^{i \mathbf{k} \cdot \mathbf{x}},
                     \end{equation}
                     
-                    \noindent kde $\mathbf{x}$ je pozice vrcholu roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o\;amplitudě a fázy sinusoidy $e^{i \mathbf{k} \cdot \mathbf{x}}$ s vlnovým vektorem $\mathbf{k}$. Tessendorf následně podle oceánografických dat vhodně volí funkci $ \widetilde{h} $, aby bylo vyslédné vlnění nejvíce realistické. 
+                    \noindent kde $\mathbf{x}$ je pozice vrcholu roviny, funkce $ \widetilde{h} $ závislá na čase $t$ obsahuje informaci o\;amplitudě a fázi sinusoidy $e^{i \mathbf{k} \cdot \mathbf{x}}$ s vlnovým vektorem $\mathbf{k}$. Tessendorf následně podle oceánografických dat vhodně volí funkci $ \widetilde{h} $, aby bylo výsledné vlnění nejvíce realistické. 
                     
                     Časová komplexita triviálního sčítání sinusoid v rovnici \ref{eq:sin_wave_sum}, tj. inverzní Fourierovy transformace, je $\mathcal{O} (n^2)$, kdežto užitím algoritmů pro IFFT se redukuje časová komplexita na $\mathcal{O} (n \log n)$  \cite{FFTCompl2022}.
                     
@@ -232,9 +232,9 @@
                     \end{figure}
 
             \subsection{Částicové metody}  
-                Procedulární metody jsou stavěny pro vizualici rozsáhlých vodních ploch jako oceány a moře. Protože jsou tyto vodní útvary rozlehlé, jakýkoliv zásah buď hráče, či prostředí by měl na výsledné zobrazení hladiny minimální efekt. 
+                Procedulární metody jsou stavěny pro vizualizaci rozsáhlých vodních ploch jako oceány a moře. Protože jsou tyto vodní útvary rozlehlé, jakýkoliv zásah buď hráče, či prostředí by měl na výsledné zobrazení hladiny minimální efekt. 
                 
-                V některých případech se ale hladina vody nechová periodicky nebo reakce na dynamické prostředí je právě při zobrazování žádoucí jako u vody fontány nebo kaluží. Tyto detailní vlastnosti vody řeší částicové modely využívající Langrageova popisu kontinua. Částicové metody simulují vodní útvary jako systém částic, které reprezentují určitou hmotu kapaliny. 
+                V některých případech se ale hladina vody nechová periodicky nebo reakce na dynamické prostředí je právě při zobrazování žádoucí jako u vody fontány nebo kaluží. Tyto detailní vlastnosti vody řeší částicové modely využívající Lagrangeova popisu kontinua. Částicové metody simulují vodní útvary jako systém částic, které reprezentují určitou hmotu kapaliny. 
                 
                 Poprvé, kdo využil částicových systémů pro simulaci tekutiny, byl v roce 1983 Reeves \cite{Reeves1983}. Reevesům přístup byl však velmi primitivní oproti dnešním variacím, pohyb částic nekorektně modeloval nezávislé na ostatních částicích. V realitě jeho simulace se více blížila k simulaci shlukům jemných částic, např. prachu.
                 
@@ -256,10 +256,10 @@
                 
                 \newpage
                 
-                Pro \emph{real-time} simulace může být tento přístup pomalý. V případě, že vodní útvar obsahuje $n$ částic, musí se funkce $f$ evaluovat $\mathcal{O}(n^2)$. Existují ale optimilizace, které rozdělují částice do pravidelné mřížky, čímž redukují složitost na $\mathcal{O}(n)$. Přestože ji lze vypočítat poměrně rychle, simulace se vůbec neopírá o\,NSE. \cite{Bridson2007} 
+                Pro \emph{real-time} simulace může být tento přístup pomalý. V případě, že vodní útvar obsahuje $n$ částic, musí se funkce $f$ evaluovat $\mathcal{O}(n^2)$. Existují ale optimalizace, které rozdělují částice do pravidelné mřížky, čímž redukují složitost na $\mathcal{O}(n)$. Přestože ji lze vypočítat poměrně rychle, simulace se vůbec neopírá o\,NSE. \cite{Bridson2007} 
                 
                 \subsubsection{Simulace podle Smoothed Particle Hydrodynamics}
-                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{\emph{Smoothed Particle Hydrodynamics}} \cite{Monaghan2005}. Monaghan vychází z interpolační metody \emph{Smoothed Particle Hydrodynamics} (dále jako SPH), kterou z prva Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skálárních polí hustoty nebo tlaku. Celý algoritmus simulace vody podle SPH je shrnut tímto pseudokódem \cite{SPHPseudo2020}:  \begin{minted}[frame=lines,
+                    Aktuálně nejrozšířenější částicová metoda založená na výpočtu sil podle NSE vychází z Monaghanova článku \uv{\emph{Smoothed Particle Hydrodynamics}} \cite{Monaghan2005}. Monaghan vychází z interpolační metody \emph{Smoothed Particle Hydrodynamics} (dále jako SPH), kterou zprvu Lucy vyvinul pro astrofyzické problémy \cite{Lucy1977}. Lucyho metoda je dostatečně obecná, aby ji bylo možné využít v simulaci tekutin pro výpočet skalárních polí hustoty nebo tlaku. Celý algoritmus simulace vody podle SPH je shrnut tímto pseudokódem \cite{SPHPseudo2020}:  \begin{minted}[frame=lines,
 framesep=2mm,
 baselinestretch=1.2,
 bgcolor=lightgray,
@@ -268,7 +268,7 @@ Nastevení počátečních hodnot častíc.
 Během celé doby simulace opakuj:
     Pro každou částici
         Najdi jeho sousedy.
-        Pomocí SPH vypočíti hustotu.
+        Pomocí SPH vypočti hustotu.
         Z hustoty aproximuj tlak.
         Pomocí SPH vypočti tlakovou sílu.
         Pomocí SPH vypočti sílu viskozity.
@@ -278,14 +278,14 @@ Během celé doby simulace opakuj:
     Vykreslení částicového systému.    
                     \end{minted}
                     
-                    SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracuje s vlastnostmi částic. SPH distribuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
+                    SPH lze v počítačové grafice přirovnat ke konvoluci, kde místo barvy pixelů pracuje s vlastnostmi částic. SPH distribuuje obecnou veličinu pro danou částici jako sumu vážených hodnot veličin jejích sousedů. Hodnota obecné veličiny $A$ pro částici $i$ je podle SPH \cite{Mueller2003}
                     
                     \begin{equation}
                       A_i(\mathbf{x}_i) = \sum_{j} m_j \frac{A_j}{\rho_j} W(|\mathbf{x}_i-\mathbf{x}_j|, h), \label{eq:sph}
                     \end{equation}
 
-                    \noindent kde $\mathbf{x}_i$, resp. $\mathbf{x}_j$, je pozice částice $i$, resp. $j$, $j$ iteruje přes všechny částice, $m_j$ je hmotnost, $A_j$ je hodnota veličny $A$ a $\rho_j$ je hustota pro částici $j$. Funkce $W(|\mathbf{x}_i - \mathbf{x}_j|, h)$ se nazývá \emph{smoothing kernel} s poloměrem $h$, což je analogií jádra u konvoluce. Obrázek \ref{fig:sph}
-                    ilustruje, jak \emph{smoothing kernely}, které mají obvykle tvar podobné Gaussovu rozdělení, váží hodnoty částic. Největší váhu $W$ přiřadí částicím nejblíže středu, tj. částici $i$, a nejnižší částicím vzdálené od středu délkou $h$. Validní \emph{smoothing kernely} musí navíc splnit normaliziční podmínku \cite{Bridson2007, Mueller2003}:
+                    \noindent kde $\mathbf{x}_i$, resp. $\mathbf{x}_j$, je pozice částice $i$, resp. $j$, $j$ iteruje přes všechny částice, $m_j$ je hmotnost, $A_j$ je hodnota veličiny $A$ a $\rho_j$ je hustota částice $j$. Funkce $W(|\mathbf{x}_i - \mathbf{x}_j|, h)$ se nazývá \emph{smoothing kernel} s poloměrem $h$, což je analogií jádra u konvoluce. Obrázek \ref{fig:sph}
+                    ilustruje, jak \emph{smoothing kernely}, které mají obvykle tvar podobné Gaussovu rozdělení, váží hodnoty částic. Největší váhu $W$ přiřadí částicím nejblíže středu, tj. částici $i$, a nejnižší částicím vzdálené od středu délkou $h$. Validní \emph{smoothing kernely} musí navíc splnit normalizační podmínku \cite{Bridson2007, Mueller2003}:
                     
                     \begin{equation}
                         \int W(r) dr = 1.
@@ -296,7 +296,7 @@ Během celé doby simulace opakuj:
                         \caption{Ilustrace vážení \emph{smoothing kernelem}. (CC BY-SA 4.0) \cite{Jlcercos2018}}\label{fig:sph}
                     \end{figure}
                     
-                    NSE mimo samotných hodnot veličin dále pracuje s gradientem (operace\;$\nabla$), jehož aplikace na rovnici \ref{eq:sph} ovlivňí jen \emph{smoothing kernel} 
+                    NSE mimo samotných hodnot veličin dále pracuje s gradientem (operace\;$\nabla$), jehož aplikace na rovnici \ref{eq:sph} ovlivní jen \emph{smoothing kernel} 
                     
                     \begin{equation}
                       A_i(\mathbf{x}_i) = \sum_{j} m_j \frac{A_j}{\rho_j} \nabla W(|\mathbf{x}_i-\mathbf{x}_j|, h),
@@ -308,7 +308,7 @@ Během celé doby simulace opakuj:
                       A_i(\mathbf{x}_i) = \sum_{j} m_j \frac{A_j}{\rho_j} \nabla^2 W(|\mathbf{x}_i-\mathbf{x}_j|, h).
                     \end{equation}
     
-                    Obvyklá volba jádra $W$, které lze využít až na dvě vyjímky téměř pro každou interpolaci veličin v simulaci tekutin, je \emph{kernel poly6} \cite{Bridson2007, Mueller2003}
+                    Obvyklá volba jádra $W$, které lze využít až na dvě výjimky téměř pro každou interpolaci veličin v simulaci tekutin, je \emph{kernel poly6} \cite{Bridson2007, Mueller2003}
                     
                     \begin{equation}
                         W_{poly6}(r, h) = \frac{315}{64 \pi h^9}
@@ -318,7 +318,7 @@ Během celé doby simulace opakuj:
                         \end{cases}.
                     \end{equation}
                     
-                    \noindent \emph{Poly6} ale nekorektně aproximuje síly tlakového pole, v simulaci se částice pod vysokým tlakem nefyzikálně shlukují \cite{Mueller2003}, neboť $\nabla W$, jež je nutné pro výpočet síly způsobené rozdílem tlaků (rovnice \ref{eq:momentum_conservation}), se ve středu jádra blíží k nule, což vede k zanedbání odpuzujících sil. Desburn řešil tento problém nahrazením jádra \emph{poly6} za \emph{kernel} \cite{Desburn1996}
+                    \noindent \emph{Poly6} ale nekorektně aproximuje síly tlakového pole, v simulaci se částice pod vysokým tlakem nefyzikálně shlukují \cite{Mueller2003}, neboť $\nabla W_{poly6}$, jež je nutné pro výpočet síly způsobené rozdílem tlaků (rovnice \ref{eq:momentum_conservation}), se ve středu jádra blíží k nule, což vede k zanedbání odpuzujících sil. Desburn řešil tento problém nahrazením jádra \emph{poly6} za \emph{kernel} \cite{Desburn1996}
                     
                     \begin{equation}
                         W_{spiky}(r, h) = \frac{15}{\pi h^6}
@@ -339,7 +339,7 @@ Během celé doby simulace opakuj:
                     \end{equation}
 
                     
-                    Pro konečnou simulaci vody je třeba vyřešit soustavu NSE za pomocí pole rychlosti, pole hustoty a pole tlaku, které SPH interpoluje z vlastností částic. Díky aplikaci Langrageova popisu kontinua se některé rovnice výrazně zjednodušší \cite{Mueller2003}. Rovnice o\;zachování hmoty \ref{eq:mass_conservation} je automaticky splněna, neboť počet částic zůstane při simulaci konstantní. Dále lze zjednodušit v rovnici o\;zachování hybnosti \ref{eq:momentum_conservation} výraz  $\frac{\partial \mathbf{v}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{v}$, protože se částice pohybují s tekutinou, může se z výrazu vynechat člen $\mathbf{v} \cdot \nabla \mathbf{v}$, který reprezentuje změnu rychlosti v případě, že se  částice pohybuje \emph{skrz} tekutinu. Konečná NSE pro SPH částicový systém zní takto 
+                    Pro konečnou simulaci vody je třeba vyřešit soustavu NSE za pomocí pole rychlosti, pole hustoty a pole tlaku, které SPH interpoluje z vlastností částic. Díky aplikaci Lagrangeova popisu kontinua se některé rovnice výrazně zjednoduší \cite{Mueller2003}. Rovnice o\;zachování hmoty \ref{eq:mass_conservation} je automaticky splněna, neboť počet částic zůstane při simulaci konstantní. Dále lze zjednodušit v rovnici o\;zachování hybnosti \ref{eq:momentum_conservation} výraz  $\frac{\partial \mathbf{v}}{\partial t} + \mathbf{v} \cdot \nabla \mathbf{v}$, protože se částice pohybují s tekutinou, může se z výrazu vynechat člen $\mathbf{v} \cdot \nabla \mathbf{v}$, který reprezentuje změnu rychlosti v případě, že se  částice pohybuje \emph{skrz} tekutinu. Konečné NSE pro SPH částicový systém zní takto 
                     
                     \begin{equation}
                       \rho \frac{\partial \mathbf{v}}{\partial t} = - \nabla p = \rho \mathbf{g} + \mu \nabla^2 \mathbf{v}.
@@ -347,9 +347,9 @@ Během celé doby simulace opakuj:
 
                     
                     
-                    Pohyb částíce je následně určený silami vyvolané rozdílem tlaků $-\nabla p$, viskozitou tekutiny $\mu \nabla^2 \mathbf{v}$ a gravitací $\rho \mathbf{g}$ (na vodu působí i extérní síly, ty lze zakomponovat s gravitací do $\mathbf{g}$).
+                    Pohyb částice je následně určený silami vyvolané rozdílem tlaků $-\nabla p$, viskozitou tekutiny $\mu \nabla^2 \mathbf{v}$ a gravitací $\rho \mathbf{g}$ (na vodu působí i externí síly, ty lze zakomponovat s gravitací do $\mathbf{g}$).
                     
-                    Částice si ale udržují informace jen o své pozici, rychlosti a hmotnosti, zbylé vlastnosti si musí simulátor spočítat sám. Každá z nich určuje nějaký objem $V_i = \frac{m_i}{\rho_i} $, zatímco hmotnost zůstává během celé simulace konstantní, $\rho_i$ se musí evaluovat v každé vykreslovací smyčce (demostrance různých hustot lze vidět v obrázku \ref{fig:sph_density}) \cite{Mueller2003}. Hustota $\rho_i$ částice $i$ na pozici $\mathbf{x}_i$ je pak podle SPH \ref{eq:sph} určená jako
+                    Částice si ale udržují informace jen o své pozici, rychlosti a hmotnosti, zbylé vlastnosti si musí simulátor spočítat sám. Každá z nich určuje nějaký objem $V_i = \frac{m_i}{\rho_i} $, zatímco hmotnost zůstává během celé simulace konstantní, $\rho_i$ se musí evaluovat v každé vykreslovací smyčce (demonstrace různých hustot lze vidět v obrázku \ref{fig:sph_density}) \cite{Mueller2003}. Hustota $\rho_i$ částice $i$ na pozici $\mathbf{x}_i$ je pak podle SPH \ref{eq:sph} určená jako
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sph_density}
@@ -392,7 +392,7 @@ Během celé doby simulace opakuj:
                         \mathbf{F}_{i}^{viskozita} = \mu \nabla^2 \mathbf{v}(\mathbf{x}_i) = \mu \sum_j m_j \frac{\mathbf{v}_j}{\rho_j} \nabla^2 W(|\mathbf{x}_i - \mathbf{x}_j|, h),
                    \end{equation}
 
-                    \noindent protože se rychlosti u každé částice liší. Symetrizace, kterou navrhl Müller \cite{Mueller2003}, spočívá v tom, že síla způsobena viskozitou zavisí pouze na rozdílech rychlostí částice od svých sousedů, což přirozeně vede k
+                    \noindent protože se rychlosti u každé částice liší. Symetrizace, kterou navrhl Müller \cite{Mueller2003}, spočívá v tom, že síla způsobena viskozitou závisí pouze na rozdílech rychlostí částice od svých sousedů, což přirozeně vede k
                     
                     \begin{equation}
                         \mathbf{F}_{i}^{viskozita} = \mu \nabla^2 \mathbf{v} (\mathbf{x}_i) = \mu \sum_j m_j \frac{\mathbf{v}_j - \mathbf{v}_i}{\rho_j} \nabla^2 W(|\mathbf{x}_i - \mathbf{x}_j|, h).
@@ -423,14 +423,14 @@ Během celé doby simulace opakuj:
                 \subsection{Hybridní metody}
                     Předešlé dvě metody představují extrémní případy pro simulaci vodní hladiny. Procedulární metody nereagují na okolní prostředí, ale jsou výpočetně rychlé. Částicové systémy na druhou stranu počítají s dynamickým prostředím, ale jsou výpočetně náročné. Hybridní metody jsou kombinací dvou, které zároveň zjednodušují problematiku vodní hladiny jako procedulární metody a zachovávají některé fyzikální vlastnosti.
                     
-                    Pro simulaci větších vodních ploch jsou částicové metody zbytečně náročné. Většina částic se bude nacházet pod hladinou a ve stojatých vodách se jejich pozice nebude výrazně měnit. Proto by bylo pro ně zbytečné počítat NSE.  Hybridní metody tuto výpočetní překážku řeší podobně jako procedulární, kdy problematiku vodní hladiny redukují z trojrozměrného prostoru do dvourozměrného \cite{Mueller2008}, transformují výšku vrcholů podle aproximací NSE.
+                    Pro simulaci větších vodních ploch jsou částicové metody zbytečně náročné. Většina částic se bude nacházet pod hladinou a ve stojatých vodách se jejich pozice nebude výrazně měnit. Proto by bylo pro ně zbytečné počítat NSE.  Hybridní metody tuto výpočetní překážku řeší podobně jako procedulární, kdy problematiku vodní hladiny redukují z trojrozměrného prostoru do dvourozměrného \cite{Mueller2008}. Tyto metody transformují výšku vrcholů podle aproximací NSE.
                     
                     Chentanezova hybridní metoda využívá \emph{Shallow Water Equations} (SWE) \cite{Nuttapong2010}, soustavu parciálních diferenciálních rovnic, které zjednodušují NSE do 2D výškových map. \emph{Real-time} výpočet SWE je ale stále drahá operace. Bridson zjednodušil její integraci výměnou za stabilitu simulace \cite{Nuttapong2010}.  
                     
-                    Další variantou je modelování hladiny podle vlnové rovnice \cite{Bridson2007}, hyperbolické parciální diferenciální rovnice. Vlnové rovnice popisují řadu vln od vlnění struny kytary až po vlnění vodní hladiny.
+                    Další variantou je modelování hladiny podle vlnové rovnice \cite{Bridson2007}, hyperbolické parciální diferenciální rovnice. Vlnová rovnice popisuje řadu vln od vlnění struny kytary až po vlnění vodní hladiny.
                     
                     \subsubsection{Simulace podle vlnové rovnice}
-                        Vlnová rovnice nahlíží na vodní hladinu jako na napnutou elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikálně korektní pohyb pouhý Newtonův druhý zákon. Simulace je založena na transformaci výšky vrcholů roviny, pro kterou potřebuje dvě 2D pole \verb|u[i,j]| a \verb|v[i,j]|, které si uchovávájí výšku a rychlost buňky v bodě \verb|[i,j]|. Pro mřížku s rozestupy \verb|h| o\;velikosti \verb|N*N| pak algoritmus vypadá takto \cite{Mueller2008}
+                        Vlnová rovnice nahlíží na vodní hladinu jako na napnutou elastickou membránu, která nebere v potaz, co se pod ní děje. Protože problematiku redukuje do dvourozměrného prostoru, místo NSE využívá pro fyzikálně korektní pohyb pouhý Newtonův druhý zákon. Simulace je založena na transformaci výšky vrcholů roviny, pro kterou potřebuje dvě 2D pole \verb|u[i,j]| a \verb|v[i,j]|, které si uchovávají výšku a rychlost buňky v bodě \verb|[i,j]|. Pro mřížku o\;velikosti \verb|N*N| s rozestupy \verb|h| pak algoritmus vypadá takto \cite{Mueller2008}
                         
                         \begin{minted}[frame=lines,
 framesep=2mm,
@@ -451,7 +451,7 @@ Během celé simulace opakuj
     Vykresli mřížku s výškovou mapou u.
                         \end{minted}
                         
-                        \noindent Pole \verb|u0| inicializuje výšku jednotlivých bodů rovniny, \verb|dt| značí časový rozdíl mezi vykreslovacími smyčkami.
+                        \noindent Pole \verb|u0| inicializuje výšku jednotlivých bodů roviny, \verb|dt| značí časový rozdíl mezi vykreslovacími smyčkami.
                         
                         
                         
@@ -469,14 +469,14 @@ Během celé simulace opakuj
                             \caption{Vlna v 1D: (a) vibrujicí struna, (b) zvětšení segmentu $AB$.  \cite{WaveEq2022}} \label{fig:wave_eq}
                         \end{figure}
                         
-                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlena od osy x. V případě, že je struna v klidovém stavu, struna splývá s osou x. Dále nechť na segment struny $AB$, část sturny od $x$ do $x + \Delta x$, kde $\Delta x \xrightarrow{} 0 $, působí napínací síly $F_{T_1}$ a $F_{T_2}$. Za překlodu, že se segement $AB$ málo vychyluje od osy x, lze jejich velikosti sil považovat za identické, 
+                        Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlena od osy x. V případě, že je struna v klidovém stavu, struna splývá s osou x. Dále nechť na segment struny $AB$, část struny od $x$ do $x + \Delta x$, kde $\Delta x \xrightarrow{} 0 $, působí napínací síly $F_{T_1}$ a $F_{T_2}$. Za předpokladu, že se segment $AB$ málo vychyluje od osy x, lze jejich velikosti sil považovat za identické, 
                         $F_{T_1} = F_{T_2} = F_T$ \cite{Lewin2008}. Kvůli čtvrtému předpokladu se horizontální síly vyruší a stačí spočítat síly působící ve vertikální ose.
                         
                         \begin{equation}
                             F_{vert} = -F_T \sin(\theta) + F_T \sin(\theta + \Delta \theta)
                         \end{equation}
                         
-                        \noindent Síla $-F_T \sin(\theta)$ působí u bodu $A$ směrem dolů a síla $F_T \sin(\theta + \Delta \theta)$ u bodu $B$ opačným směrem. Díky pátému předpokladu lze aproximovat $\sin(\theta)$ a $\sin(\theta + \Delta \theta)$ jako velikosti jejich úhlu. \cite{Lewin2008}
+                        \noindent Síla $-F_T \sin(\theta)$ působí u bodu $A$ směrem dolů a síla $F_T \sin(\theta + \Delta \theta)$ u bodu $B$ opačným směrem. Díky pátému předpokladu lze aproximovat $\sin(\theta)$ a $\sin(\theta + \Delta \theta)$ jako velikosti jejich úhlů. \cite{Lewin2008}
                         
                         \begin{equation}
                             F_{vert} = -F_T \theta + F_T (\theta + \Delta \theta) = F_T \Delta \theta
@@ -533,7 +533,7 @@ Během celé simulace opakuj
                         \end{equation}
 
                         
-                        \noindent kterou lze interpretovat tak, že řešením rovnice \ref{eq:1d_wave_eq} jsou vlny, které se šíří doprava podle funkce $f$ a doleva podle funkce $g$ rychlostí $c$. Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že síla působící na vlákno, příp. membránu, je přímě uměrné změně jejího sklonu. S rostoucím sklonem segmentu vlákna, případně membrány, roste i síla, která na něj působí a naopak. Při konstatním sklonu nedochází k\;žádné změně síly \cite{Bridson2007, Mueller2008}. Ve více rozměrném prostoru vlnová rovnice zní 
+                        \noindent kterou lze interpretovat tak, že řešením rovnice \ref{eq:1d_wave_eq} jsou vlny, které se šíří doprava podle funkce $f$ a doleva podle funkce $g$ rychlostí $c$. Ve slově rovnice \ref{eq:1d_wave_eq} popisuje, že síla působící na vlákno, příp. membránu, je přímě úměrné změně jejího sklonu. S rostoucím sklonem segmentu vlákna, případně membrány, roste i síla, která na něj působí a naopak. Při konstantním sklonu nedochází k\;žádné změně síly \cite{Bridson2007, Mueller2008}. Ve více rozměrném prostoru vlnová rovnice zní 
                         
                         \begin{equation} \label{eq:nd_wave_eq}
                              \frac{\partial^2 u}{\partial t^2} = c^2 \nabla^2 u.
@@ -545,12 +545,12 @@ Během celé simulace opakuj
                         
                         \begin{equation}
                             \begin{split}
-                                \frac{\partial u}{\partial t} &= v                  \\
+                                \frac{\partial u}{\partial t} &= v,                 \\
                                 \frac{\partial v}{\partial t} &= c^2 \nabla^2 u.
                              \end{split}
                         \end{equation}
                         
-                        \noindent Následně 2D prostor diskretizují do mřížky s rozestupy o velikosti $h$, jejíž buňky si uchovávají informace o výšce hladiny $u_t$ a rychlost $v_t$ v čase $t$, a pomocí metody konečných diferencí (FDM) získají $\nabla^2 u$. Nakonec řešení diferianciální rovnice aproximují podle Eulerovy metody s explicitním krokem. Pak pro jednotlivé buňky v čase $t+1$ platí \cite{Bridson2007}
+                        \noindent Následně 2D prostor diskretizují do mřížky s rozestupy o velikosti $h$, jejíž buňky si uchovávají informace o výšce hladiny $u_t$ a rychlost $v_t$ v čase $t$, a pomocí metody konečných diferencí (FDM) získají $\nabla^2 u$. Nakonec řešení diferenciální rovnice aproximují podle Eulerovy metody s explicitním krokem. Pak pro jednotlivé buňky v čase $t+1$ platí \cite{Bridson2007}
                         
                         \begin{equation} \label{eq:laplace_heightfield}
                             \begin{split}
@@ -570,7 +570,7 @@ Během celé simulace opakuj
                         
                         Integrace Eulerovou metodou požaduje počáteční hodnoty pro $u_t$ a $v_t$ v\;čase $t = 0$, tj. $u_0$ a $v_0$ \cite{Bridson2007, Mueller2008}. Hodnota $v_0$ je pro všechny buňky rovna nule a hodnota $u_0$ je inicializovaná nějakou funkcí. Kdyby $u_0$, tj. počáteční výška hladiny, byla rovna nule, tak by to znamenalo, že hladina je v úplném klidu a k žádnému vlnění nedojde.
                         
-                        Bohužel volba explicitního kroku Eulerovy metody vede k podmíněné stabilitě simulace \cite{Bridson2007, Mueller2008}. Krok $\Delta t v_{t+1}$ nekorektně předpokládá, že během časového kroku $\Delta t$ zůstává rychlost $v_{t+1}$ konstatní. Navíc jsou všechny výše zmíněné výpočty aproximacemi. V případě, že se špatně odhadne rychlost, může výška hladiny nekonečně nárůst nebo klesnout. Müller řeší tento problém dvěma způsoby. Jedním je oříznout výšky podle vybraného maximálního sklonu nebo další možností je zmenšit velikost rychlosti $v_{t+1}$ koeficientem $s < 1$
+                        Bohužel volba explicitního kroku Eulerovy metody vede k podmíněné stabilitě simulace \cite{Bridson2007, Mueller2008}. Krok $\Delta t v_{t+1}$ nekorektně předpokládá, že během časového kroku $\Delta t$ zůstává rychlost $v_{t+1}$ konstantní. Navíc jsou všechny výše zmíněné výpočty aproximacemi. V případě, že se špatně odhadne rychlost, může výška hladiny nekonečně nárůst nebo klesnout. Müller řeší tento problém dvěma způsoby. Jedním je oříznout výšky podle vybraného maximálního sklonu nebo další možností je zmenšit velikost rychlosti $v_{t+1}$ koeficientem $s < 1$
                         
                         \begin{equation}
                             u_{t+1}[i,j] = u_{t}[i,j] + s \cdot \Delta t v_{t+1}[i,j].
@@ -589,29 +589,29 @@ Během celé simulace opakuj
                          \end{split}
                         \end{equation}
             
-                        \noindent Takto zvolné řešení má v simulaci efekt reflektování vln od hranic mřížky. Další možností je spojit levou hranu s pravou hranou a horní hranu s dolní hranou mřížky. Výsledný efekt je takový, že vlny vycházející z levého, resp. horního, kraje vstupují do mřížky zpět z práveho, resp dolního, kraje. Toto chování může být žádoucí pro skládání vodních povrchů, tzv. \emph{tiling}. \cite{Bridson2007}
+                        \noindent Takto zvolené řešení má v simulaci efekt reflektování vln od hranic mřížky. Další možností je spojit levou hranu s pravou hranou a horní hranu s dolní hranou mřížky. Výsledný efekt je takový, že vlny vycházející z levého, resp. horního, kraje vstupují do mřížky zpět z pravého, resp dolního, kraje. Toto chování může být žádoucí pro skládání vodních povrchů, tzv. \emph{tiling}. \cite{Bridson2007}
                         
                         Přestože simulace podle vlnové rovnice vypadá jako univerzální metoda pro simulaci vodního povrchu. Má tato metoda i nevýhody, které pramení z\;redukování prostoru vody z 3D na 2D. Protože si tato metoda udržuje u\;každého bodu roviny právě jednu hodnotu jeho výšky, nelze touto metodou zobrazit jevy jako lámání vln, které vzniká na břehu vodních útvarů. Další chybou je nepřesnost vlnění v mělkých vodách, kde je dalším důležitým faktorem vzdálenost hladiny od dna útvaru, která tato metoda opomíjí. \cite{Mueller2008}
                         
     \section{Optické vlastnosti}
         
-        U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak intereaktuje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objekt může na základě jeho materiálu dojít ke třem možnostem: pohlcení fotonu, odražení nebo transmisi. Co lidské oko následně uvídí, závisí na světelných paprscích, které oko zásahnou. \cite{Light2009}
+        U každého objektu ve světě způsob, jak je naše oko vnímá, zcela závisí na světle, jak interaguje s materiálem objektu. Světlo se skládá z fotonů, které se přímočaře šíří od svého emitoru všemi směry. Při dopadu fotonu na objekt může na základě jeho materiálu dojít ke třem možnostem: pohlcení fotonu, odražení nebo transmisi. Co lidské oko následně uvidí, závisí na světelných paprscích, které oko zasáhnou. \cite{Light2009}
         
-        Chování světla pro realistické vykreslení scén zachycují globální zobrazovací metody. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně \emph{off-line} aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, \emph{real-time} aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky vrhají z pozice oka a na základě toho, kam po odrzech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
+        Chování světla pro realistické vykreslení scén zachycují globální zobrazovací metody. Tyto metody jsou však výpočetně náročné, a proto je využívají hlavně \emph{off-line} aplikace. Protože velká většina paprsků naše oko (kameru) vůbec nezasáhne, \emph{real-time} aplikace světlo obvykle zjednodušují takovým způsobem, že světelné paprsky vrhají z pozice oka a na základě toho, kam po odrazech dopadnou předají oku barvu objektu \cite{Light2009}. Přestože současné grafické karty začínají podporovat \emph{ray-tracing}, velká většina zařízení a softwaru stále využívá k zobrazování rasterizaci. 
     
-        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je obvzlášt náročně zakomponovatelná do renderovací \emph{pipeliny} kvůli restrikcím omezující, jaké informace lze zaslat grafickým kartám. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené, aby je bylo možné zakomponovat do renderovací \emph{pipeliny} rasterizačních API. 
+        Kromě vrhání paprsků je další drahá operace výpočet průsečíků paprsků s objekty. Tato operace je obzvlášť náročně zakomponovatelná do renderovací \emph{pipeliny} kvůli restrikcím omezující, jaké informace lze zaslat grafickým kartám. Proto většina algoritmů pro osvětlování scén je založena na aproximaci průsečíků. Následující metody jsou proto zvolené tak, aby je bylo možné zakomponovat do renderovací \emph{pipeliny} rasterizačních API. 
                 
         \subsection{Odrazy světla}
         
-            Voda má reflektivní vlastnosti, a proto barva její hladiny zavísí na tom, odkud světelný paprsek, který následně zasáhne příjímač, přijde. Paprsek světla, resp. paprsek vrženého z příjímače (oka, kamery), se od ideálně reflektivního povrchu odráží pod stejným úhlem jako, pod kterým parsek dopadá. \cite{LightDir2009}
+            Voda má reflektivní vlastnosti, a proto barva její hladiny závisí na tom, odkud světelný paprsek, který následně zasáhne přijímač, přijde. Paprsek světla, resp. paprsek vrženého z přijímače (oka, kamery), se od ideálně reflektivního povrchu odráží pod stejným úhlem jako, pod kterým parsek dopadá. \cite{LightDir2009}
             
-            Odrazy scény na vodní hladině lze levně simulovat pomocí tzv. \emph{cubemap}. Jedná se o druh textur, které májí tvar krychle. Hlavní výhodou užití \emph{cubemap} je její způsob vzorkování, které místo 2D souřadnic využívá 3D vektor. Jestliže se střed \emph{cubemapy} (krychle) napozicuje na počátek souřadnic, vzorkovací 3D vektor od počátku směřuje na jednu jeho stranu a podle toho, kde vektor protne stranu, převezme fragment barvu textury. Pro dosažení efektu odrazu scény pak stačí jako vzorkovací vektor zvolit vektor odrazu.  \cite{ReflectCubemap2022} 
+            Odrazy scény na vodní hladině lze levně simulovat pomocí tzv. \emph{cubemap}. Jedná se o druh textur, které mají tvar krychle. Hlavní výhodou užití \emph{cubemap} je její způsob vzorkování, které místo 2D souřadnic využívá 3D vektor. Jestliže se střed \emph{cubemapy} (krychle) napozicuje na počátek souřadnic, vzorkovací 3D vektor od počátku směřuje na jednu jeho stranu a podle toho, kde vektor protne stranu, převezme fragment barvu textury. Pro dosažení efektu odrazu scény pak stačí jako vzorkovací vektor zvolit vektor odrazu.  \cite{ReflectCubemap2022} 
             
-            \emph{Cubemapy} ale nedokáží reflektovat geometrie scény, neboť se skládá ze statických obrazů. Řešením může být např. \emph{cubemapy} vykreslit dynamicky, tj. vykreslit šest stran krychle a namapovat je na \emph{cubemapu}. Takto vytvořená textura ale by reflektovala objekty, jako by stály v dáli. 
+            \emph{Cubemapy} ale nedokáží reflektovat geometrie scény, neboť se skládá ze statických obrazů. Řešením může být např. \emph{cubemapy} vykreslit dynamicky, tj. vykreslit šest stran krychle a namapovat je na \emph{cubemapu}. Takto vytvořená textura by ale reflektovala objekty, jako by stály v dáli. 
             
-            Pro geometrie, které jsou v blízkém okolí reflektujícího objektu, řeší Lettier \cite{Lettier2019} odrazy světla pomocí zjednodušené metody \emph{ray-tracingu}, která počítá průsečíky v prostoru obrazu. Lettier nejdříve vykreslí scénu z pohledu kamery do tří pomocných textur: do první vykreslí scénu, jakoby by byla textura displej monitoru, do druhé místo barvy fragmentu uloží 3D souřadnice interpolovaných vrcholů a do další hodnoty jejich normál. Následně vyšle z\;káždého pixelu, resp. texelu, prostoru obrazu, reps. textury, paprsek, a jestli se paprsek odrazí od reflektujícího objektu, prochází Lettier podél odraženého paprsku po malých inkrementech a kontroluje, zda neprotrl nějakou geometrii ve scéně. Při průniků si daný fragment, z kterého vyšel paprsek, zaznamená barvu zasažené geometrie uložené v textuře.
+            Pro geometrie, které jsou v blízkém okolí reflektujícího objektu, řeší Lettier \cite{Lettier2019} odrazy světla pomocí zjednodušené metody \emph{ray-tracingu}, která počítá průsečíky v prostoru obrazu. Lettier nejdříve vykreslí scénu z pohledu kamery do tří pomocných textur: do první vykreslí scénu, jakoby by byla textura displej monitoru, do druhé místo barvy fragmentu uloží 3D souřadnice interpolovaných vrcholů a do další hodnoty jejich normál. Následně vyšle z\;každého pixelu, resp. texelu, prostoru obrazu, resp. textury, paprsek, a jestli se paprsek odrazí od reflektujícího objektu, prochází Lettier podél odraženého paprsku po malých inkrementech a kontroluje, zda neprotrl nějakou geometrii ve scéně. Při průniků si daný fragment, z kterého vyšel paprsek, zaznamená barvu zasažené geometrie uložené v textuře.
             
-            Limitováním prostoru na prostor obrazu přináší nějaké vady této metody. Tou největší je právě prostor, od kterého se paprsky odráží, neboť kamera vždy směřuje do předu, nemůže metoda odrážet předměty za kamerou. Podobný problém může nastat i ve předu kamery, kdy odražený paprsek narazí na geometrii v nějakém rohu, který ale kamera nevidí.
+            Limitováním prostoru na prostor obrazu přináší nějaké vady této metody. Tou největší je právě prostor, od kterého se paprsky odráží, neboť kamera vždy směřuje dopředu, nemůže metoda odrážet předměty za kamerou. Podobný problém může nastat i vepředu kamery, kdy odražený paprsek narazí na geometrii v nějakém rohu, který ale kamera nevidí.
             
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/cubemap}
@@ -621,15 +621,15 @@ Během celé simulace opakuj
             
         \subsection{Refrakce}
             
-            Hladina vody ale nemá perfektně odrazivý povrch. Některé světelné paprsky prochází skrz ni, a proto ji vnímame jako průsvitný materiál. Objekty pod hladinou ale vidíme zkresleně důsledkem tzv. refrakcí \cite{LightDir2009}. Světelné paprsky se při přechodu médií lámou, neboť prochází dvěma prostory, ve kterých má světlo různé rychlosti. V hustších prosterech se světlo pohybuje pomaleji, zatímco v\;řidších rychleji. Lom světla lze popsat Snellovým zákonem
+            Hladina vody ale nemá perfektně odrazivý povrch. Některé světelné paprsky prochází skrz ni, a proto ji vnímáme jako průsvitný materiál. Objekty pod hladinou ale vidíme zkresleně důsledkem tzv. refrakcí \cite{LightDir2009}. Světelné paprsky se při přechodu médií lámou, neboť prochází dvěma prostory, ve kterých má světlo různé rychlosti. V hustších prostorech se světlo pohybuje pomaleji, zatímco v\;řidších rychleji. Lom světla lze popsat Snellovým zákonem
             
             \begin{equation}
              \frac{\sin \theta_1}{\sin \theta_2} = \frac{n_2}{n_1},
             \end{equation}
 
-            \noindent kde $\theta_1$ značí úhel dopadu příchozího světla, $\theta_2$ je úhel lomoného paprsku (viz obrázek \ref{fig:reflect}), $n_1$ a $n_2$ jsou refraktivní indexy (IOR) příchozího a odchozího prostředí. \cite{Fleck2007}
+            \noindent kde $\theta_1$ značí úhel dopadu příchozího světla, $\theta_2$ je úhel lomeného paprsku (viz obrázek \ref{fig:reflect}), $n_1$ a $n_2$ jsou refraktivní indexy (IOR) příchozího a odchozího prostředí. \cite{Fleck2007}
             
-            Refrakce lze naimplementovat podobně jako reflekce podle Lettierovy metody \cite{Lettier2019, LettierRefract2019}. Místo ale odrazeného paprsku pracuje s refraktovaným. Další modifikace metody reflekcí je, že místo obyčejné scény, kterou si uloží do pomocné textury, si musí vykreslit scénu, ale bez refraktujícího objektu. Důvodem je, že textura slouží pro vzorkování barvy, u reflekcí odražený paprsek může znovu narazit na reflektující objekt, zatímco u\;refrakcí paprsek prochází skrz objekt, a proto by vzorkovaná barva měla být až ta, která je za refraktujícím objektem.  
+            Refrakce lze implementovat podobně jako reflekce podle Lettierovy metody \cite{Lettier2019, LettierRefract2019}. Místo ale odrazeného paprsku pracuje s refraktovaným. Další modifikace metody reflekcí je, že místo obyčejné scény, kterou si uloží do pomocné textury, si musí vykreslit scénu, ale bez refraktujícího objektu. Důvodem je, že textura slouží pro vzorkování barvy, u reflekcí odražený paprsek může znovu narazit na reflektující objekt, zatímco u\;refrakcí paprsek prochází skrz objekt, a proto by vzorkovaná barva měla být až ta, která je za refraktujícím objektem.  
             
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/reflection_and_refraction}
@@ -647,7 +647,7 @@ Během celé simulace opakuj
                 \label{fig:fresnel}
             \end{figure}
             
-             Protože povrch vody je zároveň odrazivý a refraktivní, je třeba zjistit podle kterých světelných paprsků ho obarvit. Tento problém řeší Fresnelovy rovnice. Fresnelovy rovnice podle úhlu pohledu popisují, jak moc refraktní světlo nebo odražené světlo přispívá finální barvě hladiny. Rovnice zní takto
+             Protože povrch vody je zároveň odrazivý a refraktivní, je třeba zjistit podle kterých světelných paprsků ho obarvit. Tento problém řeší Fresnelovy rovnice. Fresnelovy rovnice podle úhlu pohledu popisují, jak moc refraktované světlo nebo odražené světlo přispívá finální barvě hladiny. Rovnice zní takto
              
              \begin{equation}
               \begin{split}
@@ -660,14 +660,14 @@ Během celé simulace opakuj
                 \end{split}
              \end{equation}
             
-            \noindent Koeficient $R$ popisuje intenzitu odraženého světla, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{LightDir2009, Fleck2007}. Úhly $\theta_1$ a $\theta_2$ jsou úhly dopadu příchozího paprsku a lomeného paprsku. Konstanty $n_1$ a $n_2$ jsou IOR příchozího a odchozího prostředí. Protože koefecienty $R$ a $T$ závisí na polarizaci světla \cite{Fleck2007}, které rozlišujeme na s-polarizaci a p-polarizaci, jsou hodnoty vyčísleny jako průměry hodnot $R_s$ a $R_p$, resp. $T_s$ a $T_p$.
+            \noindent Koeficient $R$ popisuje intenzitu odraženého světla, kdežto koeficient $T$ říká intenzitu refraktovaného světla \cite{LightDir2009, Fleck2007}. Úhly $\theta_1$ a $\theta_2$ jsou úhly dopadu příchozího paprsku a lomeného paprsku. Konstanty $n_1$ a $n_2$ jsou IOR příchozího a odchozího prostředí. Protože koeficienty $R$ a $T$ závisí na polarizaci světla \cite{Fleck2007}, které rozlišujeme na s-polarizaci a p-polarizaci, jsou hodnoty vyčísleny jako průměry hodnot $R_s$ a $R_p$, resp. $T_s$ a $T_p$.
             
-            V realitě lze tento optický fenomém nejvíce vidět u mělkých stojatých vod (viz obrázek \ref{fig:fresnel}). Místa, na která se díváme pod malým úhlem ($\theta_1$ v obrázku \ref{fig:reflect}), vídíme spíše průhledně, zatímco v místech, na která se díváme pod velkým úhlem, vidíme spíše odraz okolního prostředí.
+            V realitě lze tento optický fenomén nejvíce vidět u mělkých stojatých vod (viz obrázek \ref{fig:fresnel}). Místa, na která se díváme pod malým úhlem ($\theta_1$ v obrázku \ref{fig:reflect}), vidíme spíše průhledně, zatímco v místech, na která se díváme pod velkým úhlem, vidíme spíše odraz okolního prostředí.
             
             
     
         \subsection{Útlum světla}
-            Potom, co světlo protne hladinu, jeho paprsek prochází ve vodě dvěma transformacemi, může dojít k rozptylu parsku nebo k absorbci světla. Absorbci způsobuje nejen délka dráhy paprsku a látky obsažené ve vodě, ale také mikroorganismy žíjící v ní \cite{Akkaynak2017}. Jev, který je predominantním důsledkem absorbce, je např. distorze barevného spektra \cite{Fleck2007}. Na základě obsahu vody jsou různé vlnové délky pohlceny. Např. v moři kvůli vysokém obsahu soli dochází k vysoké absorbci barev s dlouhými vlnovými délkami jako červená nebo u vody s vysokým obsahem chlorofylu je pohlcováno vše kromě zelených barev \cite{Cerezo2002}. Protože mnoho faktorů hraje roli v absorbci, musí se chování značně zjednodušit, aby je počítače stihly vypočítat. Baboud a Décoret \cite{Baboud2006} modelují záření s vlnovou délkou $\lambda$ odraženého z bodu ve vodě $p_w$ do bodu na hladině $p_s$ jako
+            Potom, co světlo protne hladinu, jeho paprsek prochází ve vodě dvěma transformacemi, může dojít k rozptylu paprsku nebo k absorpci světla. Absorpci způsobuje nejen délka dráhy paprsku a látky obsažené ve vodě, ale také mikroorganismy žijící v ní \cite{Akkaynak2017}. Jev, který je predominantním důsledkem absorpce, je např. distorze barevného spektra \cite{Fleck2007}. Na základě obsahu vody jsou různé vlnové délky pohlceny. Např. v moři kvůli vysokému obsahu soli dochází k vysoké absorpci barev s dlouhými vlnovými délkami jako červená nebo u vody s vysokým obsahem chlorofylu je pohlcováno vše kromě zelených barev \cite{Cerezo2002}. Protože mnoho faktorů hraje roli v absorpci, musí se chování značně zjednodušit, aby je počítače stihly vypočítat. Baboud a Décoret \cite{Baboud2006} modelují záření s vlnovou délkou $\lambda$ odraženého z bodu ve vodě $p_w$ do bodu na hladině $p_s$ jako
             
             \begin{equation}
                 L_\lambda(p_s, \mathbf{\omega}) = \alpha_{\lambda}(d)L_{\lambda}(p_w, \mathbf{\omega}) + (1 - \alpha_{\lambda}(d))L_{d\lambda},
@@ -680,7 +680,7 @@ Během celé simulace opakuj
                 \alpha_{\lambda}(d) = e^{-a_{\lambda} d},
             \end{equation}
 
-            \noindent kde $a_\lambda$ je útlumová konstanta závislá na vlasnostech vody. Protože obraz počítače pracuje v RGB barevném spektru, musí se rovnice \ref{eq:att} aplikovat pro jednotlivé kanály RGB
+            \noindent kde $a_\lambda$ je útlumová konstanta závislá na vlastnostech vody. Protože obraz počítače pracuje v RGB barevném spektru, musí se rovnice \ref{eq:att} aplikovat pro jednotlivé kanály RGB
             
             \begin{equation}
              L_{RGB}(p_s, \omega) = (L_{R}(p_w, \omega), L_{G}(p_w, \omega), L_{B}(p_w, \omega)).
@@ -701,9 +701,9 @@ Během celé simulace opakuj
             
             \begin{enumerate}
              \item \textbf{Získání souřadnic přijímacích objektů:} Shah nejdříve vykreslí přijímací objekty (nebo přijímače), tj. objekty, na kterých se kaustika může zobrazit, z pohledu světelného zdroje do textury, které místo barvy ukládá světové souřadnice. 
-             \item \textbf{Získání souřadnic a normál refraktujícího objektu:} Obdobně jako u prvního bodu refraktující objekt, v tomto případě hladina vody, vykreslí do jedné textuty, ale místo barvy uloží světové souřadnice fragmentu. Kromě souřadnic se do další textury navíc vykreslí hodnoty normál povrchu refraktujícího objektu.
+             \item \textbf{Získání souřadnic a normál refraktujícího objektu:} Obdobně jako u prvního bodu refraktující objekt, v tomto případě hladinu vody, vykreslí do jedné textury, ale místo barvy uloží světové souřadnice fragmentu. Kromě souřadnic se do další textury navíc vykreslí hodnoty normál povrchu refraktujícího objektu.
              \item \textbf{Vytvoření mapy kaustik:} Jednotlivé fragmenty refraktujícího objektu, které lze vidět z pohledu světla, promítne po aplikování Snellova zákona na přijímací objekty a zaznamená, na jaké místa přijímacích objektů body dopadly.
-             \item \textbf{Konečné vykreslení:} Každý příjímací objekt promítne do souřadnicového systému světla, aby mohl vypočítat texturovací souřadnice. Nakonec aplikuje mapu kaustik na přijímací objekty za pomocí vypočítaných souřadnic a vykreslí konečnou scénu. \cite{Shah2007}
+             \item \textbf{Konečné vykreslení:} Každý přijímací objekt promítne do souřadnicového systému světla, aby mohl vypočítat texturovací souřadnice. Nakonec aplikuje mapu kaustik na přijímací objekty za pomocí vypočítaných souřadnic a vykreslí konečnou scénu. \cite{Shah2007}
             \end{enumerate}
             
             Hlavní krok algoritmu je třetí bod, a proto je v této části rozveden do většího detailu. Nejpodstatnější část tvorby mapy kaustik se nachází ve \emph{vertex shaderu}. Nejdříve Shah vykreslí body \cite{Shah2007}, které spolu vytváří mřížku o\;velikosti textury z druhého bodu, tj. o velikosti textury souřadnic a normál refraktujícího objektu. Účelem této velikosti je, aby pro každý takovýto bod náležel jeden texel textury, a v případě, že bod, resp. texel, náležel refraktujícímu objektu, promítne ho na přijímací objekty. Ve \emph{vertex shaderu} by tento postup vypadal takto
@@ -732,7 +732,7 @@ Pro každý vrchol V proveď
 
             \noindent kde $V$ je světová pozice vrcholu \verb|V|, $P$ je světová pozice \verb|P|, $\mathbf{r}$ je směr \verb|r| a $d$ je délka vektoru $\mathbf{r}$. Úloha odhadu průsečíku je pak podle rovnice \ref{eq:approx} přeformulována na odhad délky $d$, protože kdyby byla hodnota $d$ rovna vzdálenosti $P$ od $V$, pak by rovnice \ref{eq:approx} popisovala reálný průsečík \verb|P|. 
                 
-            Shahův konečný odhad průsečíku $P_{2}$ je vyčíslen dvěma iteracemi vztahu \ref{eq:approx}. Nejdříve za $d$ dosadí hodnotu jedna. Poté vypočítá pozici $P_1 = V + 1 \cdot \mathbf{r}$, jehož souřadnice převede do prostoru světla a následně promítne na texturu přijímacích objektů. Promítnutním vrcholu $P_1$ zjistí jeho světovou souřadnici na přijímači. Jako poslední odhad $d$ poté zvolí jako vzdálenost vrcholu $P_1$ od $V$. V\;pseudokódu vypadá funkce \verb|OdhadPrůsečíku| takto \cite{Shah2007}
+            Shahův konečný odhad průsečíku $P_{2}$ je vyčíslen dvěma iteracemi vztahu \ref{eq:approx}. Nejdříve za $d$ dosadí hodnotu jedna. Poté vypočítá pozici $P_1 = V + 1 \cdot \mathbf{r}$, jehož souřadnice převede do prostoru světla a následně promítne na texturu přijímacích objektů. Promítnutím vrcholu $P_1$ zjistí jeho světovou souřadnici na přijímači. Jako poslední odhad $d$ poté zvolí jako vzdálenost vrcholu $P_1$ od $V$. V\;pseudokódu vypadá funkce \verb|OdhadPrůsečíku| takto \cite{Shah2007}
             
             \begin{minted}[frame=lines,
 framesep=2mm,
@@ -765,10 +765,10 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         
         Velká většina metod pro simulaci vody je založena na transformaci geometrie. Tato operace je běžná pro grafické karty, a proto má během vykreslování vyhrazenou fázi, při které lze s pozicemi vrcholů geometrie manipulovat skrz speciální program běžící na grafické kartě \emph{vertex shader}.
         
-        Podobně lze jednoduše zakomponovat i simulaci optických vlasností do procesu vykreslování. Kromě pozic grafické karty pracují i s barvami geometrií. Pro její manipulaci je ve vykreslovací \emph{pipelině} vyhrazena část nazývaná \emph{fragment processing}.
+        Podobně lze jednoduše zakomponovat i simulaci optických vlastností do procesu vykreslování. Kromě pozic grafické karty pracují i s barvami geometrií. Pro její manipulaci je ve vykreslovací \emph{pipelině} vyhrazena část nazývaná \emph{fragment processing}.
         
         \subsection{OpenGL}
-            OpenGL je více platformové grafické API, pro přesnost se jedná o specifikaci grafického API. OpenGL specifikuje, jak a co jednotlivé funkce mají provádět, na základě tichto požadavků si výrobci grafických karet a vývojáři operačních systému implementují vlastní řešení daných funkcí. \cite{Vries2022}
+            OpenGL je více platformové grafické API, pro přesnost se jedná o specifikaci grafického API. OpenGL specifikuje, jak a co jednotlivé funkce mají provádět, na základě těchto požadavků si výrobci grafických karet a vývojáři operačních systému implementují vlastní řešení daných funkcí. \cite{Vries2022}
             
             Dřívější verze OpenGL, tj. před verzí 3.2, využívaly tzv. fixní \emph{pipelinu}, pro vykreslování obrazu. Její funkce byly téměř omezené jen na renderování jednoduchých primitiv jako čáry, body nebo trojúhelníky a nedávaly programátorům žádnou volnost pro jejich modifikaci. \cite{Vries2022}
             
@@ -783,18 +783,18 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             Nejdříve se z aplikační části programu zašlou data o geometrii skrz tzv. \emph{vertex buffer} (VBO) grafické kartě. Data minimálně obsahují informace o pozicích vrcholů objektu a volitelně i vlastní dodatečné informace jako hodnoty jejich normál nebo jejich barvy. 
             
-            Od této chvíle všechny operace probíhají paralelně na grafické kartě. Nad každým vrcholem z VBO proběhne povinná část \emph{shader} programu tzv. \emph{vertex shader}. \emph{Vertex shader} může pracovat se všemi informacemi jednoho vrcholu, tj. nemá přístup k datům okolních vrcholů. Ve \emph{vertex shaderu} se provedou nad vrcholem vlastně definované operace, ale povinně musí předat grafické kartě jeho finalní pozici. 
+            Od této chvíle všechny operace probíhají paralelně na grafické kartě. Nad každým vrcholem z VBO proběhne povinná část \emph{shader} programu tzv. \emph{vertex shader}. \emph{Vertex shader} může pracovat se všemi informacemi jednoho vrcholu, tj. nemá přístup k datům okolních vrcholů. Ve \emph{vertex shaderu} se provedou nad vrcholem vlastně definované operace, ale povinně musí předat grafické kartě jeho finální pozici. 
             
-            V další fázi dochází z předaných vrcholů k sestavení primitv (body, usečky, trojúhelníky). Poté lze i s primitivy manipulvat skrz \emph{geometry shader}, volitelné části \emph{shader} programu. Vygenerované primitiva lze dále uložit do \emph{transform feedback bufferu} \cite{TFB2022}.
+            V další fázi dochází z předaných vrcholů k sestavení primitiv (body, úsečky, trojúhelníky). Poté lze i s primitivy manipulovat skrz \emph{geometry shader}, volitelné části \emph{shader} programu. Vygenerované primitiva lze dále uložit do \emph{transform feedback bufferu} \cite{TFB2022}.
             
-            Poté dojde k rasterizaci primitiv z předešlé fáze, která diskretizuje primitiva na fragmenty  (potenciální pixely obrazu). Nad fragmenty proběhne povinná část \emph{shader} programu tzv. \emph{fragment shader}. \emph{Fragment shadery} manipulují zejména s barvami fragmentů, které nakonci musí předat grafické kartě.
+            Poté dojde k rasterizaci primitiv z předešlé fáze, která diskretizuje primitiva na fragmenty  (potenciální pixely obrazu). Nad fragmenty proběhne povinná část \emph{shader} programu tzv. \emph{fragment shader}. \emph{Fragment shadery} manipulují zejména s barvami fragmentů, které na konci musí předat grafické kartě.
             
             Nakonec po operacích viditelnosti fragmentů jako testování hloubky je výsledný obraz vykreslen do \emph{framebufferu}.
             
             
             
         \subsection{Vulkan}            
-            Vulkan je nízkoúrovňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává jěště větší kontrolu nad procesech při vykresovální obrazu za účelem optimalizace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
+            Vulkan je nízkoúrovňové více platformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává ještě větší kontrolu nad procesech při vykreslování obrazu za účelem optimalizace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
         
         \subsection{DirectX}
             DirectX je alternativa OpenGL od společnosti Microsoft. Oproti OpenGL je DirectX uzavřený na platformy s operačními systémy od společnosti Microsoft, dále kromě vykreslovacích funkcionalit obsahuje i rozhraní pro práci se zvukem, sítí a vstupními daty od uživatele. Princip vykreslování je stejně jako u OpenGL založené na grafické \emph{pipelině} \cite{Allain1996}. Do verze DirectX 11 se principově podobal OpenGL, ale od verze DirectX 12 změnil svoji filozofii podobně jako Vulkan, který dává uživateli větší kontrolu nad hardwarem \cite{Vulkan2022}.
@@ -802,30 +802,30 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
 
     \section{Herní enginy}
     
-        Jestli je hlavním cílem vyproduktovat hru nebo \emph{real-time} aplikaci, programování vlastního herního \emph{enginu} může být časově neefektivní. OpenGL, DirectX a Vulkan jsou jen grafické API, na kterých jsou založeny renderovací \emph{enginy}, což tvoří jen malou část herních \emph{enginů}. Kromě nich obsahuje herní \emph{engine} AI, fyzikální, kolizový \emph{engine} a nástroje pro práci se vstupy od uživatele aplikace, a proto by bylo časově výhodné použít z některých komerčních herních \emph{enginů}. Lze je využít nejen pro hry, ale obecně i pro ostatní  \emph{real-time} aplikace a v součanosti i ve filmovém průmyslu.  \cite{GameEngine2022} 
+        Jestli je hlavním cílem vyprodukovat hru nebo \emph{real-time} aplikaci, programování vlastního herního \emph{enginu} může být časově neefektivní. OpenGL, DirectX a Vulkan jsou jen grafické API, na kterých jsou založeny renderovací \emph{enginy}, což tvoří jen malou část herních \emph{enginů}. Kromě nich obsahuje herní \emph{engine} AI, fyzikální, kolizový \emph{engine} a nástroje pro práci se vstupy od uživatele aplikace, a proto by bylo časově výhodné použít z některých komerčních herních \emph{enginů}. Lze je využít nejen pro hry, ale obecně i pro ostatní  \emph{real-time} aplikace a v současnosti i ve filmovém průmyslu.  \cite{GameEngine2022} 
         
         \subsection{Unity}
         
-            Unity je víceplatformový herní engine s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platform, pro které lze vyvíjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
+            Unity je více platformový herní \emph{engine} s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platform, pro které lze vyvíjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
             
-            Protože Unity podporuje různou škálu platform, obsahuje abstrakntí vrstvu nad grafickými API, která obsahuje OpenGL, DirectX nebo další jako Metal. Unity pro programování svých \emph{shader} programů používá zejména jazyk HLSL, proprietární jazyk DirectX, ale lze využít i jazyka určený pro OpenGL a Vulkanu GLSL. Výhodou HLSL je jeho univerzálnost, protože Unity nabízí jeho překlad skrz svůj kompilátor do ostatních jazyků. \cite{GLSLUnity2022}
+            Protože Unity podporuje různou škálu platform, obsahuje abstraktní vrstvu nad grafickými API, která obsahuje OpenGL, DirectX nebo další jako Metal. Unity pro programování svých \emph{shader} programů používá zejména jazyk HLSL, proprietární jazyk DirectX, ale lze využít i jazyka určený pro OpenGL a Vulkanu GLSL. Výhodou HLSL je jeho univerzálnost, protože Unity nabízí jeho překlad skrz svůj kompilátor do ostatních jazyků. \cite{GLSLUnity2022}
             
         \subsection{Unreal Engine}
         
-            Unreal Engine je v oblasti herních \emph{enginů} hlavní konkurentem Unity. Oproti Unity využívá pro práci programovací jazyka C++. Cílové skupiny pro Unreal Engine jsou spíše aplikace jako AAA hry, které jsou graficky náročné, díky jeho rychlosti a nástrojům pro fotorealistké zobrazení obrazu. \cite{UnityUnreal2022}
+            Unreal Engine je v oblasti herních \emph{enginů} hlavní konkurentem Unity. Oproti Unity využívá pro práci programovací jazyka C++. Cílové skupiny pro Unreal Engine jsou díky jeho rychlosti a nástrojům pro fotorealistické zobrazení obrazu spíše aplikace jako AAA hry, které jsou graficky náročné. \cite{UnityUnreal2022}
             
             Podobně jako i Unity používá Unreal Engine více grafických API a ve svých \emph{shader} programech používá HLSL, které volitelně může přeložit skrz svůj \emph{HLSL Cross Compiler} do optimalizovaného GLSL programu. \cite{GLSLUnreal2022}
 
     \chapter{Shrnutí analýzy}
-        Tato kapitola je věnována shrnutí metod pro simulaci vody a nástrojů, pomocí kterých je lze implementovat. Na základě předešlé analýzy jsou následně zvolené algoritmy a nástroje pro implementační část bakálařské práce. Na závěr jsou zde uvedeny funkční a nefunkční požadavky kladené na prototyp simulace a aplikace testovací scény.
+        Tato kapitola je věnována shrnutí metod pro simulaci vody a nástrojů, pomocí kterých je lze implementovat. Na základě předešlé analýzy jsou následně zvolené algoritmy a nástroje pro implementační část bakalářské práce. Na závěr jsou zde uvedeny funkční a nefunkční požadavky kladené na prototyp simulace a aplikace testovací scény.
         
         \section{Volba algoritmu}
         
-            Procedulární metody jsou určené pro vykreslení rozsáhlých vodních ploch, některé jeho implementace, zejména ty založené na IFFT, mají výsledné vodní hladiny nerozpoznatelné od tich reálných. Na druhou stranu nedovulují stejnou míru interakce jako ostatní.
+            Procedulární metody jsou určené pro vykreslení rozsáhlých vodních ploch, některé jeho implementace, zejména ty založené na IFFT, mají výsledné vodní hladiny nerozpoznatelné od tich reálných. Na druhou stranu nedovolují stejnou míru interakce jako ostatní.
             
-            Metody založené na částicových systémech výměnou za výpočetní náročnost se snaží řídít co nejvěruhodněji fyzikálním zákonům. Dokážou reagovat na externí síly a při vysokém počtu částic lze dosáhnout fotorealistických výsledků. Bohužel kvůli jejich výpočetní náročnosti se je vyplatí využít jen pro malé vodní útvary. Při volbě této metody pro útvary jako moře nebo rybníky nemusí být simulace dostatečně rychlá pro \emph{real-time} pozorování.
+            Metody založené na částicových systémech výměnou za výpočetní náročnost se snaží řídit co nejvěrohodněji fyzikálním zákonům. Dokážou reagovat na externí síly a při vysokém počtu částic lze dosáhnout fotorealistických výsledků. Bohužel kvůli jejich výpočetní náročnosti se je vyplatí využít jen pro malé vodní útvary. Při volbě této metody pro útvary jako moře nebo rybníky nemusí být simulace dostatečně rychlá pro \emph{real-time} pozorování.
             
-            Hybridní metody jsou kompromisem mezi částicovými systémy a procedulárními metodami. Problematiku redukují do 2D prostorů jako procedulární, ale zachovávají jistou míru interakce s dynamickým světem. Simulace pomocí vlnové rovnice se navíc řídí i fyzikálními zákony, i když bere v potaz jen hladinu vody, výsledné vizuální provedení je dobrou aproximací vodní plochy. Oproti částicovým systémům se její výpočet tolik neškáluje s větším rozlohou vodního povrchu, a proto je lze využít pro simulaci jak menší, tak i větších vodních útvarů. Tyto důvody mne přesvědčily pro volbu hybridní metody založené na výpočtu vlnové rovnice pro implementaci do mého prototypu.
+            Hybridní metody jsou kompromisem mezi částicovými systémy a procedulárními metodami. Problematiku redukují do 2D prostoru jako procedulární, ale zachovávají jistou míru interakce s dynamickým světem. Simulace pomocí vlnové rovnice se navíc řídí i fyzikálními zákony, i když bere v potaz jen hladinu vody, výsledné vizuální provedení je dobrou aproximací vodní plochy. Oproti částicovým systémům se její výpočet tolik neškáluje s větším rozlohou vodního povrchu, a proto je lze využít pro simulaci jak menší, tak i větších vodních útvarů. Tyto důvody mne přesvědčily pro volbu hybridní metody založené na výpočtu vlnové rovnice pro implementaci do mého prototypu.
             
             Většina fyzikálně korektních algoritmů pro simulaci optických vlastností je založena na metodě vrhání paprsků, které bohužel většina současného hardwaru nepodporuje. Proto jsem zvolil pro simulaci optických vlastností metody aproximující \emph{ray-tracing} pomocí výpočtu průsečíků v prostoru obrazu jako Shahovo mapování kaustik. Tyto metody využívají pro simulaci pomocné textury, v kterých jsou uložené podpůrné data pro výpočet průsečíků.
             
@@ -833,13 +833,13 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         
             Grafické API nabízí rozhraní pro práci s obrazem skrz grafické karty. Poskytují \emph{shader} programy, které dovolují svým uživatelům manipulovat nejenom barvami objektů, ale také i jeho geometrií. Zatímco herní jádra budují nad grafickými API další podpůrné nástroje vhodné pro vývoj her jako AI nebo fyzikální \emph{enginy}.
             
-            Pro implementaci prototypu simulátoru a aplikace testovací scény jsem se rozhodl vybrat grafického API OpenGL a to z následujících důvodů. Prvním důvodem je, že velká většina algortimů (procedulární, hybridní metody) je založena na transformaci geometrie a jeho následné optické vlastnosti spočívájí ve výpočtu barvy povrchu vody podle pozic kamery (oka) a pozorovaného bodu hladiny. Tyto operace jsou stěžejními částmi v simulaci, které lze jednoduše paralelizovat pomocí nabízených nástrojů API \emph{shader} programů. Dalším důvodem, proč jsem nezvolil herní \emph{engine} pro svůj vývoj prototypu, je, že výše zmíněné algoritmy potřebují ke svému fungování jen renderovací \emph{pipelinu} grafických API a dalších volitelných nástrojů herního jádra by se v prototypu téměř vůbec nevyužilo. Posledním důvodem je, že i při volbě herního \emph{enginu} by stejně výsledná implementace byla přeložena do grafického API. S použítím samostatného OpenGL bych měl kontrolu nad vykreslování a to bez žádného prostředníka. 
+            Pro implementaci prototypu simulátoru a aplikace testovací scény jsem se rozhodl vybrat grafického API OpenGL a to z následujících důvodů. Prvním důvodem je, že velká většina algoritmů (procedulární, hybridní metody) je založena na transformaci geometrie a jeho následné optické vlastnosti spočívají ve výpočtu barvy povrchu vody podle pozic kamery (oka) a pozorovaného bodu hladiny. Tyto operace jsou stěžejními částmi v simulaci, které lze jednoduše paralelizovat pomocí nabízených nástrojů API \emph{shader} programů. Dalším důvodem, proč jsem nezvolil herní \emph{engine} pro svůj vývoj prototypu, je, že výše zmíněné algoritmy potřebují ke svému fungování jen renderovací \emph{pipelinu} grafických API a dalších volitelných nástrojů herního jádra by se v prototypu téměř vůbec nevyužilo. Posledním důvodem je, že i při volbě herního \emph{enginu} by stejně výsledná implementace byla přeložena do grafického API. S použitím samostatného OpenGL bych měl kontrolu nad vykreslování a to bez žádného prostředníka. 
             
             Volba mezi grafickými API jako DirectX nebo Vulkan oproti OpenGL je poté jenom z mé preference. OpenGL a DirectX jsou téměř svými ekvivalenty. U grafického API Vulkan je oproti ostatním na druhou stranu příliš nízkoúrovňovým rozhraním a následná implementace v něm by byla příliš náročná a zbytečně zdlouhavá.
             
         \section{Model požadavků}
 
-            Tato kapitola obsahuje model požadavků kladený na protyp simulátoru vodního útvaru a aplikaci testovací scény. Model požadavků je rozdělen do dvou tabulek na funkční a nefunkční požadavky. Tabulka funkčních požadavků je dále rozčleněna na požadavky určené pro samotný simulátor vodní hladiny a aplikační část programu. Jednotlivé záznamy požadavků jsou v tabulkách rozvedeny a je jim přiřazena priorita podle metody \emph{MoSCoW} \cite{Moscow2022}.
+            Tato kapitola obsahuje model požadavků kladený na prototyp simulátoru vodního útvaru a aplikaci testovací scény. Model požadavků je rozdělen do dvou tabulek na funkční a nefunkční požadavky. Tabulka funkčních požadavků je dále rozčleněna na požadavky určené pro samotný simulátor vodní hladiny a aplikační část programu. Jednotlivé záznamy požadavků jsou v tabulkách rozvedeny a je jim přiřazena priorita podle metody \emph{MoSCoW} \cite{Moscow2022}.
             
             
             
@@ -872,8 +872,8 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
                         Popis &  Simulátor bude regulovat osvětlení objektů na základě jejich vzdálenosti od hladiny vody.\\ 
                         Priorita & Mělo by  \\
                         \hline
-                        Požadavek & Změna paramaterů simulátoru \\ 
-                        Popis &  Za běhu umožní simulátor  změnu paramaterů jednotlivých vlastností vodní plochy.\\ 
+                        Požadavek & Změna parametrů simulátoru \\ 
+                        Popis &  Za běhu umožní simulátor  změnu parametrů jednotlivých vlastností vodní plochy.\\ 
                         Priorita & Mohlo by \\
                         \hline
                         \hline
@@ -894,11 +894,11 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
                     \caption{Nefunkční požadavky simulátoru a aplikace testovací scény.}
                     \begin{tabular}[t]{ | p{6em} | p{8cm} | } 
                         \hline
-                        Požadavek & Použítí grafického API OpenGL \\ 
+                        Požadavek & Použití grafického API OpenGL \\ 
                         Popis &  Pro akceleraci výpočtu simulace a zobrazování testovací scény bude aplikace využívat grafického API OpenGL. \\ 
                         Priorita & Musí  \\ 
                         \hline
-                        Požadavek & Použítí programovacího jazyka C++ \\ 
+                        Požadavek & Použití programovacího jazyka C++ \\ 
                         Popis &  Aplikační část programu bude napsaná v jazyce C++. \\ 
                         Priorita & Musí  \\ 
                         \hline

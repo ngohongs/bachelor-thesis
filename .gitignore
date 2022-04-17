@@ -9,7 +9,7 @@
 *.log
 *.lol
 *.lot
-_minted-thesis/
+_minted-thesis
 *.out
 *.ps
 *.run.xml
