@@ -91,7 +91,7 @@
 
     \section{Dynamické vlastnosti}
 
-        Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje na dynamické prostředí. V současnosti nejrealističtějších výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes 100 milion neznámých pro vyřešení a s užitím globálních zobrazovacích metod jako \emph{ray-tracing} pro realistickou vizualizaci odrazů, refrakcí a kaustik je výpočetně nemožné simulaci provést v reálném čase. \cite{Mueller2008}
+        Dynamické vlastnosti zachycují, jak se vodní hladina pohybuje a jak reaguje na dynamické prostředí. V současnosti nejrealističtějších výsledků je dosaženo simulací Eulerovy vody (nahlíží na vodu Eulerovým popisem), jejíž prostor je rozdělen do alespoň 512\textsuperscript{3} buněk. Takto řídké rozdělení obsahuje přes sto milion neznámých pro vyřešení a s užitím globálních zobrazovacích metod jako \emph{ray-tracing} pro realistickou vizualizaci odrazů, refrakcí a kaustik je výpočetně nemožné simulaci provést v reálném čase. \cite{Mueller2008}
 
 
         \begin{figure}\centering
@@ -216,7 +216,7 @@
                     
                     Johanson \cite{Johanson2004} řeší výpočetní náročnost adaptivní metodou, která na základě vzdálenosti kamery a vodní plochy vyřazuje některá vlnění. V případě, že je kamera dostatečně vzdálená od vodní plochy, vyřazuje Johanson vlnění s vysokými frekvencemi. Efektivnějšího výsledku dosáhl Lee \cite{Lee2006}, který před vykreslením vodní plochy navíc zahazuje vrcholy geometrie hladiny, které jsou mimo rozsah kamery.
                     
-                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformace (FFT), resp. rychlé inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve své podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle statických dat vlnění oceánů, např. ze satelitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
+                    V současnosti nejlepším řešením tohoto problému je užití rychlé Fourierovy transformace (FFT), resp. rychlé inverzní Fourierovy transformace (IFFT) podle Jerryho Tessendorfa \cite{Tessendorf2001}. Sčítání sinusoid v rovnici \ref{eq:sin_wave_sum} je ve své podstatě inverzní Fourierova transformace, kde jednotlivé sinusoidy přispívají ke konečnému vlnění. Tesssendorf podle statistických dat vlnění oceánů, např. ze satelitních snímků, modeluje výšku vrcholů hladiny jako inverzní Fourierovu transformaci funkce
                     
                     \begin{equation}
                         h(\mathbf{x},t) = \sum_k \widetilde{h}(\mathbf{k}, t) e^{i \mathbf{k} \cdot \mathbf{x}},
@@ -423,7 +423,7 @@ Během celé doby simulace opakuj:
                 \subsection{Hybridní metody}
                     Předešlé dvě metody představují extrémní případy pro simulaci vodní hladiny. Procedulární metody nereagují na okolní prostředí, ale jsou výpočetně rychlé. Částicové systémy na druhou stranu počítají s dynamickým prostředím, ale jsou výpočetně náročné. Hybridní metody jsou kombinací dvou, které zároveň zjednodušují problematiku vodní hladiny jako procedulární metody a zachovávají některé fyzikální vlastnosti.
                     
-                    Pro simulaci větších vodních ploch jsou částicové metody zbytečně náročné. Většina částic se bude nacházet pod hladinou a ve stojatých vodách se jejich pozice nebude výrazně měnit. Proto by bylo pro ně zbytečné počítat NSE.  Hybridní metody tuto výpočetní překážku řeší podobně jako procedulární, kdy problematiku vodní hladiny redukují z trojrozměrného prostoru do dvourozměrného \cite{Mueller2008}. Tyto metody transformují výšku vrcholů podle aproximací NSE.
+                    Pro simulaci větších vodních ploch jsou částicové metody zbytečně náročné. Většina částic se bude nacházet pod hladinou a ve stojatých vodách se jejich pozice nebude výrazně měnit. Proto by bylo pro ně zbytečné počítat NSE.  Hybridní metody tuto výpočetní překážku řeší podobně jako procedulární, kdy problematiku vodní hladiny redukují z trojrozměrného prostoru do dvourozměrného \cite{Mueller2008} a  transformují výšku vrcholů podle aproximací NSE.
                     
                     Chentanezova hybridní metoda využívá \emph{Shallow Water Equations} (SWE) \cite{Nuttapong2010}, soustavu parciálních diferenciálních rovnic, které zjednodušují NSE do 2D výškových map. \emph{Real-time} výpočet SWE je ale stále drahá operace. Bridson zjednodušil její integraci výměnou za stabilitu simulace \cite{Nuttapong2010}.  
                     
@@ -768,7 +768,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         Podobně lze jednoduše zakomponovat i simulaci optických vlastností do procesu vykreslování. Kromě pozic grafické karty pracují i s barvami geometrií. Pro její manipulaci je ve vykreslovací \emph{pipelině} vyhrazena část nazývaná \emph{fragment processing}.
         
         \subsection{OpenGL}
-            OpenGL je více platformové grafické API, pro přesnost se jedná o specifikaci grafického API. OpenGL specifikuje, jak a co jednotlivé funkce mají provádět, na základě těchto požadavků si výrobci grafických karet a vývojáři operačních systému implementují vlastní řešení daných funkcí. \cite{Vries2022}
+            OpenGL je víceplatformové grafické API, pro přesnost se jedná o specifikaci grafického API. OpenGL specifikuje, jak a co jednotlivé funkce mají provádět, na základě těchto požadavků si výrobci grafických karet a vývojáři operačních systému implementují vlastní řešení daných funkcí. \cite{Vries2022}
             
             Dřívější verze OpenGL, tj. před verzí 3.2, využívaly tzv. fixní \emph{pipelinu}, pro vykreslování obrazu. Její funkce byly téměř omezené jen na renderování jednoduchých primitiv jako čáry, body nebo trojúhelníky a nedávaly programátorům žádnou volnost pro jejich modifikaci. \cite{Vries2022}
             
@@ -794,7 +794,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             
         \subsection{Vulkan}            
-            Vulkan je nízkoúrovňové více platformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává ještě větší kontrolu nad procesech při vykreslování obrazu za účelem optimalizace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
+            Vulkan je nízkoúrovňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává ještě větší kontrolu nad procesech při vykreslování obrazu za účelem optimalizace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
         
         \subsection{DirectX}
             DirectX je alternativa OpenGL od společnosti Microsoft. Oproti OpenGL je DirectX uzavřený na platformy s operačními systémy od společnosti Microsoft, dále kromě vykreslovacích funkcionalit obsahuje i rozhraní pro práci se zvukem, sítí a vstupními daty od uživatele. Princip vykreslování je stejně jako u OpenGL založené na grafické \emph{pipelině} \cite{Allain1996}. Do verze DirectX 11 se principově podobal OpenGL, ale od verze DirectX 12 změnil svoji filozofii podobně jako Vulkan, který dává uživateli větší kontrolu nad hardwarem \cite{Vulkan2022}.
@@ -806,7 +806,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         
         \subsection{Unity}
         
-            Unity je více platformový herní \emph{engine} s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platform, pro které lze vyvíjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
+            Unity je víceplatformový herní \emph{engine} s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platform, pro které lze vyvíjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
             
             Protože Unity podporuje různou škálu platform, obsahuje abstraktní vrstvu nad grafickými API, která obsahuje OpenGL, DirectX nebo další jako Metal. Unity pro programování svých \emph{shader} programů používá zejména jazyk HLSL, proprietární jazyk DirectX, ale lze využít i jazyka určený pro OpenGL a Vulkanu GLSL. Výhodou HLSL je jeho univerzálnost, protože Unity nabízí jeho překlad skrz svůj kompilátor do ostatních jazyků. \cite{GLSLUnity2022}
             
