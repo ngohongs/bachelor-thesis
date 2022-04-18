@@ -3,9 +3,9 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
 
     \section{Procesy simulátoru a aplikace testovací scény}
         
-        Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implementaci bude třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi pamětí aplikační částí a pamětí grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny bude dále nutným vstupem pro aplikaci optických vlastností vody, konkrétněji k výpočtu povrchových normál. Obyčejná datová struktura pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řešením toho problému bude předávání textur, které mohou mít v grafických kartách podobu polí.   
+        Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implementaci bude třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi pamětí aplikační částí a pamětí grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny bude dále nutným vstupem pro aplikaci optických vlastností vody, konkrétněji k výpočtu povrchových normál. Obyčejná datová struktura pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řešením tohoto problému bude předávání textur, které mohou mít v grafických kartách podobu polí.   
         
-        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslení refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahovo metoda formace kaustik \cite{Shah2007} vypočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnou. Mapa bude obdobně ve formátu textury.
+        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslením refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahovo metoda formace kaustik \cite{Shah2007} vypočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnou. Mapa bude obdobně ve formátu textury.
         
         Reflekce a refrakce lze vykreslit stejným algoritmem, neboť principiálně fungují podobně. Jedna varianta využívá pro vzorkování barvy a světla odražený paprsek od povrchu vody, zatímco druhá varianta počítá s lomeným paprskem. Odhad průsečíků pohledových paprsků se scénou  bude implementován stejně jako u Shahovy metody mapování kaustik \cite{Shah2007}, která přijímá na vstupu texturu s pozicemi vrcholů objektů, vůči kterým se mají průsečíky počítat. 
         
@@ -59,7 +59,7 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
     Tato kapitola se zaobírá implementací simulátoru vodního útvaru. Protože aplikační část řídí jen nepodstatné části celého programu (zobrazení finální scény, zpracování vstupu nebo předávání instrukcí grafické kartě), bude hlavním obsahem implementace \emph{shader} programů, které v realitě provádí všechny podstatné operace algoritmů simulace.
     
     \section{Simulace hladiny podle vlnové rovnice}
-        Simulace hladiny podle vlnové rovnice spočívá v transformaci výšek jednotlivých bodů roviny. Samozřejmě je možné simulátoru rovinu dodat jako model (ve formátu \verb|.obj|), lze ale také její geometrii procedulárně vygenerovat, což umožňuje větší kontrolu nad detailnosti vodní plochy zvyšováním rozlišení roviny (počtu vrcholů podél strany roviny). Třída \verb|PlaneGenerator| takovou rovinu generuje, geometrie roviny je generátorem normalizovaná, tj. souřadnice jeho vrcholů jsou škálovány do intervalu $[-1,1]$, dále vypočítá vrcholům jejich příslušnou texturovací souřadnici, které budou v simulaci důležitým vstupem. 
+        Simulace hladiny podle vlnové rovnice spočívá v transformaci výšek jednotlivých bodů roviny. Samozřejmě je možné simulátoru rovinu dodat jako model (ve formátu \verb|.obj|), lze ale také její geometrii procedulárně vygenerovat, což umožňuje větší kontrolu nad detailností vodní plochy zvyšováním rozlišení roviny (počtu vrcholů podél strany roviny). Třída \verb|PlaneGenerator| takovou rovinu generuje, geometrie roviny je generátorem normalizovaná, tj. souřadnice jeho vrcholů jsou škálovány do intervalu $[-1,1]$, dále vypočítá vrcholům jejich příslušnou texturovací souřadnici, které budou v simulaci důležitým vstupem. 
         
         \begin{minted}[frame=lines,
 framesep=2mm,
@@ -70,7 +70,7 @@ void PlaneGenerator::Generate(const int & res,
     std::vector<Vertex> & vert, std::vector<unsigned int> & ind)
         \end{minted}
         
-        Metoda \verb|Generate| podle rozlišení \verb|res|, tj. počet vrcholů podél strany roviny, generuje vrcholy roviny, které uloží do pole \verb|vert|, indexy vrcholů tvořící trojúhelníky, které jsou potřeba pro vykreslení roviny grafickým API OpenGL, jsou dále uloženy v poli \verb|ind|. Výsledná rovina je znázorněna v obrázku \ref{fig:plane}.        
+        Metoda \verb|Generate| podle rozlišení \verb|res|, tj. počtu vrcholů podél strany roviny, generuje vrcholy roviny, které uloží do pole \verb|vert|, indexy vrcholů tvořící trojúhelníky, které jsou potřebné pro vykreslení roviny grafickým API OpenGL, jsou dále uloženy v poli \verb|ind|. Výsledná rovina je znázorněna v obrázku \ref{fig:plane}.        
         
         \begin{figure}\centering
             \includegraphics[width=0.5\textwidth]{img/plane}
@@ -183,7 +183,7 @@ fontsize=\footnotesize]{glsl}
 new_v = new_v - old_u.
         \end{minted}
         
-        Zbylý program je dále podle Müllerova algoritmu \cite{Mueller2008} zmíněný v analýze metody podle vlnové rovnice. Deformovaná rovina, tj. vodní hladina, je následně zobrazena podle \emph{vertex shaderu}, který na vstupu přijímá texturu výškové mapy a podle její texturovací souřadnice přičte k výšce vrcholu hodnotu textury uložené v červeném kanálu
+        Zbylý program je dále podle Müllerova algoritmu \cite{Mueller2008} zmíněný v analýze metody podle vlnové rovnice. Deformovaná rovina, tj. vodní hladina, je následně zobrazena podle \emph{vertex shaderu}, který na vstupu přijímá texturu výškové mapy a podle texturovacích souřadnic vrcholu přičte k výšce vrcholu hodnotu textury uložené v červeném kanálu
         
         \begin{minted}[frame=lines,
 framesep=2mm,
@@ -219,7 +219,7 @@ vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
 
         Kromě textur je třeba vygenerovat mřížku podobné v obrázku \ref{fig:plane}. Na rozdíl od mřížky používané v simulaci vodní hladiny je tato mřížka bez jakýkoliv hran, které vrcholy spojují. Ve výsledku má mřížka podobu rovnoměrně rozložených vrcholů. Třída \verb|PlaneGenerator| pro výpočet kaustik umí vygenerovat požadovanou mřížku ve zvoleném rozlišení.
         
-        \emph{Vertex shader}, který provádí většinu výpočtu kaustik, poté přijímá podpůrné textury zmíněné výše a mřížku, která má stejné rozlišení jako podpůrné textury, a to aby jednotlivým bodům  mřížky odpovídal právě jeden texel textury. Celý výpočet se řídí podle tohoto kódu
+        \emph{Vertex shader}, který provádí většinu výpočtu kaustik, poté přijímá podpůrné textury zmíněné výše a mřížku, která má stejné rozlišení jako podpůrné textury, aby jednotlivým bodům  mřížky odpovídal právě jeden texel textury. Celý výpočet se řídí podle tohoto kódu
         
         \begin{minted}[frame=lines,
 framesep=2mm,
@@ -285,7 +285,7 @@ vec2 calculateCausticsTexCoord()
 }.
         \end{minted}
         
-        Shah dále doporučuje rozmazání mapy kaustik \cite{Shah2007}, aby nešly vidět artefakty způsobené promítáním konečného počtu vrcholů. Použití obyčejného rozmazání se z mapy kaustik ztrácí vysoké frekvence, které jsou  nejvíce vizuálně atraktivní, a proto provádím rozmazání konvolucí s Gaussovo jádrem.   
+        Shah dále doporučuje rozmazání mapy kaustik \cite{Shah2007}, aby nešly vidět artefakty způsobené promítáním konečného počtu vrcholů. Použití obyčejného rozmazání se z mapy kaustik ztrácí vysoké frekvence, které jsou  nejvíce vizuálně atraktivní, a proto provádím rozmazání konvolucí s Gaussovým jádrem.   
 
          \begin{figure}\centering
             \includegraphics[width=0.75\textwidth]{img/causticmap}
@@ -369,7 +369,7 @@ float I = exp(-a * clamp(diff, 0, diff)).
     
     Následující kapitola je zaměřena na ukázku konečných vizuálních výsledků implementace. Mimo vykreslených scén jsou zde probrány nedostatky zvolených algoritmů.
    
-    Největších chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelné v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3} \ref{fig:duckr}.
+    Největších chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelné v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3}, \ref{fig:duckr}.
     
     V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože reálný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním. V \ref{fig:rrerr3} lze vidět chybu míchání barev odražené a refraktované scény podle Fresnelových ronvic způsobena nepřesností aproximací průsečíků. Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
     
