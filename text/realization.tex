@@ -1,7 +1,8 @@
-\chapter{Návrh aplikace}
+\chapter{Realizace aplikace}
+\section{Návrh aplikace}
 Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dalších optických vlastností, také i struktuře aplikace testovací scény. Nejdříve je zmíněn celkový pohled na aplikaci, ve kterém jsou zohledněné procesy zvolených algoritmů pro zobrazení scény, z kterých následně vychází struktura simulátoru a aplikace.
 
-    \section{Procesy simulátoru a aplikace testovací scény}
+    \subsection{Procesy simulátoru a aplikace testovací scény}
         
         Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implementaci bude třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi pamětí aplikační částí a pamětí grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny bude dále nutným vstupem pro aplikaci optických vlastností vody, konkrétněji k výpočtu povrchových normál. Obyčejná datová struktura pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řešením tohoto problému bude předávání textur, které mohou mít v grafických kartách podobu polí.   
         
@@ -13,38 +14,38 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
         
         \begin{figure}\centering
             \includegraphics[width=\textwidth]{img/process}
-            \caption{Diagram procesů simulátoru a aplikace testovací scény.}
+            \caption{Diagram procesů simulátoru a aplikace testovací scény}
             \label{fig:process}
         \end{figure}
         
-    \section{Struktura simulátoru a aplikace testovací scény}
+    \subsection{Struktura simulátoru a aplikace testovací scény}
         
         Z diagramu procesů \ref{fig:process} je patrná i struktura programu. Simulátor vodního útvaru může být rozdělen na dílčí části. Aplikační část programu bude provádět jen finální vykreslení a zpracování vstupu od uživatele programu. Tyto procesy simulátoru a aplikace zachycují následující třídy znázorněné v UML diagramu tříd \ref{fig:class}.
         
         \begin{figure}\centering
             \includegraphics[width=\textwidth]{img/class}
-            \caption{Diagram tříd simulátoru a aplikace testovací scény.}
+            \caption{Diagram tříd simulátoru a aplikace testovací scény}
             \label{fig:class}
         \end{figure}
         
-        \subsection{Třída Application}
+        \subsubsection{Třída Application}
         
             Třída \verb|Application| po zavolání funkce \verb|Run| zahájí inicializaci ostatních tříd a začne provádět vykreslovací smyčku. Ve smyčce bude volat jednotlivé fáze simulace jako simulace vodního povrchu pomocí vlnové rovnice, která bude reprezentována třídou \verb|SimulationRenderer|, výpočet mapy kaustik reprezentována třídou \verb|CausticsRenderer| a vykreslení reflekcí, refrakcí nebo finální scény třídou \verb|SceneRenderer|. 
             
-        \subsection{Třída State}
+        \subsubsection{Třída State}
             
             Třída \verb|State| bude zprostředkovávat všechny informace mezi třídami provádějící simulaci a vykreslování  testovací scény \verb|CausticsRenderer|, \verb|SceneRenderer|, \verb|SimulationRenderer| a \verb|Application|. Mezivýsledky simulace, které budou ve formátu textur, se ve třídě \verb|State| budou ukládat a budou následně přístupné všem ostatním třídám k použití. 
             
-        \subsection{Třída SimulationRenderer}
+        \subsubsection{Třída SimulationRenderer}
             
             \verb|SimulationRenderer| bude provádět po zavolání funkce \verb|Render|  výpočet vlnové rovnice \cite{Mueller2008}. Následně bude  ukládat výšku a rychlost vlnění vodní hladiny do textury \verb|m_HeightField| ve třídě \verb|State|, aby ji v dalších fázích mohli přijmout jako vstupní parametr, např. třída \verb|CausticsRenderer| pro výpočet kaustik.
             
             
-        \subsection{Třída CausticsRenderer}
+        \subsubsection{Třída CausticsRenderer}
         
             Třída \verb|CausticsRenderer| pomocí výškové mapy \verb|m_HeightField| bude vykreslovat podpůrné textury podle Shahovy metody \cite{Shah2007}. Nejdříve vykreslí texturu pozic a normál vrcholů refraktujícího objektu, tj. vodní hladiny. Poté vykreslí pozice vrcholů objektů, na které se kaustiky mohou promítnou. S těmito podpůrnými daty bude následně možné vypočítat mapu kaustik. Pro další fázi simulace bude mapa kaustik uložena ve třídě \verb|State| jako \verb|m_CausticMap|.
             
-        \subsection{Třída SceneRenderer}
+        \subsubsection{Třída SceneRenderer}
         
             Konečná fáze simulace bude vykreslení finální scény. Reflekce a refrakce budou zde též implementované, neboť pro jejich vykreslení bude  třeba stejných algoritmů jako pro vykreslení finální scény. 
             
@@ -55,10 +56,10 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
             Nakonec lze vykreslit finální scénu. Všechny předešlé fáze a operace se následně budou neustále opakovat ve vykreslovací smyčce.
             
             
-\chapter{Implementace aplikace}
+\section{Implementace aplikace}
     Tato kapitola se zaobírá implementací simulátoru vodního útvaru. Protože aplikační část řídí jen nepodstatné části celého programu (zobrazení finální scény, zpracování vstupu nebo předávání instrukcí grafické kartě), bude hlavním obsahem implementace \emph{shader} programů, které v realitě provádí všechny podstatné operace algoritmů simulace.
     
-    \section{Simulace hladiny podle vlnové rovnice}
+    \subsection{Simulace hladiny podle vlnové rovnice}
         Simulace hladiny podle vlnové rovnice spočívá v transformaci výšek jednotlivých bodů roviny. Samozřejmě je možné simulátoru rovinu dodat jako model (ve formátu \verb|.obj|), lze ale také její geometrii procedulárně vygenerovat, což umožňuje větší kontrolu nad detailností vodní plochy zvyšováním rozlišení roviny (počtu vrcholů podél strany roviny). Třída \verb|PlaneGenerator| takovou rovinu generuje, geometrie roviny je generátorem normalizovaná, tj. souřadnice jeho vrcholů jsou škálovány do intervalu $[-1,1]$, dále vypočítá vrcholům jejich příslušnou texturovací souřadnici, které budou v simulaci důležitým vstupem. 
         
         \begin{minted}[frame=lines,
@@ -74,7 +75,7 @@ void PlaneGenerator::Generate(const int & res,
         
         \begin{figure}\centering
             \includegraphics[width=0.5\textwidth]{img/plane}
-            \caption{Geometrie vygenerované roviny. \cite{Heightfield2022}}
+            \caption{Geometrie vygenerované roviny \cite{Heightfield2022}}
             \label{fig:plane}
         \end{figure}
         
@@ -196,12 +197,12 @@ vec3 offset = vec3(0.0f, height, 0.0f);
 vec4 worldCoord = model * vec4(aPosition + offset, 1.0f).
         \end{minted}
 
-    \section{Simulace kaustik}
+    \subsection{Simulace kaustik}
         Shahova formace kaustik \cite{Shah2007} předpokládá na vstupu tři podpůrné textury. Jedna obsahuje souřadnice a druhá normály interpolovaných vrcholů vodního povrchu ve světovém souřadnicovém systému z pohledu světla, tzn. RGB barva objektu v textuře bude XYZ souřadnice pozice nebo normály. 
         
          \begin{figure}\centering
             \includegraphics[width=0.5\textwidth]{img/positions}
-            \caption{Textura souřadnic interpolovaných vrcholů modelů scény z pohledu kamery.}
+            \caption{Textura souřadnic interpolovaných vrcholů modelů scény z pohledu kamery}
             \label{fig:positionstex}
         \end{figure}
         
@@ -289,14 +290,14 @@ vec2 calculateCausticsTexCoord()
 
          \begin{figure}\centering
             \includegraphics[width=0.75\textwidth]{img/causticmap}
-            \caption{Nefiltrovaná mapa kaustik.}
+            \caption{Nefiltrovaná mapa kaustik}
         \end{figure}
         
          \begin{figure}\centering
             \includegraphics[width=0.75\textwidth]{img/causticmapfiltered}
-            \caption{Mapa kaustik filtrovaná Gaussovým rozmazáním.}
+            \caption{Mapa kaustik filtrovaná Gaussovým rozmazáním}
         \end{figure}
-    \section{Simulace reflekcí a refrakcí}
+    \subsection{Simulace reflekcí a refrakcí}
 
         Reflekce a refrakce jsou implementované obdobně jako formace kaustik. Po vyslání pohledové paprsku a jeho transformaci na lomený, resp. odražený, paprsek se spočítá jeho odhadovaný průsečík pomocí textury pozic interpolovaných vrcholů objektů, od kterých se může obraz refraktovat, resp. odrazit. Odhad je stejně implementován jako u kaustik s výjimkou délky prvního odhadu, který je škálován podle úhlu pohledu
         
@@ -365,11 +366,11 @@ float a = attenuation;
 float I = exp(-a * clamp(diff, 0, diff)).
     \end{minted}
 
-\chapter{Výsledky implementace}
+\section{Výsledky implementace}
     
     Následující kapitola je zaměřena na ukázku konečných vizuálních výsledků implementace. Mimo vykreslených scén jsou zde probrány nedostatky zvolených algoritmů.
    
-    Největších chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelné v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3}, \ref{fig:duckr}.
+    Nejvýraznějších vizuálních chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelné v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3}, \ref{fig:duckr}.
     
     V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože reálný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním. V \ref{fig:rrerr3} lze vidět chybu míchání barev odražené a refraktované scény podle Fresnelových ronvic způsobena nepřesností aproximací průsečíků. Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
     
@@ -380,48 +381,48 @@ float I = exp(-a * clamp(diff, 0, diff)).
     Kromě optických chyb jsem narazil i na podstatný nedostatek v integraci vlnové rovnice. Müllerova metoda předpokládá, že časový krok integrace $\Delta t$ je konstantní v průběhu celé simulace \cite{Mueller2008}. V případě že, rychlost výpočtu vlnové rovnice je nad $\mathtt{\sim}100$ FPS, simulace zůstává stabilní, ale při $\mathtt{\sim}40$ FPS může jakýkoliv výkyv rychlosti porušit stabilitu simulace a přivést chybu do výpočtu, která se může později projevit.  
     
     \begin{figure}\centering
-        \includegraphics[width=0.75\textwidth]{img/rrerr1}
-        \caption{Chyba refrakcí způsobena špatným odhadem průsečíku a restrikcí odhadu na prostor obrazu.}
+        \includegraphics[width=0.6\textwidth]{img/rrerr1}
+        \caption{Chyba refrakcí způsobena špatným odhadem průsečíku a restrikcí odhadu na prostor obrazu}
         \label{fig:rrerr1}
     \end{figure}
     
     \begin{figure}\centering
-        \includegraphics[width=0.75\textwidth]{img/rrerr2}
-        \caption{Chyba refrakcí způsobena schovaným průsečíkem za cizí geometrií.}
+        \includegraphics[width=0.6\textwidth]{img/rrerr2}
+        \caption{Chyba refrakcí způsobena schovaným průsečíkem za cizí geometrií}
         \label{fig:rrerr2}
     \end{figure}
     
     \begin{figure}\centering
-        \includegraphics[width=0.75\textwidth]{img/rrerr3}
-        \caption{Chyba refrakcí a reflekcí způsobena nepřesností odhadu průsečíku.}
+        \includegraphics[width=0.6\textwidth]{img/rrerr3}
+        \caption{Chyba refrakcí a reflekcí způsobena nepřesností odhadu průsečíku}
         \label{fig:rrerr3}
     \end{figure}
     
     
      \begin{figure}\centering
-        \includegraphics[width=0.75\textwidth]{img/duckreflection}
-        \caption{Odraz kachničky a chyba způsobena texturovací souřadnicí průsečíku ležící mimo obraz scény.}
+        \includegraphics[width=0.6\textwidth]{img/duckreflection}
+        \caption{Odraz kachničky a chyba způsobena texturovací souřadnicí průsečíku ležící mimo obraz scény}
      \label{fig:duckr}
     \end{figure}
     
     \begin{figure}\centering
-            \includegraphics[width=0.75\textwidth]{img/heightfield}
-            \caption{Testovací scéna se simulátorem vodního útvaru.}
+            \includegraphics[width=0.6\textwidth]{img/heightfield}
+            \caption{Testovací scéna se simulátorem vodního útvaru}
     \end{figure}
     
     \begin{figure}\centering
-            \includegraphics[width=0.75\textwidth]{img/normal}
-            \caption{Testovací scéna s viditelnými kaustikami.}
+            \includegraphics[width=0.6\textwidth]{img/normal}
+            \caption{Testovací scéna s viditelnými kaustikami}
     \end{figure}
         
     \begin{figure}\centering
-        \includegraphics[width=0.75\textwidth]{img/caustics}
-        \caption{Formace kaustik na podvodních objektech.}
+        \includegraphics[width=0.6\textwidth]{img/caustics}
+        \caption{Formace kaustik na podvodních objektech}
     \end{figure}
     
      \begin{figure}\centering
-        \includegraphics[width=0.75\textwidth]{img/causticserror}
-        \caption{Artefakty mapy kaustik způsobené promítáním konečného počtu vrcholů (paprsků).}
+        \includegraphics[width=0.6\textwidth]{img/causticserror}
+        \caption{Artefakty mapy kaustik způsobené promítáním konečného počtu vrcholů (paprsků)}
         \label{fig:causticerr}
     \end{figure}
     

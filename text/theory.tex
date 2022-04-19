@@ -15,7 +15,7 @@
     
         \noindent kde vektor $ \mathbf{v} = (u, v, w) $ označuje rychlost tekutiny, $ \rho $ označuje hustotu tekutiny, $ p $ tlak, kterým působí tekutina na své okolí, $ \mathbf{g} = (x, y, z) $ je gravitační zrychlení, $ \nu $ je značení kinematické viskozity tekutiny. Symboly $ \nabla$, $ \nabla \cdot $, $ \nabla^2 $ označují diferenciální operátory nabla, divergence a Laplacův operátor. \cite{Bridson2007}  
     
-            \subsection{Vysvětlení}
+            \subsection{Vysvětlení Navierových--Stokesových rovnic}
                 Před vysvětlením jednotlivých rovnic je dobré zmínit, že většina teorie mechaniky tekutin je založena na odvětví matematiky vektorové analýzy a pracují s\,vektorovými poli, resp. skalárními poli. NSE např. pracují s vektorovými poli, resp. se skalárními poli, které jednotlivým bodům prostoru přiřazují vektor určující rychlost proudu tekutiny, resp. hodnotu tlaku.
     
                 Na první pohled vypadají rovnice těžce pochopitelné, ale myšlenka za nimi je velmi jednoduchá. První rovnice \ref{eq:mass_conservation} popisuje zákon o zachování hmotnosti, tím je myšleno, že není možné, aby hmota tekutiny na některém místě z ničeho vznikla nebo zanikla. \cite{Bridson2007}
@@ -57,7 +57,7 @@
                 
             \newpage
                 
-            \subsection{Využití}
+            \subsection{Využití Navierových--Stokesových rovnic}
                 Výhodou NSE je, že je lze aplikovat na téměř jakékoliv tekutiny. V praxi se využívají pro předpověď počasí, modelování podnebí, proudění v\;oceánech, výpočtu aerodynamických vlastností vozidel. Přestože využití rovnic je nespočetné, mají zásadní problém, neboť do dnes nevíme, zdali mají pro náhodný vstup nějaké řešení. Pro zjednodušení výpočtu existují několik aproximací, které je umožňují aplikovat se zanedbatelnými chybami v modelovacích systémech. \cite{Nse2008}
             
         \section{Popisy tekutin}
@@ -82,12 +82,7 @@
 
 \chapter{Vlastnosti vodního povrchu a algoritmy, které je simulují}
 
-    Tato kapitola obsahuje popis vizuálních vlastností vodní hladiny, které v reálném světě lze zpozorovat, a k jejím hlavním rysům jsou vypsané algoritmy, které je simulují. Z\,pohledu počítačové grafiky lze vlastnosti vody rozdělit do dvou kategorií:
-
-    \begin{description}
-        \item[dynamické vlastnosti] popisující pohyb vodní hladiny,
-        \item[optické vlastnosti] popisující interakce povrchu vody s paprsky světla.
-    \end{description}
+    Tato kapitola obsahuje popis vizuálních vlastností vodní hladiny, které v reálném světě lze zpozorovat, a k jejím hlavním rysům jsou vypsané algoritmy, které je simulují. Z\,pohledu počítačové grafiky lze vlastnosti vody rozdělit do dvou kategorií: dynamické vlastnosti, které popisují pohyb vodní hladiny, nebo optické vlastnosti, které popisují interakce světelných paprsků s povrchem vody.
 
     \section{Dynamické vlastnosti}
 
@@ -96,7 +91,7 @@
 
         \begin{figure}\centering
             \includegraphics[width=0.5\textwidth]{img/Guendelman2005}
-            \caption{Ukázka Guendelmanovy \emph{off-line} simulace Eulerovy tekutiny. \cite{Guendelman2005}}\label{fig:guendelman-offline}
+            \caption{Ukázka Guendelmanovy \emph{off-line} simulace Eulerovy tekutiny \cite{Guendelman2005}}\label{fig:guendelman-offline}
         \end{figure}
 
         Proto \emph{real-time} simulace vody vhodné pro aplikace jako hry musí nutně splňovat tyto podmínky:
@@ -138,7 +133,7 @@
 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sin_wave}
-                        \caption{Simulace vlnění pomocí jedné sinusoidy.}\label{fig:3d_sin_wave}
+                        \caption{Simulace vlnění pomocí jedné sinusoidy}\label{fig:3d_sin_wave}
                     \end{figure}
                     
                     Tento model se ale vlní jen v jednom směru a výsledné vlny vypadají nerealisticky hladce. K dosažení větších detailů lze k funkci přičíst další sinusoidy s odlišnými parametry amplitudy, vlnového vektoru nebo úhlové frekvence:  
@@ -151,7 +146,7 @@
 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sin_wave_sum}
-                        \caption{Simulace vlnění pomocí sčítání sinusoid.}\label{fig:3d_sin_wave_sum}
+                        \caption{Simulace vlnění pomocí sčítání sinusoid}\label{fig:3d_sin_wave_sum}
                     \end{figure}
                     
                     \newpage 
@@ -166,15 +161,15 @@
                     
                     \begin{figure}\centering
                         \includegraphics[width=\textwidth]{img/sin_better}
-                        \caption{Porovnání mezi vlnami funkcí \ref{eq:sin_wave} a \ref{eq:sin_better}.}\label{fig:sin_better}
+                        \caption{Porovnání mezi vlnami funkcí \ref{eq:sin_wave} a \ref{eq:sin_better}}\label{fig:sin_better}
                     \end{figure}
                 
                 \subsubsection{Simulace podle Gerstnerovy vlny}
-                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky by bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy \footnote{Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kutálející se} kružnicí po nehybné přímce \cite{Cycle2022}.}, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách \cite{Gerstner1804}. 
+                    Limitující faktor metody založené na transformaci vrcholů pomocí sinusoid je, že manipuluje s jediným parametrem vrcholu, tj. výškou, a pro realističtější výsledky by bylo třeba manipulovat vrcholy i v horizontální rovině. Tento problém řeší cyklické křivky, tzv. trochoidy, podle kterých Franz Josef Gerstner, německý fyzik, modeloval vlnění hladiny v hlubokých vodách \cite{Gerstner1804}. Trochoidou nazýváme trajektorii bodu pevně spojeného s \uv{kutálející se} kružnicí po nehybné přímce \cite{Cycle2022}. 
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/trochoidal_wave}
-                        \caption{Gerstnerova vlna s fázovou rychlostí $ c $, vlnovou délkou $ \lambda $ a rozdílem hřebenu a údolí $ H $. (CC BY-SA 4.0) \cite{Kraaiennest2015}}
+                        \caption{Gerstnerova vlna s fázovou rychlostí $ c $, vlnovou délkou $ \lambda $ a rozdílem hřebenu a údolí $ H $ (CC BY-SA 4.0) \cite{Kraaiennest2015}}
                         \label{fig:trochoidal_wave}
                     \end{figure}
                     
@@ -194,7 +189,7 @@
 
                     \begin{figure}\centering
                         \includegraphics[width=0.75\textwidth]{img/s_comparison}
-                        \caption{Porovnání hodnot $ s $ ve dvourozměrném prostoru.} \label{fig:s_comparison}
+                        \caption{Porovnání hodnot $ s $ ve dvourozměrném prostoru} \label{fig:s_comparison}
                     \end{figure}
                     
                     Detailnějších výsledků lze získat podobně jako u sinusoid pomocí skládání Gerstnerových vln \cite{Fernando2004}:
@@ -209,7 +204,7 @@
 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/gerstner_wave}
-                        \caption{Gerstnerovy vlny v simulaci vodního povrchu podle tutoriálu od Jaspera Flicka. \cite{Gerstner2022}}\label{fig:gerstner_wave}
+                        \caption{Gerstnerovy vlny v simulaci vodního povrchu podle tutoriálu od Jaspera Flicka \cite{Gerstner2022}}\label{fig:gerstner_wave}
                     \end{figure}
                 \subsubsection{Simulace podle Fourierovy transformace}
                     Předešlé dvě metody jsou kvalitními nástroji pro simulaci vodního povrchu a za jejich pomoci lze i s vysokým počtem vln $N_w$, který se pohybuje v řádech tisíců nebo více, získat fotorealistických výsledků. Vysoký počet $N_w$ představuje však výpočetní překážku. Obvykle by výpočet posunutí podle rovnic \ref{eq:sin_wave_sum} nebo \ref{eq:gerstner} herní \emph{enginy} provedly ve \emph{vertex shaderech}, pro které je však výpočet funkcí sinus a cosinus náročné \cite{SinShader2022}.
@@ -228,7 +223,7 @@
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/fft_ocean}
-                        \caption{Ukázka simulace podle FFT od Asylum Darth.  \cite{FFTPicture2022}}
+                        \caption{Ukázka simulace podle FFT od Asylum Darth  \cite{FFTPicture2022}}
                     \end{figure}
 
             \subsection{Částicové metody}  
@@ -293,7 +288,7 @@ Během celé doby simulace opakuj:
                 
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sph}
-                        \caption{Ilustrace vážení \emph{smoothing kernelem}. (CC BY-SA 4.0) \cite{Jlcercos2018}}\label{fig:sph}
+                        \caption{Ilustrace vážení \emph{smoothing kernelem} (CC BY-SA 4.0) \cite{Jlcercos2018}}\label{fig:sph}
                     \end{figure}
                     
                     NSE mimo samotných hodnot veličin dále pracuje s gradientem (operace\;$\nabla$), jehož aplikace na rovnici \ref{eq:sph} ovlivní jen \emph{smoothing kernel} 
@@ -353,7 +348,7 @@ Během celé doby simulace opakuj:
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sph_density}
-                        \caption{Demonstrace rozdílů v hustotě tekutiny.  \cite{SPHNvidia2011}}\label{fig:sph_density}
+                        \caption{Demonstrace rozdílů v hustotě tekutiny  \cite{SPHNvidia2011}}\label{fig:sph_density}
                     \end{figure}
                     
                     \begin{equation}
@@ -411,12 +406,12 @@ Během celé doby simulace opakuj:
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sph_density_curve}
-                        \caption{Interpolace pole hustoty podle SPH. \cite{SPHNvidia2011}}
+                        \caption{Interpolace pole hustoty podle SPH \cite{SPHNvidia2011}}
                     \end{figure}
                     
                     \begin{figure}\centering
                         \includegraphics[width=0.5\textwidth]{img/sph_vis}
-                        \caption{Müllerova simulace vody založená na SPH.  \cite{Mueller2003}}
+                        \caption{Müllerova simulace vody založená na SPH  \cite{Mueller2003}}
                     \end{figure}
                     
                
@@ -453,7 +448,7 @@ Během celé simulace opakuj
                         
                         \noindent Pole \verb|u0| inicializuje výšku jednotlivých bodů roviny, \verb|dt| značí časový rozdíl mezi vykreslovacími smyčkami.
                         
-                        
+                        \newpage
                         
                         Vlnová rovnice a síla, která vyvolává pohyb, jsou v následující části vyvozené. Pro jednoduchost je problém redukován na 1D, kde vypadá vlna jako napnutá vibrující struna (viz. obrázek \ref{fig:wave_eq}), postup lze analogicky převést do 2D. Jednodimenzionální vlnová rovnice předpokládá, že jsou splněny tyto podmínky:
                         \begin{enumerate} \label{en:wave_as}
@@ -466,7 +461,7 @@ Během celé simulace opakuj
                         
                         \begin{figure}\centering
                             \includegraphics[width=0.6\textwidth]{img/waveeq}
-                            \caption{Vlna v 1D: (a) vibrující struna, (b) zvětšení segmentu $AB$.  \cite{WaveEq2022}} \label{fig:wave_eq}
+                            \caption{Vlna v 1D: (a) vibrující struna, (b) zvětšení segmentu $AB$  \cite{WaveEq2022}} \label{fig:wave_eq}
                         \end{figure}
                         
                         Nechť funkce $u(x,t)$ udává, jak je struna na pozici $x$ v čase $t$ vychýlena od osy x. V případě, že je struna v klidovém stavu, struna splývá s osou x. Dále nechť na segment struny $AB$, část struny od $x$ do $x + \Delta x$, kde $\Delta x \xrightarrow{} 0 $, působí napínací síly $F_{T_1}$ a $F_{T_2}$. Za předpokladu, že se segment $AB$ málo vychyluje od osy x, lze jejich velikosti sil považovat za identické, 
@@ -506,14 +501,11 @@ Během celé simulace opakuj
                         \noindent Pro aproximaci hodnoty $\cos^2(\theta)$ se opět užije pátého předpokladu, že sklony $\theta$ a $\theta + \Delta \theta$ jsou velmi malé, podle kterého platí, že $\cos(\theta) \approx \cos(\theta + \Delta \theta) \approx 1$. Následně protože $\Delta x \xrightarrow{} 0$, lze přepsat rovnici \ref{eq:tg_dx} jako 
                         
                         \begin{equation}
-                            \frac{\Delta \theta}{\Delta x} = \frac{\partial^2 u}{\partial x^2},
+                            \frac{\Delta \theta}{\Delta x} = \frac{\partial^2 u}{\partial x^2}.
+                            \label{eq:tg_dx_final}
                         \end{equation}
                         
-                        \begin{equation} \label{eq:tg_dx_final}
-                            \Delta \theta = \Delta x \frac{\partial^2 u}{\partial x^2}.
-                        \end{equation}
-                        
-                        \noindent Po dosazení hodnoty $\theta$ z rovnice  \ref{eq:tg_dx_final} do rovnice \ref{eq:wave_newton}, vydělení hodnotou $\Delta x$ a prohození členů získáme 1D vlnovou rovnici \cite{Lewin2008}
+                        \noindent Po dosazení hodnoty $\Delta \theta$ z rovnice  \ref{eq:tg_dx_final} do rovnice \ref{eq:wave_newton}, vydělení hodnotou $\Delta x$ a prohození členů získáme 1D vlnovou rovnici \cite{Lewin2008}
                         
                         \begin{equation} 
                              \frac{\partial^2 u}{\partial t^2} = \frac{F_T}{\mu} \frac{\partial^2 u}{\partial x^2}.
@@ -615,7 +607,7 @@ Během celé simulace opakuj
             
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/cubemap}
-                \caption{Vzorkování odrazů scény, kde odražený pohledový parsek směřuje na horní stranu \emph{cubemapy}. (CC BY 4.0)  \cite{ReflectCubemap2022}}
+                \caption{Vzorkování odrazů scény, kde odražený pohledový parsek směřuje na horní stranu \emph{cubemapy} (CC BY 4.0)  \cite{ReflectCubemap2022}}
                 \label{fig:reflect_cube}
             \end{figure}
             
@@ -633,7 +625,7 @@ Během celé simulace opakuj
             
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/reflection_and_refraction}
-                \caption{Odraz a refrakce paprsku. (CC BY-SA 3.0) \cite{ReRe2009}}
+                \caption{Odraz a refrakce paprsku (CC BY-SA 3.0) \cite{ReRe2009}}
                 \label{fig:reflect}
             \end{figure}
     
@@ -643,7 +635,7 @@ Během celé simulace opakuj
                 
             \begin{figure}\centering 
                 \includegraphics[width=0.75\textwidth]{img/fresnel} 
-                \caption{Optický efekt popsaný Fresnelovými rovnicemi.  \cite{Fresnel2018}}
+                \caption{Optický efekt popsaný Fresnelovými rovnicemi  \cite{Fresnel2018}}
                 \label{fig:fresnel}
             \end{figure}
             
@@ -686,16 +678,15 @@ Během celé simulace opakuj
              L_{RGB}(p_s, \omega) = (L_{R}(p_w, \omega), L_{G}(p_w, \omega), L_{B}(p_w, \omega)).
             \end{equation}
 
-        \subsection{Kaustiky}
-        
-            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Vytvářejí komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}. Běžně je lze vidět např. při osvětlení sklenice nebo hladiny moře (viz obrázek \ref{fig:caustics}).
-        
             \begin{figure}\centering
                 \includegraphics[width=0.5\textwidth]{img/caustics.jpg}
-                \caption{Kaustika pod hladinou vody. (CC BY-SA 3.0) \cite{Caustics2009}}
+                \caption{Kaustika pod hladinou vody (CC BY-SA 3.0) \cite{Caustics2009}}
                 \label{fig:caustics}
             \end{figure}
             
+        \subsection{Kaustiky}
+        
+            Kaustika je optický jev, který vzniká díky reflektivním a refraktivním vlastnostem vody. Vytvářejí komplexní vzory světla způsobené konvergencí odražených nebo zlomených paprsků světla do jednoho bodu \cite{Shah2007}. Běžně je lze vidět např. při osvětlení sklenice nebo hladiny moře (viz obrázek \ref{fig:caustics}).
             
             Zobrazování kaustik je bohužel náročná operace, neboť pro její simulaci je třeba vypočítat průsečíky paprsků s objekty ve scénách. V případě, že objekty scény jsou jednoduché útvary jako kvádr nebo koule, lze takové průsečíky jednoduše analyticky vypočítat \cite{Wallace2022}, ale tyto tvary se jen ojediněle vyskytují v hrách. Shah proto simuluje kaustiky skrz pomocnou mapu kaustik \cite{Shah2007}. Všechny výpočty pro aproximaci průsečíku počítá v prostoru obrazu. Výhodou této metody je, že dokáže reagovat na různě složité objekty a také na dynamické prostředí. Shahův algoritmus lze rozdělit na tyto části:
             
@@ -777,7 +768,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             Proces renderování skrz OpenGL lze rozdělit do dvou hlavních fází: transformace 3D geometrie do 2D prostoru obrazu a vybarvení jednotlivých pixelů obrazu \cite{Vries2022}. Zjednodušený průběh je znázorněn v diagramu \ref{fig:opengl_pipeline}.  
             \begin{figure}\centering
                 \includegraphics[width=0.75\textwidth]{img/openglpipe}
-                \caption{Diagram zjednodušeného průběhu renderovací \emph{pipeliny} OpenGL.  \cite{Kwolek2020}}
+                \caption{Diagram zjednodušeného průběhu renderovací \emph{pipeliny} OpenGL  \cite{Kwolek2020}}
                 \label{fig:opengl_pipeline}
             \end{figure}
             
@@ -833,7 +824,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         
             Grafické API nabízí rozhraní pro práci s obrazem skrz grafické karty. Poskytují \emph{shader} programy, které dovolují svým uživatelům manipulovat nejenom barvami objektů, ale také i jeho geometrií. Zatímco herní jádra budují nad grafickými API další podpůrné nástroje vhodné pro vývoj her jako AI nebo fyzikální \emph{enginy}.
             
-            Pro implementaci prototypu simulátoru a aplikace testovací scény jsem se rozhodl vybrat grafického API OpenGL a to z následujících důvodů. Prvním důvodem je, že velká většina algoritmů (procedulární, hybridní metody) je založena na transformaci geometrie a jeho následné optické vlastnosti spočívají ve výpočtu barvy povrchu vody podle pozic kamery (oka) a pozorovaného bodu hladiny. Tyto operace jsou stěžejními částmi v simulaci, které lze jednoduše paralelizovat pomocí nabízených nástrojů API \emph{shader} programů. Dalším důvodem, proč jsem nezvolil herní \emph{engine} pro svůj vývoj prototypu, je, že výše zmíněné algoritmy potřebují ke svému fungování jen renderovací \emph{pipelinu} grafických API a dalších volitelných nástrojů herního jádra by se v prototypu téměř vůbec nevyužilo. Posledním důvodem je, že i při volbě herního \emph{enginu} by stejně výsledná implementace byla přeložena do grafického API. S použitím samostatného OpenGL bych měl kontrolu nad vykreslování a to bez žádného prostředníka. 
+            Pro implementaci prototypu simulátoru a aplikace testovací scény jsem se rozhodl vybrat grafického API OpenGL a to z následujících důvodů. Prvním důvodem je, že velká většina algoritmů (procedulární, hybridní metody) je založena na transformaci geometrie a jeho následné optické vlastnosti spočívají ve výpočtu barvy povrchu vody podle pozic kamery (oka) a pozorovaného bodu hladiny. Tyto operace jsou stěžejními částmi v simulaci, které lze jednoduše paralelizovat pomocí nabízených nástrojů API \emph{shader} programů. Dalším důvodem pro volbu grafického API oproti hernímu \emph{enginu} je, že výše zmíněné algoritmy potřebují ke svému fungování jen renderovací \emph{pipelinu} grafických API a dalších volitelných nástrojů herního jádra by se v prototypu téměř vůbec nevyužilo. Posledním důvodem je, že i při volbě herního \emph{enginu} by stejně výsledná implementace byla přeložena do grafického API. S použitím samostatného OpenGL bych měl kontrolu nad vykreslování a to bez žádného prostředníka. 
             
             Volba mezi grafickými API jako DirectX nebo Vulkan oproti OpenGL je poté jenom z mé preference. OpenGL a DirectX jsou téměř svými ekvivalenty. U grafického API Vulkan je oproti ostatním na druhou stranu příliš nízkoúrovňovým rozhraním a následná implementace v něm by byla příliš náročná a zbytečně zdlouhavá.
             
@@ -845,7 +836,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             \begin{table}
                     \centering
-                    \caption{Funkční požadavky simulátoru a aplikace testovací scény.}
+                    \caption{Funkční požadavky simulátoru a aplikace testovací scény}
                     \begin{tabular}[t]{ | p{6em} | p{8cm} | } 
                         \hline
                         Požadavek & Pohyb vodní hladiny\\ 
@@ -891,7 +882,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             \begin{table}
                     \centering
-                    \caption{Nefunkční požadavky simulátoru a aplikace testovací scény.}
+                    \caption{Nefunkční požadavky simulátoru a aplikace testovací scény}
                     \begin{tabular}[t]{ | p{6em} | p{8cm} | } 
                         \hline
                         Požadavek & Použití grafického API OpenGL \\ 
