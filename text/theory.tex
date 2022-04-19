@@ -818,7 +818,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             Hybridní metody jsou kompromisem mezi částicovými systémy a procedulárními metodami. Problematiku redukují do 2D prostoru jako procedulární, ale zachovávají jistou míru interakce s dynamickým světem. Simulace pomocí vlnové rovnice se navíc řídí i fyzikálními zákony, i když bere v potaz jen hladinu vody, výsledné vizuální provedení je dobrou aproximací vodní plochy. Oproti částicovým systémům se její výpočet tolik neškáluje s větší rozlohou vodního povrchu, a proto je lze využít pro simulaci jak menší, tak i větších vodních útvarů. Tyto důvody mne přesvědčily pro volbu hybridní metody založené na výpočtu vlnové rovnice pro implementaci do mého prototypu.
             
-            Většina fyzikálně korektních algoritmů pro simulaci optických vlastností je založena na metodě vrhání paprsků, které bohužel většina současného hardwaru nepodporuje. Proto jsem zvolil pro simulaci optických vlastností metody aproximující \emph{ray-tracing} pomocí výpočtu průsečíků v prostoru obrazu jako Shahovo mapování kaustik. Tyto metody využívají pro simulaci pomocné textury, v kterých jsou uložené podpůrné data pro výpočet průsečíků.
+            Většina fyzikálně korektních algoritmů pro simulaci optických vlastností je založena na metodě vrhání paprsků, které bohužel většina současného hardwaru nepodporuje. Proto bylo zvoleno pro simulaci optických vlastností metody aproximující \emph{ray-tracing} pomocí výpočtu průsečíků v prostoru obrazu jako Shahovo mapování kaustik. Tyto metody využívají pro simulaci pomocné textury, v kterých jsou uložené podpůrné data pro výpočet průsečíků.
             
         \section{Volba technologií}
         
