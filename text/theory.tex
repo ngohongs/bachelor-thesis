@@ -785,7 +785,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
             
             
         \subsection{Vulkan}            
-            Vulkan je nízkoúrovňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává ještě větší kontrolu nad procesy při vykreslování obrazu za účelem optimalizace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
+            Vulkan je nízkoúrovňové víceplatformové grafické API od vývojářů OpenGL. Vulkan oproti OpenGL dává ještě větší kontrolu nad procesy při vykreslování obrazu za účelem optimalizace běhu programu. Procesy jako řízení vláken a paměti, které by pro OpenGL prováděly \emph{drivery} grafických karet, má u\;Vulkanu zodpovědnost aplikační část programu. \cite{Vulkan2022} 
         
         \subsection{DirectX}
             DirectX je alternativa OpenGL od společnosti Microsoft. Oproti OpenGL je DirectX uzavřený na platformy s operačními systémy od společnosti Microsoft, dále kromě vykreslovacích funkcionalit obsahuje i rozhraní pro práci se zvukem, sítí a vstupními daty od uživatele. Princip vykreslování je stejně jako u OpenGL založený na grafické \emph{pipelině} \cite{Allain1996}. Do verze DirectX 11 se principově podobal OpenGL, ale od verze DirectX 12 změnil svoji filozofii podobně jako Vulkan, který dává uživateli větší kontrolu nad hardwarem \cite{Vulkan2022}.
@@ -799,7 +799,7 @@ OdhadPrůsečíku(float3 V, float3 r, texture2D receivers)
         
             Unity je víceplatformový herní \emph{engine} s hlavním skriptovacím jazykem C\#. Největší výhodou Unity je počet platforem, pro které lze vyvíjet. Lze jej využít jak ve webových, tak i v mobilních aplikací nebo pro vývoj konzolových her a dalších. V současnosti je populárním nástrojem pro mobilní platformy nebo pro VR/AR aplikace \cite{UnityUnreal2022}. 
             
-            Protože Unity podporuje různou škálu platforem, obsahuje abstraktní vrstvu nad grafickými API, která obsahuje OpenGL, DirectX nebo další jako Metal. Unity pro programování svých \emph{shader} programů používá zejména jazyk HLSL, proprietární jazyk DirectX, ale lze využít i jazyka určeného pro OpenGL a Vulkan GLSL. Výhodou HLSL je jeho univerzálnost, protože Unity nabízí jeho překlad skrz svůj kompilátor do ostatních jazyků. \cite{GLSLUnity2022}
+            Protože herní \emph{engine} Unity podporuje různou škálu platforem, obsahuje abstraktní vrstvu nad grafickými API, která obsahuje OpenGL, DirectX nebo další jako Metal. Unity pro programování svých \emph{shader} programů používá zejména jazyk HLSL, proprietární jazyk DirectX, ale lze využít i jazyka určeného pro OpenGL a Vulkan GLSL. Výhodou HLSL je jeho univerzálnost, protože Unity nabízí jeho překlad skrz svůj kompilátor do ostatních jazyků. \cite{GLSLUnity2022}
             
         \subsection{Unreal Engine}
         
