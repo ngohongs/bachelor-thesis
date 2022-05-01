@@ -6,11 +6,11 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
         
         Hlavním algoritmem simulace bude Müllerova metoda \cite{Mueller2008} simulace vodního povrchu podle vlnové rovnice. Metoda je založena na redukci 3D prostoru vody na 2D prostor. K její implementaci bude třeba předávat dvě 2D pole, které drží informace o výšce hladiny a rychlosti vlnění, mezi pamětí aplikační částí a pamětí grafické karty. Pole s výškami hladiny v jednotlivých bodech vodní roviny bude dále nutným vstupem pro aplikaci optických vlastností vody, konkrétněji k výpočtu povrchových normál. Obyčejná datová struktura pole ale nelze mezi pamětí aplikace a pamětí grafiky jednoduše předávat, řešením tohoto problému bude předávání textur, které mohou mít v grafických kartách podobu polí.   
         
-        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslením refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahovo metoda formace kaustik \cite{Shah2007} vypočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnou. Mapa bude obdobně ve formátu textury.
+        Po provedeném výpočtu výšek hladiny z vlnové rovnice lze dále provést simulaci optických vlastností. Před vykreslením refrakcí bude třeba promítnout kaustiky na přijímací objekty, tj. objekty pod hladinou vody, neboť refrakce zkreslují obraz pod vodou a to včetně kaustik. Shahova metoda formace kaustik \cite{Shah2007} vypočítává mapu kaustik pomocí textury pozic a normál jednotlivých vrcholů vodního povrchu a textury pozic vrcholů objektů, na které se kaustiky mohou promítnout. Mapa bude obdobně ve formátu textury.
         
         Reflekce a refrakce lze vykreslit stejným algoritmem, neboť principiálně fungují podobně. Jedna varianta využívá pro vzorkování barvy a světla odražený paprsek od povrchu vody, zatímco druhá varianta počítá s lomeným paprskem. Odhad průsečíků pohledových paprsků se scénou  bude implementován stejně jako u Shahovy metody mapování kaustik \cite{Shah2007}, která přijímá na vstupu texturu s pozicemi vrcholů objektů, vůči kterým se mají průsečíky počítat. 
         
-        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, které data zpracuje pro vykreslení finální podoby scény. Celá vykreslovací smyčka je znázorněna v diagramu \ref{fig:process}.
+        Všechny informace v jednotlivých fázích simulace vodního povrchu se následně předají konečnému programu, který data zpracuje pro vykreslení finální podoby scény. Celá vykreslovací smyčka je znázorněna v diagramu \ref{fig:process}.
         
         \begin{figure}\centering
             \includegraphics[width=\textwidth]{img/process}
@@ -38,12 +38,12 @@ Tato kapitola se věnuje kromě návrhu simulátoru vodního povrchu a jeho dal�
             
         \subsubsection{Třída SimulationRenderer}
             
-            \verb|SimulationRenderer| bude provádět po zavolání funkce \verb|Render|  výpočet vlnové rovnice \cite{Mueller2008}. Následně bude  ukládat výšku a rychlost vlnění vodní hladiny do textury \verb|m_HeightField| ve třídě \verb|State|, aby ji v dalších fázích mohli přijmout jako vstupní parametr, např. třída \verb|CausticsRenderer| pro výpočet kaustik.
+            \verb|SimulationRenderer| bude provádět po zavolání funkce \verb|Render|  výpočet vlnové rovnice \cite{Mueller2008}. Následně bude  ukládat výšku a rychlost vlnění vodní hladiny do textury \verb|m_HeightField| ve třídě \verb|State|, aby ji v dalších fázích mohly přijmout jako vstupní parametr, např. třída \verb|CausticsRenderer| pro výpočet kaustik.
             
             
         \subsubsection{Třída CausticsRenderer}
         
-            Třída \verb|CausticsRenderer| pomocí výškové mapy \verb|m_HeightField| bude vykreslovat podpůrné textury podle Shahovy metody \cite{Shah2007}. Nejdříve vykreslí texturu pozic a normál vrcholů refraktujícího objektu, tj. vodní hladiny. Poté vykreslí pozice vrcholů objektů, na které se kaustiky mohou promítnou. S těmito podpůrnými daty bude následně možné vypočítat mapu kaustik. Pro další fázi simulace bude mapa kaustik uložena ve třídě \verb|State| jako \verb|m_CausticMap|.
+            Třída \verb|CausticsRenderer| pomocí výškové mapy \verb|m_HeightField| bude vykreslovat podpůrné textury podle Shahovy metody \cite{Shah2007}. Nejdříve vykreslí texturu pozic a normál vrcholů refraktujícího objektu, tj. vodní hladiny. Poté vykreslí pozice vrcholů objektů, na které se kaustiky mohou promítnout. S těmito podpůrnými daty bude následně možné vypočítat mapu kaustik. Pro další fázi simulace bude mapa kaustik uložena ve třídě \verb|State| jako \verb|m_CausticMap|.
             
         \subsubsection{Třída SceneRenderer}
         
@@ -79,7 +79,7 @@ void PlaneGenerator::Generate(const int & res,
             \label{fig:plane}
         \end{figure}
         
-        Jak bylo v předešlých kapitolách zmíněno pro implementaci výpočtu simulace hladiny podle vlnové rovnice je třeba v polích \verb|u[i,j]| a \verb|v[i,j]| průběžně ukládat výšky roviny a rychlosti změn výšek v daných bodech roviny. Bohužel pole nelze jednoduše předávat mezi pamětí aplikace a pamětí grafické karty. Řešením je použití textur. Jednotlivé pixely textury následně reprezentují jednu buňku pole. Protože textury pracují v kanálech RGB, lze zakomponovat pole \verb|u[i,j]| a \verb|v[i,j]| do jedné textury. Výšky budou uloženy v\;kanálu červené barvy, zatímco rychlost bude uložena v\;kanálu zelené barvy. Dále je dobré zmínit, že textury obvykle pracují s nezápornými desetinnými hodnotami. Výpočty vlnové rovnice se ale mohou pohybovat v záporných hodnotách. Pro nastavení použití i těchto hodnot je třeba vygenerovat texturu s\;parametrem \verb|RGBA32F| místo \verb|RGBA|,
+        Jak bylo v předešlých kapitolách zmíněno, pro implementaci výpočtu simulace hladiny podle vlnové rovnice je třeba v polích \verb|u[i,j]| a \verb|v[i,j]| průběžně ukládat výšky roviny a rychlosti změn výšek v daných bodech roviny. Bohužel pole nelze jednoduše předávat mezi pamětí aplikace a pamětí grafické karty. Řešením je použití textur. Jednotlivé pixely textury následně reprezentují jednu buňku pole. Protože textury pracují v kanálech RGB, lze zakomponovat pole \verb|u[i,j]| a \verb|v[i,j]| do jedné textury. Výšky budou uloženy v\;kanálu červené barvy, zatímco rychlost bude uložena v\;kanálu zelené barvy. Dále je dobré zmínit, že textury obvykle pracují s nezápornými desetinnými hodnotami. Výpočty vlnové rovnice se ale mohou pohybovat v záporných hodnotách. Pro nastavení použití i těchto hodnot je třeba vygenerovat texturu s\;parametrem \verb|RGBA32F| místo \verb|RGBA|,
         
         \begin{minted}[frame=lines,
 framesep=2mm,
@@ -299,7 +299,7 @@ vec2 calculateCausticsTexCoord()
         \end{figure}
     \subsection{Simulace reflekcí a refrakcí}
 
-        Reflekce a refrakce jsou implementované obdobně jako formace kaustik. Po vyslání pohledové paprsku a jeho transformaci na lomený, resp. odražený, paprsek se spočítá jeho odhadovaný průsečík pomocí textury pozic interpolovaných vrcholů objektů, od kterých se může obraz refraktovat, resp. odrazit. Odhad je stejně implementován jako u kaustik s výjimkou délky prvního odhadu, který je škálován podle úhlu pohledu
+        Reflekce a refrakce jsou implementované obdobně jako formace kaustik. Po vyslání pohledového paprsku a jeho transformaci na lomený, resp. odražený, paprsek se spočítá jeho odhadovaný průsečík pomocí textury pozic interpolovaných vrcholů objektů, od kterých se může obraz refraktovat, resp. odrazit. Odhad je stejně implementován jako u kaustik s výjimkou délky prvního odhadu, který je škálován podle úhlu pohledu
         
         \begin{minted}[frame=lines,
 framesep=2mm,
@@ -372,7 +372,7 @@ float I = exp(-a * clamp(diff, 0, diff)).
    
     Nejvýraznějších vizuálních chyb vzniká při aproximací velmi citlivých výpočtů jako refrakce a reflekce viditelné v obrázcích \ref{fig:rrerr1}, \ref{fig:rrerr2}, \ref{fig:rrerr3}, \ref{fig:duckr}.
     
-    V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože reálný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním. V \ref{fig:rrerr3} lze vidět chybu míchání barev odražené a refraktované scény podle Fresnelových ronvic způsobena nepřesností aproximací průsečíků. Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
+    V obrázku \ref{fig:rrerr1} dochází k tomu, že odhadovaný průsečík vychází z prostoru obrazu a následně místo textury scény vzorkuje z textury prostředí v \emph{cubemapě}. V obrázku \ref{fig:rrerr2} dochází k tomu, že vyslaný lomený prvek protne scénu ale ve špatném místě, protože reálný průsečík je z pohledu kamery schovaný za nějakou geometrií, která leží před ním. V \ref{fig:rrerr3} lze vidět chybu míchání barev odražené a refraktované scény podle Fresnelových rovnic způsobenou nepřesností aproximace průsečíků. Odraz kachničky v obrázku \ref{fig:duckr} má siluetu samotné kachničky kvůli způsobu odhadu průsečíku, který ověřuje jeho správnost pomocí textury pozic reflektovaných objektů (zde kachničky). 
     
     Tyto nedostatky jsou nejvíce výrazné při pohledu zblízka a rovné vodní hladině. Naštěstí se v realitě vodní hladina neustále hýbe a díky zkreslení obrazu refrakcemi jsou tyto chyby zamaskovány. Korektnost výpočtu průsečíku spočívá ve správném odhadu délky lomeného, resp. odraženého,  paprsku. V aplikaci testovací scény lze tento parametr měnit v sekci \emph{Reflections/refractions settings} parameter \emph{First guess}.
 
